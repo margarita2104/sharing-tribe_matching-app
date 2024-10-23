@@ -8,7 +8,7 @@ import Footer from "./_components/Shared/Footer";
 export const metadata: Metadata = {
   title: "Sharing Tribe",
   description: "Connect with people who share your interests.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  // icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 const inter = Inter({ subsets: ["latin"] });
