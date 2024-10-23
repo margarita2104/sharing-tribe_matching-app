@@ -52,7 +52,7 @@ const Header = () => {
               ? "font-semibold"
               : "border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
           }
-          href="/signin"
+          href="/api/auth/signin"
         >
           Sign in
         </Link>
