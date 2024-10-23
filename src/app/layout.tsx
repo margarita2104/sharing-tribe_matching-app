@@ -1,7 +1,9 @@
 import "~/styles/globals.css";
 
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import { type Metadata } from "next";
+import Header from "./_components/Shared/Header";
+import Footer from "./_components/Shared/Footer";
 
 import { getServerAuthSession } from "~/server/auth";
 import Providers from "./components/SessionProvider";
@@ -9,18 +11,22 @@ import Providers from "./components/SessionProvider";
 export const metadata: Metadata = {
   title: "Sharing Tribe",
   description: "Connect with people who share your interests.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  // icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default async function RootLayout({
+const inter = Inter({ subsets: ["latin"] });
+
+export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await getServerAuthSession();
 
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={inter.className}>
       <body>
-        <Providers session={session}>{children}</Providers>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );
