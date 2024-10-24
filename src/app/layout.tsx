@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 import Header from "./_components/Shared/Header";
 import Footer from "./_components/Shared/Footer";
+import Container from "./components/Container";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <Header />
-        {children}
+        <Container>
+          <Header />
+          {children}
+        </Container>
         <Footer />
       </body>
     </html>
