@@ -8,7 +8,7 @@ const Header = () => {
   const currentPath = usePathname();
 
   return (
-    <header className="flex items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
+    <header className="flex sticky top-0 items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
       <Link href="/">
         <Image
           src={"logo.svg"}
