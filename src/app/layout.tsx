@@ -20,7 +20,6 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body className="overflow-y-scroll">
         <Header />
-
         <Container>{children}</Container>
         <Footer />
       </body>
