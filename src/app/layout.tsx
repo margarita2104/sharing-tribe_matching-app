@@ -1,9 +1,9 @@
 import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 import { type Metadata } from "next";
-import Header from "./components/Shared/Header";
-import Footer from "./components/Shared/Footer";
-import Container from "./components/Container";
+import Header from "../components/Shared/Header";
+import Footer from "../components/Shared/Footer";
+import Container from "../components/Container";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
