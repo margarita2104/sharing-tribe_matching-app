@@ -4,6 +4,8 @@ import { type Metadata } from "next";
 import Header from "../components/Shared/Header";
 import Footer from "../components/Shared/Footer";
 import Container from "../components/Container";
+import { auth } from "~/auth";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
@@ -13,16 +15,23 @@ export const metadata: Metadata = {
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await auth();
+
   return (
-    <html lang="en" className={inter.className}>
-      <body className="overflow-y-scroll">
-        <Header />
-        <Container>{children}</Container>
-        <Footer />
-      </body>
-    </html>
+
+    <SessionProvider session={session}>
+      <html lang="en" className={inter.className}>
+        <body className="overflow-y-scroll">
+          <Header user={session?.user} />
+
+          <Container>{children}</Container>
+          <Footer />
+        </body>
+      </html>
+    </SessionProvider>
+
   );
 }
