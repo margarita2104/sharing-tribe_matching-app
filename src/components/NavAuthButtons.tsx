@@ -7,7 +7,7 @@ export default function NavAuthButtons() {
       <div className="flex items-center justify-center gap-7">
         <Link
           className="border-b-2 border-transparent font-semibold hover:border-b-2 hover:border-tree-poppy"
-          href="/auth/login"
+          href="/auth"
         >
           Sign in
         </Link>
