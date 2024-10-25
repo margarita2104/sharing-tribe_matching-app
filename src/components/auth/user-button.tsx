@@ -1,4 +1,3 @@
-"use client";
 import { ExitIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -8,14 +7,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useCurrentUser } from "~/hooks/use-current-user";
 import { LogoutButton } from "./logout-button";
 import { RxAvatar } from "react-icons/rx";
 import Image from "next/image";
+import { type User } from "@prisma/client";
 
-export const UserButton = () => {
-  const user = useCurrentUser();
-
+export const UserButton = ({ user }: { user: User }) => {
   if (!user) return null;
 
   return (

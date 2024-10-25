@@ -27,6 +27,7 @@ export default function HeaderLinks() {
           Home
         </Link>
         <Link
+          target="_blank"
           className="border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
           href="https://sharingtribe.tech"
         >
