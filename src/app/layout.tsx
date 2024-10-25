@@ -21,6 +21,7 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
+
     <SessionProvider session={session}>
       <html lang="en" className={inter.className}>
         <body className="overflow-y-scroll">
@@ -31,5 +32,6 @@ export default async function RootLayout({
         </body>
       </html>
     </SessionProvider>
+
   );
 }
