@@ -51,7 +51,7 @@ export default function Auth() {
           </Link>
         </Button>
         <Button variant="ghost" asChild>
-          <Link href="/sign/login">Already have an account? Signin</Link>
+          <Link href="sign/login">Already have an account? Signin</Link>
         </Button>
       </div>
     </>
