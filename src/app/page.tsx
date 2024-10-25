@@ -1,7 +1,7 @@
 import { auth } from "~/auth";
 
 export default async function HomePage() {
-  const session = await auth();
-  console.log(session);
+  const user = await auth();
+  console.log(user);
   return <main>Hello</main>;
 }
