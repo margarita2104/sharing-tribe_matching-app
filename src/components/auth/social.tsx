@@ -11,7 +11,7 @@ export const Social = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
-  const onClick = async (provider: "google" | "github") => {
+  const onClick = async (provider: "google" | "linkedin") => {
     await signIn(provider, {
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
@@ -31,7 +31,7 @@ export const Social = () => {
         size="lg"
         className="w-full"
         variant="outline"
-        onClick={() => onClick("github")}
+        onClick={() => onClick("linkedin")}
       >
         <FaLinkedinIn className="h-5 w-5" color="#0077B5" />
       </Button>
