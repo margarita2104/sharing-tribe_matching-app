@@ -10,17 +10,17 @@ import {
 import { LogoutButton } from "./logout-button";
 import { RxAvatar } from "react-icons/rx";
 import Image from "next/image";
-import { type User } from "@prisma/client";
+import { type Session } from "next-auth";
 
-export const UserButton = ({ user }: { user: User }) => {
+export const UserButton = ({ user }: { user: Session | null }) => {
   if (!user) return null;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {user.image ? (
+        {user.user?.image ? (
           <Image
-            src={user.image}
+            src={user?.user?.image}
             height={36}
             width={36}
             alt="Profile picture"

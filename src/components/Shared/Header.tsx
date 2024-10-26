@@ -1,13 +1,27 @@
-import { type User } from "@prisma/client";
 import NavAuthButtons from "../NavAuthButtons";
 import { UserButton } from "../auth/user-button";
 import HeaderLinks from "./HeaderLinks";
+import { auth } from "~/auth";
+import { type Session } from "next-auth";
 
-const Header = ({ user }: { user: User }) => {
+type UserProps = {
+  user: {
+    name: string;
+    email: string;
+    image: string;
+    id: string;
+    isOath: boolean;
+  };
+  expires: string;
+};
+
+const Header = async () => {
+  const user: UserProps | Session | null = await auth();
+
   return (
     <header className="sticky top-0 flex items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
       <HeaderLinks />
-      {user ? <UserButton user={user} /> : <NavAuthButtons />}
+      {user ? <UserButton user={!user ? null : user} /> : <NavAuthButtons />}
     </header>
   );
 };
