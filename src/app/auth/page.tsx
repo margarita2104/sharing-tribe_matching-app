@@ -12,12 +12,11 @@ import { FaUsers } from "react-icons/fa";
 
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
   const router = useRouter();
