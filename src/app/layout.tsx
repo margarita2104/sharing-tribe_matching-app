@@ -17,17 +17,17 @@ const inter = Inter({ subsets: ["latin"] });
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const session = await auth();
+  // const session = await auth();
 
   return (
-    <SessionProvider session={session}>
-      <html lang="en" className={inter.className}>
-        <body className="overflow-y-scroll">
-          <Header user={session?.user} />
-          <Container>{children}</Container>
-          <Footer />
-        </body>
-      </html>
-    </SessionProvider>
+    // <SessionProvider session={session}>
+    <html lang="en" className={inter.className}>
+      <body className="overflow-y-scroll">
+        <Header />
+        <Container>{children}</Container>
+        <Footer />
+      </body>
+    </html>
+    // </SessionProvider>
   );
 }
