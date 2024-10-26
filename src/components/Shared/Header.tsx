@@ -17,7 +17,7 @@ type UserProps = {
 
 const Header = async () => {
   const user: UserProps | Session | null = await auth();
-  console.log(user);
+
   return (
     <header className="sticky top-0 flex items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
       <HeaderLinks />
