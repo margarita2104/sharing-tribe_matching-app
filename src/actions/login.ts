@@ -23,7 +23,7 @@ export const login = async (
 
   const existingUser = await getUserByEmail(email);
 
-  if (!existingUser || !existingUser.email || !existingUser.password) {
+  if (!existingUser?.email || !existingUser.password) {
     return { error: "Email does not exist!" };
   }
 
@@ -44,7 +44,7 @@ export const login = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl ?? DEFAULT_LOGIN_REDIRECT,
     });
     redirect("/");
   } catch (error) {
