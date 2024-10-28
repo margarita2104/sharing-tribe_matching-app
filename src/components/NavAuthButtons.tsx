@@ -1,12 +1,19 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function NavAuthButtons() {
+  const currentPath = usePathname();
+
   return (
     <>
       <div className="flex items-center justify-center gap-7">
         <Link
-          className="border-b-2 border-transparent font-semibold hover:border-b-2 hover:border-tree-poppy"
+          className={
+            currentPath === "/auth"
+              ? "font-semibold"
+              : "border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
+          }
           href="/auth"
         >
           Sign in
