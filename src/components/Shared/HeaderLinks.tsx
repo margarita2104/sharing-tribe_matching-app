@@ -15,7 +15,7 @@ export default function HeaderLinks() {
           height="64"
         />
       </Link>
-      <nav className="flex w-2/4 justify-around">
+      <nav className="hidden w-2/4 md:flex md:justify-around">
         <Link
           className={
             currentPath === "/"

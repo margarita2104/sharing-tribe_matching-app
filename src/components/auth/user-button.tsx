@@ -34,7 +34,7 @@ export const UserButton = ({ user }: { user: Session | null }) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
+
         <div className="border-b-2 border-slate-100" />
         <DropdownMenuItem>
           <LogoutButton>
