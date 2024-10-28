@@ -7,7 +7,7 @@ export default function NavAuthButtons() {
 
   return (
     <>
-      <div className="flex items-center justify-center gap-7">
+      <div className="flex items-center justify-center gap-2 lg:gap-7">
         <Link
           className={
             currentPath === "/auth"

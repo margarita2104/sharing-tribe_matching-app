@@ -3,6 +3,7 @@ import { UserButton } from "../auth/user-button";
 import HeaderLinks from "./HeaderLinks";
 import { auth } from "~/auth";
 import { type Session } from "next-auth";
+import { MobileNav } from "../mobile-nav";
 
 type UserProps = {
   user: {
@@ -19,9 +20,28 @@ const Header = async () => {
   const user: UserProps | Session | null = await auth();
 
   return (
-    <header className="sticky top-0 flex items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
+    <header className="sticky top-0 z-20 flex items-center justify-between bg-violet px-7 py-2 text-tree-poppy">
       <HeaderLinks />
-      {user ? <UserButton user={!user ? null : user} /> : <NavAuthButtons />}
+
+      {user ? (
+        <div className="flex gap-x-2">
+          <div className="hidden md:block">
+            <UserButton user={!user ? null : user} />
+          </div>
+          <div className="block md:hidden">
+            <MobileNav user={!user ? null : user} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="hidden md:block">
+            <NavAuthButtons />
+          </div>
+          <div className="block md:hidden">
+            <MobileNav user={!user ? null : user} />
+          </div>
+        </>
+      )}
     </header>
   );
 };
