@@ -9,6 +9,8 @@ export default {
   			violet: '#280944',
   			'tree-poppy': '#FF931E',
   			'flush-orange': '#FF8500',
+				'gallery':"#F0EFEF",
+				'alto':'#D9D9D9',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

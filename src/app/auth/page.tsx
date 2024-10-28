@@ -22,9 +22,9 @@ export default function Auth() {
   const router = useRouter();
   return (
     <>
-      <h2 className="mb-4 mt-10 text-center text-2xl text-violet md:text-6xl">
+      <h1 className="mb-4 mt-10 text-center text-4xl font-semibold text-violet">
         Join our talent network
-      </h2>
+      </h1>
       <div className="mt-10 flex min-w-96 flex-col items-start space-y-4">
         <Button
           onClick={() =>
