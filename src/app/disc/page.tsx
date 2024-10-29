@@ -1,11 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const DiscTest = () => {
+const Disc = () => {
   return (
     <main>
       <section className="hero">
         <Image
-          src="/images/disctest-hero.svg"
+          src="/images/disc-hero.svg"
           alt="Hero image"
           fill
           style={{ objectFit: "cover" }}
@@ -50,7 +51,7 @@ const DiscTest = () => {
         </div>
         <div className="flex w-1/2 justify-center">
           <Image
-            src="/images/disctest-about.svg"
+            src="/images/disc-about.svg"
             alt="Section illustration"
             width={400}
             height={400}
@@ -74,7 +75,7 @@ const DiscTest = () => {
             </div>
             <div className="flex justify-center">
               <Image
-                src="/icons/disctest-icon-1.svg"
+                src="/icons/disc-icon-1.svg"
                 alt="Section icon"
                 width={130}
                 height={114}
@@ -92,7 +93,7 @@ const DiscTest = () => {
             </div>
             <div className="flex justify-center">
               <Image
-                src="/icons/disctest-icon-2.svg"
+                src="/icons/disc-icon-2.svg"
                 alt="Section icon"
                 width={130}
                 height={130}
@@ -112,7 +113,7 @@ const DiscTest = () => {
             </div>
             <div className="flex justify-center">
               <Image
-                src="/icons/disctest-icon-3.svg"
+                src="/icons/disc-icon-3.svg"
                 alt="Section icon"
                 width={94}
                 height={130}
@@ -122,12 +123,35 @@ const DiscTest = () => {
         </div>
       </section>
       <section className="px-36">
-        <h3 className="mb-6 text-xl font-semibold text-violet">
-          Ready to&nbsp;take the test?
-        </h3>
+        <Link
+          href="/disc/about"
+          className="flex items-center justify-between rounded-lg border border-alto hover:bg-accent"
+        >
+          <h3 className="py-5 pl-10 text-xl font-semibold text-violet">
+            Ready to&nbsp;take the test?
+          </h3>
+          <div className="flex items-center rounded-lg border border-alto">
+            <div className="h-full border-r border-alto py-3 px-4">
+              <Image
+                src="/icons/test-yes.svg"
+                alt="Section icon"
+                width={40}
+                height={50}
+              />
+            </div>
+            <div className="h-full py-3 px-4">
+              <Image
+                src="/icons/test-no.svg"
+                alt="Section icon"
+                width={40}
+                height={50}
+              />
+            </div>
+          </div>
+        </Link>
       </section>
     </main>
   );
 };
 
-export default DiscTest;
+export default Disc;

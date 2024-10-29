@@ -45,7 +45,7 @@ export function MobileNav({ user }: { user: Session | null }) {
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link className="w-full" href="/disctest">
+            <Link className="w-full" href="/disc">
               DISC Personality Test
             </Link>
 
