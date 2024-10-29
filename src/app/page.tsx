@@ -5,7 +5,7 @@ export default async function HomePage() {
     <main>
       <section className="hero">
         <Image
-          src="/images/hero-home.svg"
+          src="/images/home-hero.svg"
           alt="Hero image"
           fill
           style={{ objectFit: "cover" }}
@@ -32,8 +32,8 @@ export default async function HomePage() {
           <Image
             src="/images/home-perfect-match.svg"
             alt="Section illustration"
-            width={300}
-            height={300}
+            width={400}
+            height={400}
           />
         </div>
         <div className="w-1/2">
