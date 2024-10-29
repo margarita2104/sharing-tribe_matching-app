@@ -35,11 +35,11 @@ export default function HeaderLinks() {
         </Link>
         <Link
           className={
-            currentPath === "/disctest"
+            currentPath === "/disc"
               ? "font-semibold"
               : "border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
           }
-          href="/disctest"
+          href="/disc"
         >
           DISC Personality Test
         </Link>
