@@ -11,6 +11,7 @@ import { LogoutButton } from "./logout-button";
 import { RxAvatar } from "react-icons/rx";
 import Image from "next/image";
 import { type Session } from "next-auth";
+import Link from "next/link";
 
 export const UserButton = ({ user }: { user: Session | null }) => {
   if (!user) return null;
@@ -33,7 +34,11 @@ export const UserButton = ({ user }: { user: Session | null }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">
+          <Link className="w-full" href="/profile">
+            Profile
+          </Link>
+        </DropdownMenuItem>
 
         <div className="border-b-2 border-slate-100" />
         <DropdownMenuItem>

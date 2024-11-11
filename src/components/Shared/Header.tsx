@@ -5,13 +5,13 @@ import { auth } from "~/auth";
 import { type Session } from "next-auth";
 import { MobileNav } from "../mobile-nav";
 
-type UserProps = {
+export type UserProps = {
   user: {
     name: string;
     email: string;
     image: string;
     id: string;
-    isOath: boolean;
+    isOAuth: boolean;
   };
   expires: string;
 };

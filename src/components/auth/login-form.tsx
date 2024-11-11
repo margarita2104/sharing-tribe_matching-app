@@ -70,7 +70,10 @@ export const LoginForm = () => {
       showSocial
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="justify-center space-y-6"
+        >
           <div className="space-y-4">
             <FormField
               control={form.control}
