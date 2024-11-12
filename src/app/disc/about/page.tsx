@@ -57,7 +57,7 @@ const DiscAbout = () => {
           </div>
         </div>
       </section>
-      <section className="px-10 py-10">
+      <section className="px-10">
         <div className="rounded-lg border border-alto p-11">
           <div className="mb-6 flex justify-between">
             <h2 className="mb-6 text-2xl font-semibold text-violet">
