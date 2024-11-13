@@ -1,0 +1,184 @@
+{
+  "questions": [
+    {
+      "question": "Question 1",
+      "options": [
+        { "letter": "D", "text": "I enjoy taking charge and making decisions quickly." },
+        { "letter": "I", "text": "I enjoy motivating others and creating a positive atmosphere." },
+        { "letter": "S", "text": "I prefer a calm and steady pace in my work." },
+        { "letter": "C", "text": "I like things to be organized and follow a structured approach." }
+      ]
+    },
+    {
+      "question": "Question 2",
+      "options": [
+        { "letter": "D", "text": "I like challenging tasks that allow me to lead." },
+        { "letter": "I", "text": "I am enthusiastic and easily get others excited about an idea." },
+        { "letter": "S", "text": "I am supportive and focus on building long-term relationships." },
+        { "letter": "C", "text": "I focus on accuracy and always double-check my work." }
+      ]
+    },
+    {
+      "question": "Question 3",
+      "options": [
+        { "letter": "D", "text": "I am competitive and driven by results." },
+        { "letter": "I", "text": "I enjoy being around people and starting new conversations." },
+        { "letter": "S", "text": "I prefer consistency and dislike sudden changes." },
+        { "letter": "C", "text": "I prefer to rely on facts and detailed information when making decisions." }
+      ]
+    },
+    {
+      "question": "Question 4",
+      "options": [
+        { "letter": "D", "text": "I like being in control and directing others." },
+        { "letter": "I", "text": "I enjoy recognition and making an impact on others." },
+        { "letter": "S", "text": "I am a good listener and value harmony in relationships." },
+        { "letter": "C", "text": "I am detail-oriented and methodical in my approach." }
+      ]
+    },
+    {
+      "question": "Question 5",
+      "options": [
+        { "letter": "D", "text": "I can make tough decisions quickly, even under pressure." },
+        { "letter": "I", "text": "I enjoy meeting new people and making connections." },
+        { "letter": "S", "text": "I focus on maintaining a peaceful environment around me." },
+        { "letter": "C", "text": "I ensure that my work is done with high precision and clarity." }
+      ]
+    },
+    {
+      "question": "Question 6",
+      "options": [
+        { "letter": "D", "text": "I like pushing boundaries and taking on new challenges." },
+        { "letter": "I", "text": "I am outgoing and thrive in social situations." },
+        { "letter": "S", "text": "I prefer routine and tend to avoid conflict." },
+        { "letter": "C", "text": "I like to gather all the information before acting." }
+      ]
+    },
+    {
+      "question": "Question 7",
+      "options": [
+        { "letter": "D", "text": "I enjoy solving difficult problems and leading the team forward." },
+        { "letter": "I", "text": "I love interacting with others and energizing a group." },
+        { "letter": "S", "text": "I am dependable and consistent in everything I do." },
+        { "letter": "C", "text": "I focus on ensuring everything is done right and follow rules closely." }
+      ]
+    },
+    {
+      "question": "Question 8",
+      "options": [
+        { "letter": "D", "text": "I am not afraid to speak my mind and take control." },
+        { "letter": "I", "text": "I enjoy making others feel comfortable and welcomed." },
+        { "letter": "S", "text": "I prefer to take my time to understand others and maintain stability." },
+        { "letter": "C", "text": "I always consider every detail and ensure accuracy in my tasks." }
+      ]
+    },
+    {
+      "question": "Question 9",
+      "options": [
+        { "letter": "D", "text": "I take responsibility for decisions and prefer to lead." },
+        { "letter": "I", "text": "I enjoy creating a fun, engaging atmosphere." },
+        { "letter": "S", "text": "I am patient and always ready to support others." },
+        { "letter": "C", "text": "I prefer to follow procedures to maintain quality." }
+      ]
+    },
+    {
+      "question": "Question 10",
+      "options": [
+        { "letter": "D", "text": "I like taking risks and achieving goals." },
+        { "letter": "I", "text": "I am optimistic and enjoy motivating people." },
+        { "letter": "S", "text": "I prefer to avoid conflict and keep things peaceful." },
+        { "letter": "C", "text": "I always aim for perfection in what I do." }
+      ]
+    },
+    {
+      "question": "Question 11",
+      "options": [
+        { "letter": "D", "text": "I like to take control in stressful situations." },
+        { "letter": "I", "text": "I love connecting with others and keeping them engaged." },
+        { "letter": "S", "text": "I prefer stability and a calm work environment." },
+        { "letter": "C", "text": "I focus on the details and ensure everything is precise." }
+      ]
+    },
+    {
+      "question": "Question 12",
+      "options": [
+        { "letter": "D", "text": "I am driven to succeed and don’t let obstacles stop me." },
+        { "letter": "I", "text": "I like to bring positivity and encourage teamwork." },
+        { "letter": "S", "text": "I enjoy being reliable and supporting my colleagues." },
+        { "letter": "C", "text": "I prefer to follow rules to ensure consistency in results." }
+      ]
+    },
+    {
+      "question": "Question 13",
+      "options": [
+        { "letter": "D", "text": "I like making things happen and being decisive." },
+        { "letter": "I", "text": "I enjoy socializing and bringing people together." },
+        { "letter": "S", "text": "I like to work in a stable, harmonious environment." },
+        { "letter": "C", "text": "I pay attention to every detail and prefer accuracy over speed." }
+      ]
+    },
+    {
+      "question": "Question 14",
+      "options": [
+        { "letter": "D", "text": "I am confident when leading others and taking action." },
+        { "letter": "I", "text": "I like being the center of attention and inspiring others." },
+        { "letter": "S", "text": "I prefer consistency in my routine and work relationships." },
+        { "letter": "C", "text": "I focus on following processes and guidelines to maintain high standards." }
+      ]
+    },
+    {
+      "question": "Question 15",
+      "options": [
+        { "letter": "D", "text": "I enjoy overcoming challenges and making quick decisions." },
+        { "letter": "I", "text": "I love working in groups and keeping everyone energized." },
+        { "letter": "S", "text": "I am focused on building long-term, stable relationships." },
+        { "letter": "C", "text": "I like analyzing data and ensuring everything is done accurately." }
+      ]
+    },
+    {
+      "question": "Question 16",
+      "options": [
+        { "letter": "D", "text": "I am comfortable taking risks and facing new challenges." },
+        { "letter": "I", "text": "I enjoy interacting with others and sharing ideas." },
+        { "letter": "S", "text": "I prefer working at a steady pace without interruptions." },
+        { "letter": "C", "text": "I always strive for perfection and accuracy in my work." }
+      ]
+    },
+    {
+      "question": "Question 17",
+      "options": [
+        { "letter": "D", "text": "I take charge in high-pressure situations and make quick decisions." },
+        { "letter": "I", "text": "I enjoy building connections and working in a social environment." },
+        { "letter": "S", "text": "I am reliable and prefer to work in stable conditions." },
+        { "letter": "C", "text": "I follow a systematic approach and ensure the quality of my work." }
+      ]
+    },
+    {
+      "question": "Question 18",
+      "options": [
+        { "letter": "D", "text": "I enjoy making tough decisions and taking the lead." },
+        { "letter": "I", "text": "I am enthusiastic and enjoy interacting with others." },
+        { "letter": "S", "text": "I am considerate and value steady progress." },
+        { "letter": "C", "text": "I focus on details and prefer a structured environment." }
+      ]
+    },
+    {
+      "question": "Question 19",
+      "options": [
+        { "letter": "D", "text": "I feel comfortable making quick decisions in difficult situations." },
+        { "letter": "I", "text": "I enjoy social settings and interacting with different people." },
+        { "letter": "S", "text": "I prefer consistency and tend to avoid confrontations." },
+        { "letter": "C", "text": "I like following rules to maintain accuracy and precision." }
+      ]
+    },
+    {
+      "question": "Question 20",
+      "options": [
+        { "letter": "D", "text": "I am motivated to lead and achieve results." },
+        { "letter": "I", "text": "I like bringing energy to a team and building positive relationships." },
+        { "letter": "S", "text": "I am reliable and enjoy steady, supportive work environments." },
+        { "letter": "C", "text": "I prefer a systematic approach and value accuracy." }
+      ]
+    }
+  ]
+}
