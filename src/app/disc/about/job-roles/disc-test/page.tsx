@@ -28,7 +28,9 @@ const DiscTest = () => {
       newSelections[questionIndex] = { most: null, least: null };
     }
 
-    const questionSelection = newSelections[questionIndex]!;
+    const questionSelection = newSelections[questionIndex];
+
+    if (!questionSelection) return;
 
     if (type === "most") {
       if (questionSelection.least !== value) {
