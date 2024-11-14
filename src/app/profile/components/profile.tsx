@@ -1,24 +1,31 @@
-import { type Session } from "next-auth";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React from "react";
+"use client";
 
-import { type User } from "next-auth";
+import Image from "next/image";
+import { useState } from "react";
+import { type User as NextAuthUser } from "next-auth";
+
+interface User extends NextAuthUser {
+  bio?: string;
+  linkedinUrl?: string;
+}
 import { Button } from "~/components/ui/button";
 import { RxAvatar } from "react-icons/rx";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { useCurrentUser } from "~/hooks/use-current-user";
+import { Bio } from "./short-bio-form";
 
 export default function Profile() {
-  const { data: session }: { data: Session | null } = useSession();
+  const user = useCurrentUser();
+  console.log(user);
 
-  if (!session) return null;
+  if (!user) return null;
 
   return (
     <>
-      <ProfileHeader user={session.user} />
+      <ProfileHeader user={user} />
       <div className="flex flex-wrap gap-x-4">
-        <PersonalInformation user={session.user} />
-        <PersonalInformation user={session.user} />
+        <PersonalInformation user={user} />
+        <PersonalInformation user={user} />
       </div>
       <AddNewSection />
     </>
@@ -27,34 +34,37 @@ export default function Profile() {
 
 function ProfileHeader({ user }: { user: User }) {
   return (
-    <div className="mt-12 flex gap-x-8">
-      <div>
-        {user.image ? (
-          <Image
-            src={user.image}
-            alt="Profile picture"
-            width={100}
-            height={100}
-            className="rounded-full"
-          />
-        ) : (
-          <RxAvatar className="h-24 w-24" />
-        )}
-      </div>
-      <div className="flex-col items-center justify-center space-y-4">
-        <div className="space-y-1">
-          <p className="text-2xl text-violet">{user.name}</p>
-          <p>{user.email}</p>
+    <>
+      <div className="mt-12 flex gap-x-8">
+        <div>
+          {user.image ? (
+            <Image
+              src={user.image}
+              alt="Profile picture"
+              width={100}
+              height={100}
+              className="rounded-full"
+            />
+          ) : (
+            <RxAvatar className="h-24 w-24" />
+          )}
         </div>
-        <Button
-          className="border-[1px] border-tree-poppy bg-white"
-          variant="secondary"
-        >
-          Edit Profile
-        </Button>
+        <div className="flex-col items-center justify-center space-y-4">
+          <div className="space-y-1">
+            <p className="text-2xl text-violet">{user.name}</p>
+            <p>{user.email}</p>
+          </div>
+          <Button
+            className="border-[1px] border-tree-poppy bg-white"
+            variant="secondary"
+          >
+            Edit Profile
+          </Button>
+        </div>
+        <p>C</p>
       </div>
-      <p>C</p>
-    </div>
+      <p>{user.bio}</p>
+    </>
   );
 }
 
@@ -89,6 +99,7 @@ function PersonalInformation({ user }: { user: User }) {
 }
 
 function AddNewSection() {
+  const [bioClicked, setBioClicked] = useState(false);
   return (
     <div className="mb-14 mt-14">
       <h2 className="text-center text-xl">Add new section</h2>
@@ -129,9 +140,11 @@ function AddNewSection() {
           <Button
             className="border-[1px] border-tree-poppy bg-white"
             variant="secondary"
+            onClick={() => setBioClicked(!bioClicked)}
           >
             Short Bio
           </Button>
+          {bioClicked && <Bio />}
           <Button
             className="border-[1px] border-tree-poppy bg-white"
             variant="secondary"

@@ -1,9 +1,9 @@
 import { type DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
-  role: UserRole;
-  isTwoFactorEnabled: boolean;
   isOAuth: boolean;
+  linkedinUrl: string;
+  bio: string;
 };
 
 declare module "next-auth" {
