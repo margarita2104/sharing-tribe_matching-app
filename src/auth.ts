@@ -48,6 +48,8 @@ export const {
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.linkedinUrl = token.linkedinUrl as string;
         session.user.bio = token.bio as string;
+        session.user.githubUrl = token.githubUrl as string;
+        session.user.location = token.location as string;
       }
 
       return session;
@@ -66,6 +68,8 @@ export const {
       token.email = existingUser.email;
       token.linkedinUrl = existingUser.linkedinUrl;
       token.bio = existingUser.bio;
+      token.githubUrl = existingUser.githubUrl;
+      token.location = existingUser.location;
 
       return token;
     },

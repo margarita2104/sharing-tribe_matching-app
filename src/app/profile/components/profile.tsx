@@ -4,15 +4,83 @@ import Image from "next/image";
 import { useState } from "react";
 import { type User as NextAuthUser } from "next-auth";
 
-interface User extends NextAuthUser {
+export interface User extends NextAuthUser {
   bio?: string;
+  location?: string;
   linkedinUrl?: string;
+  githubUrl?: string;
 }
 import { Button } from "~/components/ui/button";
 import { RxAvatar } from "react-icons/rx";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { Bio } from "./short-bio-form";
+import { PersonalInfo } from "./personal-info";
+import { ProfessionalOverview } from "./professional-overview";
+
+export const sectionFields = {
+  personalInfo: [
+    { label: "Full Name", name: "name" },
+    { label: "Location", name: "location" },
+    { label: "Email", name: "email" },
+    { label: "LinkedIn URL", name: "linkedinUrl" },
+    { label: "Github URL", name: "githubUrl" },
+  ],
+  professionalOverview: [
+    { label: "Job Title", name: "jobTitle", type: "select" },
+    { label: "Job Role Family", name: "jobRoleFamily", type: "select" },
+    {
+      label: "Current Employment Status",
+      name: "employmentStatus",
+      type: "select",
+    },
+    { label: "Desired Work Mode", name: "workMode", type: "select" },
+    { label: "Availability", name: "availability", type: "select" },
+    { label: "Current Company", name: "currentCompany" },
+  ],
+  workExperience: [
+    { label: "Job Title", name: "jobTitle" },
+    { label: "Company Name", name: "companyName" },
+    { label: "Start Date", name: "startDate", type: "date" },
+    { label: "End Date", name: "endDate", type: "date" },
+  ],
+  educationCertification: [
+    { label: "Highest Degree/Qualification", name: "degree" },
+    { label: "Field of Study", name: "fieldOfStudy" },
+    { label: "Institution", name: "institution", type: "date" },
+    { label: "Graduation Year", name: "graduationYear" },
+  ],
+  technicalSkills: [{ label: "Tech Skills", name: "name" }],
+  softSkills: [{ label: "Soft Skills", name: "name" }],
+  jobPreference: [
+    { label: "Desired Roles", name: "role" },
+    { label: "Work Preference", name: "workPreference" },
+    { label: "Desired Industry", name: "industry", type: "date" },
+  ],
+  workTandem: [
+    { label: "Ideal Tandem Partner", name: "idealPartnerRole" },
+    { label: "Complementary Skills", name: "complementarySkills" },
+  ],
+  projectPortfolio: [
+    { label: "Project Title", name: "title" },
+    { label: "Role in the Project", name: "role" },
+    { label: "Description", name: "description" },
+    { label: "Link to the Project", name: "link" },
+    { label: "Project Files", name: "projectFiles", type: "file" },
+  ],
+  references: [
+    { label: "Reference Name", name: "name" },
+    { label: "Relationship to Candidate", name: "relationship" },
+    { label: "Company/Organization", name: "company" },
+    { label: "Contact Information", name: "contactInfo" },
+  ],
+  additionalInfo: [
+    { label: "Hobbies and Interests", name: "hobbiesAndInterests" },
+    { label: "Volunteering Experience", name: "volunteering" },
+    { label: "Languages", name: "languages" },
+    { label: "Preferred Work Schedule", name: "preferredWorkSchedule" },
+  ],
+};
 
 export default function Profile() {
   const user = useCurrentUser();
@@ -24,8 +92,8 @@ export default function Profile() {
     <>
       <ProfileHeader user={user} />
       <div className="flex flex-wrap gap-x-4">
-        <PersonalInformation user={user} />
-        <PersonalInformation user={user} />
+        <PersonalInfo user={user} />
+        <ProfessionalOverview user={user} />
       </div>
       <AddNewSection />
     </>
@@ -65,36 +133,6 @@ function ProfileHeader({ user }: { user: User }) {
       </div>
       <p>{user.bio}</p>
     </>
-  );
-}
-
-function PersonalInformation({ user }: { user: User }) {
-  return (
-    <Card className="mt-14 w-[400px]" title="Personal Information">
-      <CardHeader>
-        <div className="flex justify-between">
-          <h2 className="text-lg text-violet">Personal Information</h2>
-          <div className="cursor-pointer">
-            <Image
-              src="/icons/profile-edit.png"
-              alt="Profile edit icon"
-              width={16}
-              height={16}
-            />
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-between">
-          <p className="text-violet">Full Name</p>
-          <p className="text-slate-500">{user.name}</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-violet">Email</p>
-          <p className="text-slate-500">{user.email}</p>
-        </div>
-      </CardContent>
-    </Card>
   );
 }
 
