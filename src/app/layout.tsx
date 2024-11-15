@@ -6,6 +6,7 @@ import Footer from "../components/Shared/Footer";
 import Container from "../components/Container";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "~/auth";
+import { Toaster } from "~/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
@@ -26,6 +27,7 @@ export default async function RootLayout({
           <Header />
           <Container>{children}</Container>
           <Footer />
+          <Toaster />
         </body>
       </html>
     </SessionProvider>

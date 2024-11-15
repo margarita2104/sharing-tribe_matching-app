@@ -17,6 +17,7 @@ import { useCurrentUser } from "~/hooks/use-current-user";
 import { Bio } from "./short-bio-form";
 import { PersonalInfo } from "./personal-info";
 import { ProfessionalOverview } from "./professional-overview";
+import { WorkExperience } from "./work-experience";
 
 export const sectionFields = {
   personalInfo: [
@@ -94,6 +95,7 @@ export default function Profile() {
       <div className="flex flex-wrap gap-x-4">
         <PersonalInfo user={user} />
         <ProfessionalOverview user={user} />
+        {/* <WorkExperience user={user} /> */}
       </div>
       <AddNewSection />
     </>

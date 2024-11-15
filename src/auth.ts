@@ -4,6 +4,12 @@ import { db } from "./server/db";
 import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
 import { getAccountByUserId } from "./data/account";
+import {
+  type availability,
+  type employmentStatus,
+  type jobRoleFamily,
+  type workMode,
+} from "./next-auth";
 
 export const {
   handlers: { GET, POST },
@@ -50,6 +56,13 @@ export const {
         session.user.bio = token.bio as string;
         session.user.githubUrl = token.githubUrl as string;
         session.user.location = token.location as string;
+        session.user.jobTitle = token.jobTitle as string;
+        session.user.jobRoleFamily = token.jobRoleFamily as jobRoleFamily;
+        session.user.employmentStatus =
+          token.employmentStatus as employmentStatus;
+        session.user.workMode = token.workMode as workMode;
+        session.user.availability = token.availability as availability;
+        session.user.currentCompany = token.currentCompany as string;
       }
 
       return session;
@@ -70,6 +83,12 @@ export const {
       token.bio = existingUser.bio;
       token.githubUrl = existingUser.githubUrl;
       token.location = existingUser.location;
+      token.jobTitle = existingUser.jobTitle;
+      token.jobRoleFamily = existingUser.jobRoleFamily;
+      token.employmentStatus = existingUser.employmentStatus;
+      token.workMode = existingUser.workMode;
+      token.availability = existingUser.availability;
+      token.currentCompany = existingUser.currentCompany;
 
       return token;
     },

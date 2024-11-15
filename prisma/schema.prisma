@@ -25,7 +25,7 @@ model User {
 
     // Professional Overview
     jobTitle         String?
-    jobRoleFamily    String?
+    jobRoleFamily    JobRoleFamily    @default(Other)
     employmentStatus EmploymentStatus @default(Freelance)
     workMode         WorkMode         @default(Hybrid)
     availability     String?
@@ -142,6 +142,23 @@ enum EmploymentStatus {
     FullTime
     PartTime
     OpenToOpportunities
+}
+
+enum Availability {
+    OneMonth
+    ThreeMonths
+    SixMonths
+}
+
+enum JobRoleFamily {
+    SoftwareDevelopment
+    Design
+    ProductManagement
+    DataScience
+    DevOps
+    QualityAssurance
+    Engineering
+    Other
 }
 
 enum WorkMode {
