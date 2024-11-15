@@ -11,13 +11,24 @@ export const ProfileSchema = z
     githubUrl: z.optional(z.string().min(6)),
     bio: z.optional(z.string().min(6)),
     jobTitle: z.optional(z.string().min(6)),
-    jobRoleFamily: z.optional(z.string().min(6)),
+    jobRoleFamily: z.optional(
+      z.enum([
+        "SoftwareDevelopment",
+        "Design",
+        "ProductManagement",
+        "DataScience",
+        "DevOps",
+        "QualityAssurance",
+        "Engineering",
+        "Other",
+      ]),
+    ),
     employmentStatus: z.optional(
       z.enum(["Freelance", "FullTime", "PartTime", "OpenToOpportunities"]),
     ),
     workMode: z.optional(z.enum(["Hybrid", "Remote", "Onsite"])),
 
-    availability: z.optional(z.string().min(6)),
+    availability: z.optional(z.enum(["OneMonth", "ThreeMonths", "SixMonths"])),
     currentCompany: z.optional(z.string().min(6)),
   })
   .refine(
@@ -46,6 +57,17 @@ export const ProfileSchema = z
       path: ["password"],
     },
   );
+
+export const WorkExperienceSchema = z.object({
+  jobTitle: z.string().min(1, {
+    message: "First Name is required.",
+  }),
+  companyName: z.string().min(1, {
+    message: "Last Name is required.",
+  }),
+  startDate: z.date(),
+  endDate: z.date(),
+});
 
 export const RegisterSchema = z.object({
   firstName: z.string().min(1, {
