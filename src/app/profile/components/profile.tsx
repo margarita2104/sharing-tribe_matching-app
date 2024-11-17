@@ -39,11 +39,11 @@ export default function Profile({
   return (
     <>
       <ProfileHeader user={user} />
-      <div className="flex h-fit flex-wrap justify-center gap-x-4">
+      <div className="flex h-fit flex-col items-center justify-center gap-x-4 md:flex-row md:flex-wrap">
         <PersonalInfo user={user} />
         <ProfessionalOverview user={user} />
         {workExperiences.length ? (
-          <Card className="mt-14 h-fit w-[450px]">
+          <Card className="mt-14 h-fit w-[350px] sm:min-w-[450px]">
             {workExperiences
               .slice(0, showAll ? workExperiences.length : 1)
               .map((workExperience, index) => (
@@ -56,6 +56,9 @@ export default function Profile({
                   <ModalWorkExpButton userId={user.id} title="Add more" />
                 </>
               )}
+              {workExperiences.length === 1 ? (
+                <ModalWorkExpButton userId={user.id} title="Add more" />
+              ) : null}
               {showAll && (
                 <>
                   <Button onClick={() => setShowAll(false)}>Show Less</Button>
@@ -66,7 +69,7 @@ export default function Profile({
           </Card>
         ) : null}
         {education.length ? (
-          <Card className="mt-14 h-fit w-[450px]">
+          <Card className="mt-14 h-fit w-[350px] sm:min-w-[450px]">
             {education
               .slice(0, showAllEducation ? education.length : 1)
               .map((educatio, index) => (
@@ -81,6 +84,9 @@ export default function Profile({
                   <ModalEducation userId={user.id} title="Add more" />
                 </>
               )}
+              {education.length === 1 ? (
+                <ModalWorkExpButton userId={user.id} title="Add more" />
+              ) : null}
               {showAllEducation && (
                 <>
                   <Button onClick={() => setShowAllEducation(false)}>
