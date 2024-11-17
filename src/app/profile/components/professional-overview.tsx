@@ -32,7 +32,6 @@ import {
 import { toast } from "~/hooks/use-toast";
 
 export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
-  console.log(user);
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   // const [success, setSuccess] = useState<string | undefined>();
