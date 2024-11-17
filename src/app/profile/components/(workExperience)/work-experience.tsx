@@ -29,6 +29,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "~/lib/utils";
 import { format, isValid } from "date-fns";
 import { toast } from "~/hooks/use-toast";
+import { ModalWorkExpButton } from "./modal-work-exp";
 
 type WorkExperienceProps = {
   workExperience: {

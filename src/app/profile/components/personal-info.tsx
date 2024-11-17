@@ -62,7 +62,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card className="mt-14 w-[450px]" title="Personal Information">
+    <Card
+      className="mt-14 h-fit w-[350px] sm:min-w-[450px]"
+      title="Personal Information"
+    >
       <CardHeader>
         <div className="flex justify-between">
           <h2 className="text-lg text-violet">Personal Information</h2>
