@@ -2,14 +2,17 @@
 
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-
 import { db } from "../server/db";
-
 import { getUserByEmail, getUserById } from "~/data/user";
 import { currentUser } from "../lib/auth";
 import { generateVerificationToken } from "~/lib/tokens";
 import { sendVerificationEmail } from "~/lib/mail";
-import { type ProfileSchema } from "~/schema";
+import {
+  type WorkExperienceSchema,
+  type ProfileSchema,
+  type EducationSchema,
+} from "~/schema";
+import { revalidatePath } from "next/cache";
 
 export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
   const user = await currentUser();
@@ -71,5 +74,112 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     },
   });
 
+  revalidatePath("/profile");
+
   return { success: "Profile Updated!" };
+};
+
+export const WorkUpdate = async (
+  values: z.infer<typeof WorkExperienceSchema>,
+  id: number,
+) => {
+  const user = await currentUser();
+
+  if (!user?.email) {
+    throw new Error("User email not found");
+  }
+  const dbWorkExperience = await db.workExperience.findUnique({
+    where: { id },
+  });
+
+  if (!dbWorkExperience) {
+    throw new Error("Work Experience not found");
+  }
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  await db.workExperience.update({
+    where: { id },
+    data: values,
+  });
+
+  revalidatePath("/profile");
+
+  return { success: "Work Updated", error: "Oh no something went wrong" };
+};
+export const WorkCreate = async (
+  values: z.infer<typeof WorkExperienceSchema>,
+) => {
+  await db.workExperience.create({ data: values });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Work experience added!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const getWorkExperience = async (id: string) => {
+  const workExperience = await db.workExperience.findMany({
+    where: { userId: id },
+    orderBy: { startDate: "desc" },
+  });
+
+  return workExperience;
+};
+// EDUCATION CERTIFICATION
+
+export const EducationUpdate = async (
+  values: z.infer<typeof EducationSchema>,
+  id: number,
+) => {
+  const user = await currentUser();
+
+  if (!user?.email) {
+    throw new Error("User email not found");
+  }
+  const dbEducation = await db.education.findUnique({
+    where: { id },
+  });
+
+  if (!dbEducation) {
+    throw new Error("Education not found");
+  }
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  await db.education.update({
+    where: { id },
+    data: values,
+  });
+
+  revalidatePath("/profile");
+
+  return { success: "Education Updated", error: "Oh no something went wrong" };
+};
+export const EducationCreate = async (
+  values: z.infer<typeof EducationSchema>,
+) => {
+  await db.education.create({ data: values });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Education added!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const getEducation = async (id: string) => {
+  const educations = await db.education.findMany({
+    where: { userId: id },
+    orderBy: { graduationYear: "desc" },
+  });
+
+  return educations;
 };

@@ -58,15 +58,35 @@ export const ProfileSchema = z
     },
   );
 
-export const WorkExperienceSchema = z.object({
-  jobTitle: z.string().min(1, {
+export const WorkExperienceSchema = z
+  .object({
+    jobTitle: z.string().min(1, {
+      message: "First Name is required.",
+    }),
+    companyName: z.string().min(1, {
+      message: "Last Name is required.",
+    }),
+    userId: z.string(),
+
+    startDate: z.date(),
+    endDate: z.date(),
+  })
+  .refine((data) => data.endDate > data.startDate, {
+    message: "End Date must be greater than Start Date.",
+    path: ["endDate"],
+  });
+export const EducationSchema = z.object({
+  degree: z.string().min(1, {
     message: "First Name is required.",
   }),
-  companyName: z.string().min(1, {
+  fieldOfStudy: z.string().min(1, {
     message: "Last Name is required.",
   }),
-  startDate: z.date(),
-  endDate: z.date(),
+  institution: z.string().min(1, {
+    message: "Last Name is required.",
+  }),
+  graduationYear: z.string().optional(),
+  userId: z.string(),
 });
 
 export const RegisterSchema = z.object({

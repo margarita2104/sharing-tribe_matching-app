@@ -1,14 +1,13 @@
 "use client";
-
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
-import { ProfileSchema } from "../../../schema/index";
-import { Card, CardContent, CardHeader } from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
-import { ProfileUpdate } from "../../../actions/profile";
+import { EducationSchema } from "../../../../schema/index";
+import { CardContent, CardHeader } from "../../../../components/ui/card";
+import { Button } from "../../../../components/ui/button";
+import { EducationUpdate } from "../../../../actions/profile";
 import {
   Form,
   FormField,
@@ -16,34 +15,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
-import { Input } from "../../../components/ui/input";
-import { FormError } from "../../../components/form-error";
-import { FormSuccess } from "../../../components/form-success";
+} from "../../../../components/ui/form";
+import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
-import { type ExtendedUser } from "~/next-auth";
 import { toast } from "~/hooks/use-toast";
 
-export function PersonalInfo({ user }: { user: ExtendedUser }) {
+type EducationProps = {
+  educatio: {
+    id: number;
+    degree: string;
+    fieldOfStudy: string;
+    institution: string;
+    graduationYear: string | null;
+    userId: string;
+  };
+};
+
+export function EducationCertification({ educatio }: EducationProps) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof ProfileSchema>>({
-    resolver: zodResolver(ProfileSchema),
+  const form = useForm<z.infer<typeof EducationSchema>>({
+    resolver: zodResolver(EducationSchema),
     defaultValues: {
-      name: user.name ?? undefined,
-      location: user.location || undefined,
-      email: user.email ?? undefined,
-      linkedinUrl: user.linkedinUrl || undefined,
+      degree: educatio.degree,
+      fieldOfStudy: educatio.fieldOfStudy,
+      institution: educatio.institution,
+      graduationYear: educatio.graduationYear ?? undefined,
     },
   });
-
-  const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
+  const onSubmit = (values: z.infer<typeof EducationSchema>) => {
     startTransition(() => {
-      ProfileUpdate(values)
+      EducationUpdate(values, educatio.id)
         .then(async (data) => {
           if (data?.error) {
             // setError(data.error);
@@ -53,7 +59,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
           if (data?.success) {
             await update();
             // setSuccess(data.success);
-            toast({ title: "Profile updated", description: data.success });
+            toast({
+              title: "Education updated",
+              description: data.success,
+            });
             setEdit(false);
           }
         })
@@ -62,10 +71,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card className="mt-14 w-[450px]" title="Personal Information">
+    <>
       <CardHeader>
         <div className="flex justify-between">
-          <h2 className="text-lg text-violet">Personal Information</h2>
+          <h2 className="text-lg text-violet">Education & Certifications</h2>
           {edit ? null : (
             <div className="cursor-pointer" onClick={() => setEdit(true)}>
               <Image
@@ -84,20 +93,20 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
             <div>
               <FormField
                 control={form.control}
-                name="name"
+                name="degree"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Full Name</FormLabel>
+                    <FormLabel className="w-full">Degree</FormLabel>
 
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Full Name"
+                          placeholder="Degree"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.name}</p>
+                        <p className="w-full">{educatio.degree}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -107,19 +116,58 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="location"
+                name="fieldOfStudy"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Location</FormLabel>
+                    <FormLabel className="w-full">Field Of Study</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Location"
+                          placeholder="Field Of Study"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.location ?? "N/A"}</p>
+                        <p className="w-full">
+                          {educatio.fieldOfStudy ?? "N/A"}
+                        </p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="userId"
+                defaultValue={educatio.userId}
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormControl>
+                      <Input {...field} disabled={isPending} type="hidden" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="institution"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Institution</FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          placeholder="institution"
+                          disabled={isPending}
+                        />
+                      ) : (
+                        <p className="w-full">
+                          {educatio.institution ?? "N/A"}
+                        </p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -129,63 +177,22 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="graduationYear"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Email</FormLabel>
+                    <FormLabel className="w-full">Graduation Year</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Email"
+                          value={field.value ?? ""}
+                          placeholder="Graduation Year"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.email}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="linkedinUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Linkedin URL"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="githubUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Github URL"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                        <p className="w-full">
+                          {educatio.graduationYear ?? "N/A"}
+                        </p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -213,6 +220,6 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
           </form>
         </Form>
       </CardContent>
-    </Card>
+    </>
   );
 }

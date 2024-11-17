@@ -65,12 +65,12 @@ model WorkExperience {
 }
 
 model Education {
-    id             Int    @id @default(autoincrement())
+    id             Int     @id @default(autoincrement())
     degree         String
     fieldOfStudy   String
     institution    String
-    graduationYear Int?
-    user           User   @relation(fields: [userId], references: [id])
+    graduationYear String?
+    user           User    @relation(fields: [userId], references: [id])
     userId         String
 }
 
