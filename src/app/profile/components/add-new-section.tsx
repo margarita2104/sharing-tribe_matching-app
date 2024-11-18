@@ -10,11 +10,17 @@ export function AddNewSection({
   workExperienceLenght,
   educationLength,
   jobTitle,
+  setShowTechSkills,
+  showTechSkills,
+  techSkills,
 }: {
   userId: string;
   workExperienceLenght: number;
   educationLength: number;
   jobTitle: string;
+  showTechSkills: boolean;
+  techSkills: number;
+  setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <div className="mb-14 mt-14">
@@ -37,13 +43,16 @@ export function AddNewSection({
               title="Education & Certifications"
             />
           )}
+          {techSkills ? null : showTechSkills ? null : (
+            <Button
+              onClick={() => setShowTechSkills(!showTechSkills)}
+              className="border-[1px] border-tree-poppy bg-white"
+              variant="secondary"
+            >
+              Tech Skills
+            </Button>
+          )}
 
-          <Button
-            className="border-[1px] border-tree-poppy bg-white"
-            variant="secondary"
-          >
-            Skills
-          </Button>
           <Button
             className="border-[1px] border-tree-poppy bg-white"
             variant="secondary"

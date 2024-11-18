@@ -40,6 +40,7 @@ export default function Profile({
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [showTechSkills, setShowTechSkills] = useState(false);
 
   if (!user) return null;
   if (!workExperiences) return null;
@@ -111,36 +112,41 @@ export default function Profile({
           </Card>
         ) : null}
       </div>
-      <Card className="m-14 h-fit w-10/12">
-        <CardHeader>
-          <div className="flex justify-between">
-            <h2 className="text-lg text-violet">Technical Skills</h2>
-            {edit ? null : (
-              <div className="cursor-pointer" onClick={() => setEdit(true)}>
-                <Image
-                  src="/icons/profile-edit.png"
-                  alt="Profile edit icon"
-                  width={16}
-                  height={16}
-                />
-              </div>
-            )}
-          </div>
-        </CardHeader>
+      {showTechSkills ? (
+        <Card className="m-14 h-fit w-10/12">
+          <CardHeader>
+            <div className="flex justify-between">
+              <h2 className="text-lg text-violet">Technical Skills</h2>
+              {edit ? null : (
+                <div className="cursor-pointer" onClick={() => setEdit(true)}>
+                  <Image
+                    src="/icons/profile-edit.png"
+                    alt="Profile edit icon"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+              )}
+            </div>
+          </CardHeader>
 
-        <TechnicalSkills
-          userId={user.id}
-          techSkills={techSkills}
-          setEdit={setEdit}
-          edit={edit}
-        />
-      </Card>
+          <TechnicalSkills
+            userId={user.id}
+            techSkills={techSkills}
+            setEdit={setEdit}
+            edit={edit}
+          />
+        </Card>
+      ) : null}
 
       <AddNewSection
         userId={user.id ?? ""}
         workExperienceLenght={workExperiences.length}
         educationLength={education.length}
         jobTitle={user.jobTitle}
+        setShowTechSkills={setShowTechSkills}
+        showTechSkills={showTechSkills}
+        techSkills={techSkills.length}
       />
     </>
   );
