@@ -78,7 +78,7 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
   return (
     <Card
-      className="mt-14 h-fit w-[350px] sm:min-w-[450px]"
+      className="h-fit w-[250px] sm:min-w-[350px]"
       title="Personal Information"
     >
       <CardHeader>

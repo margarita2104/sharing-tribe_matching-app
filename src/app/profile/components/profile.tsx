@@ -35,15 +35,17 @@ export default function Profile({
   if (!user) return null;
   if (!workExperiences) return null;
   if (!education) return null;
+  console.log(user);
 
   return (
     <>
       <ProfileHeader user={user} />
-      <div className="flex h-fit flex-col items-center justify-center gap-x-4 md:flex-row md:flex-wrap">
+      <div className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2">
         <PersonalInfo user={user} />
-        <ProfessionalOverview user={user} />
+        {!user.jobTitle ? null : <ProfessionalOverview user={user} />}
+
         {workExperiences.length ? (
-          <Card className="mt-14 h-fit w-[350px] sm:min-w-[450px]">
+          <Card className="h-fit w-[250px] sm:min-w-[350px]">
             {workExperiences
               .slice(0, showAll ? workExperiences.length : 1)
               .map((workExperience, index) => (
@@ -67,11 +69,9 @@ export default function Profile({
               )}
             </CardFooter>
           </Card>
-        ) : workExperiences.length ? (
-          <Card className="mt-14 hidden h-[288px] w-[350px] border-none shadow-none sm:min-w-[450px] md:block"></Card>
         ) : null}
         {education.length ? (
-          <Card className="mt-14 h-fit w-[350px] sm:min-w-[450px]">
+          <Card className="h-fit w-[250px] sm:min-w-[350px]">
             {education
               .slice(0, showAllEducation ? education.length : 1)
               .map((educatio, index) => (
@@ -99,14 +99,13 @@ export default function Profile({
               )}
             </CardFooter>
           </Card>
-        ) : workExperiences.length > 0 ? (
-          <Card className="mt-14 hidden h-[288px] w-[350px] border-none shadow-none sm:min-w-[450px] md:block"></Card>
         ) : null}
       </div>
       <AddNewSection
         userId={user.id ?? ""}
         workExperienceLenght={workExperiences.length}
         educationLength={education.length}
+        jobTitle={user.jobTitle}
       />
     </>
   );
