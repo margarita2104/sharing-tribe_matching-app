@@ -4,8 +4,8 @@ type WorkExperience = {
   id: number;
   companyName: string;
   jobTitle: string;
-  startDate: Date;
-  endDate: Date | null;
+  startDate: string;
+  endDate: string | null;
   userId: string;
 };
 type Education = {

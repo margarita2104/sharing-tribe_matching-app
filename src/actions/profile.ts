@@ -112,6 +112,7 @@ export const WorkUpdate = async (
 export const WorkCreate = async (
   values: z.infer<typeof WorkExperienceSchema>,
 ) => {
+  console.log("Received Values: ", values);
   await db.workExperience.create({ data: values });
 
   revalidatePath("/profile");
