@@ -51,10 +51,10 @@ export function EducationCertification({ educatio }: EducationProps) {
     startTransition(() => {
       EducationUpdate(values, educatio.id)
         .then(async (data) => {
-          if (data?.error) {
-            // setError(data.error);
-            toast({ title: "Error", description: data.error });
-          }
+          // if (data?.error) {
+          //   // setError(data.error);
+          //   toast({ title: "Error", description: data.error });
+          // }
 
           if (data?.success) {
             await update();
@@ -66,7 +66,13 @@ export function EducationCertification({ educatio }: EducationProps) {
             setEdit(false);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() =>
+          toast({
+            title: "Error",
+            description: "An error occurred",
+            variant: "destructive",
+          }),
+        );
     });
   };
 

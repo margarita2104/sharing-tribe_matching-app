@@ -5,6 +5,8 @@ import authConfig from "./auth.config";
 import { getUserById } from "./data/user";
 import { getAccountByUserId } from "./data/account";
 import {
+  type SoftSkills,
+  type TechSkills,
   type Education,
   type WorkExperience,
   type availability,
@@ -69,6 +71,8 @@ export const {
           token.workExperiences as WorkExperience[];
       }
       session.user.education = token.education as Education[];
+      session.user.technicalSkills = token.technicalSkills as TechSkills[];
+      session.user.softSkills = token.softSkills as SoftSkills[];
 
       return session;
     },
@@ -97,6 +101,8 @@ export const {
       token.workExperiences = existingUser.workExperiences;
       token.education = existingUser.education;
       token.id = existingUser.id;
+      token.technicalSkills = existingUser.technicalSkills;
+      token.softSkills = existingUser.softSkills;
 
       return token;
     },

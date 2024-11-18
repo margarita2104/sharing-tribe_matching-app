@@ -26,9 +26,6 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-
-import { FormError } from "~/components/form-error";
-import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
 import {
@@ -60,10 +57,10 @@ export function ModalProfessionalOverview({
     startTransition(() => {
       ProfileUpdate(values)
         .then(async (data) => {
-          if (data?.error) {
-            // setError(data.error);
-            toast({ title: "Error", description: data.error });
-          }
+          // if (data?.error) {
+          //   // setError(data.error);
+          //   toast({ title: "Error", description: data.error });
+          // }
 
           if (data.success) {
             await update();
@@ -75,7 +72,13 @@ export function ModalProfessionalOverview({
             setEdit(false);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() =>
+          toast({
+            title: "Error",
+            description: "An error occurred",
+            variant: "destructive",
+          }),
+        );
     });
   };
   return (

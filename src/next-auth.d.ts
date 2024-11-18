@@ -8,6 +8,16 @@ type WorkExperience = {
   endDate: string | null;
   userId: string;
 };
+type TechSkills = {
+  id: number;
+  name: string;
+  userId: string;
+};
+type SoftSkills = {
+  id: number;
+  name: string;
+  userId: string;
+};
 type Education = {
   id: number;
   degree: string;
@@ -48,6 +58,8 @@ export type ExtendedUser = DefaultSession["user"] & {
   currentCompany: string;
   workExperiences: WorkExperience[];
   education: Education[];
+  technicalSkills: TechSkills[];
+  softSkills: SoftSkills[];
 };
 
 declare module "next-auth" {
