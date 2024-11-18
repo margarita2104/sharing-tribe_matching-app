@@ -36,8 +36,8 @@ type WorkExperienceProps = {
     id: number;
     jobTitle: string;
     companyName: string;
-    startDate: Date;
-    endDate: Date | null;
+    startDate: string;
+    endDate: string | null;
     userId: string;
   };
 };
@@ -54,10 +54,8 @@ export function WorkExperiences({ workExperience }: WorkExperienceProps) {
     defaultValues: {
       jobTitle: workExperience.jobTitle,
       companyName: workExperience.companyName,
-      startDate: new Date(workExperience.startDate),
-      endDate: workExperience.endDate
-        ? new Date(workExperience.endDate)
-        : undefined,
+      startDate: workExperience.startDate,
+      endDate: workExperience.endDate ?? "",
     },
   });
   const onSubmit = (values: z.infer<typeof WorkExperienceSchema>) => {
@@ -168,48 +166,26 @@ export function WorkExperiences({ workExperience }: WorkExperienceProps) {
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
-                  <FormItem className="flex w-full items-center justify-between">
+                  <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">Start Date</FormLabel>
-                    {edit ? (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              {field.value && isValid(new Date(field.value)) ? (
-                                format(new Date(field.value), "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    ) : (
-                      <p className="w-full">
-                        {workExperience.startDate
-                          ? format(new Date(workExperience.startDate), "PPP")
-                          : "N/A"}
-                      </p>
-                    )}
-
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          onSelect={field.onChange}
+                          placeholder="startDate"
+                          disabled={isPending}
+                          type="date"
+                          value={
+                            field.value
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
+                        />
+                      ) : (
+                        <p className="w-full">{workExperience.startDate}</p>
+                      )}
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -221,47 +197,24 @@ export function WorkExperiences({ workExperience }: WorkExperienceProps) {
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">End Date</FormLabel>
-                    {edit ? (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              {field.value && isValid(new Date(field.value)) ? (
-                                format(new Date(field.value), "PPP")
-                              ) : (
-                                <span>Pick a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    ) : (
-                      <p className="w-full">
-                        {workExperience.endDate
-                          ? format(new Date(workExperience.endDate), "PPP")
-                          : "N/A"}
-                      </p>
-                    )}
-                    <FormMessage />
-
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          onSelect={field.onChange}
+                          placeholder="startDate"
+                          disabled={isPending}
+                          type="date"
+                          value={
+                            field.value
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
+                        />
+                      ) : (
+                        <p className="w-full">{workExperience.endDate}</p>
+                      )}
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

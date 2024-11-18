@@ -55,12 +55,12 @@ model User {
 }
 
 model WorkExperience {
-    id          Int       @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     jobTitle    String
     companyName String
-    startDate   DateTime
-    endDate     DateTime?
-    user        User      @relation(fields: [userId], references: [id])
+    startDate   String
+    endDate     String?
+    user        User    @relation(fields: [userId], references: [id])
     userId      String
 }
 

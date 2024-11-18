@@ -85,7 +85,7 @@ export default function Profile({
                 </>
               )}
               {education.length === 1 ? (
-                <ModalWorkExpButton userId={user.id} title="Add more" />
+                <ModalEducation userId={user.id} title="Add more" />
               ) : null}
               {showAllEducation && (
                 <>

@@ -68,8 +68,8 @@ export const WorkExperienceSchema = z
     }),
     userId: z.string(),
 
-    startDate: z.date(),
-    endDate: z.date(),
+    startDate: z.string(),
+    endDate: z.string(),
   })
   .refine((data) => data.endDate > data.startDate, {
     message: "End Date must be greater than Start Date.",
