@@ -67,6 +67,8 @@ export default function Profile({
               )}
             </CardFooter>
           </Card>
+        ) : workExperiences.length ? (
+          <Card className="mt-14 hidden h-[288px] w-[350px] border-none shadow-none sm:min-w-[450px] md:block"></Card>
         ) : null}
         {education.length ? (
           <Card className="mt-14 h-fit w-[350px] sm:min-w-[450px]">
@@ -97,6 +99,8 @@ export default function Profile({
               )}
             </CardFooter>
           </Card>
+        ) : workExperiences.length > 0 ? (
+          <Card className="mt-14 hidden h-[288px] w-[350px] border-none shadow-none sm:min-w-[450px] md:block"></Card>
         ) : null}
       </div>
       <AddNewSection
