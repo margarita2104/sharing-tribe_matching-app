@@ -6,6 +6,8 @@ import Footer from "../components/Shared/Footer";
 import Container from "../components/Container";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "~/auth";
+import { Toaster } from "~/components/ui/toaster";
+import { db } from "~/server/db";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
@@ -19,6 +21,8 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
 
+  
+
   return (
     <SessionProvider session={session}>
       <html lang="en" className={inter.className}>
@@ -26,6 +30,7 @@ export default async function RootLayout({
           <Header />
           <Container>{children}</Container>
           <Footer />
+          <Toaster />
         </body>
       </html>
     </SessionProvider>

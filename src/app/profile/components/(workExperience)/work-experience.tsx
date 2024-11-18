@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
-import { ProfileSchema } from "../../../schema/index";
-import { Card, CardContent, CardHeader } from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
-import { ProfileUpdate } from "../../../actions/profile";
+import { WorkExperienceSchema } from "../../../../schema/index";
+import { Card, CardContent, CardHeader } from "../../../../components/ui/card";
+import { Button } from "../../../../components/ui/button";
+import { WorkUpdate } from "../../../../actions/profile";
 import {
   Form,
   FormField,
@@ -16,34 +16,51 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
-import { Input } from "../../../components/ui/input";
-import { FormError } from "../../../components/form-error";
-import { FormSuccess } from "../../../components/form-success";
+} from "../../../../components/ui/form";
+import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
-import { type ExtendedUser } from "~/next-auth";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { Calendar } from "~/components/ui/calendar";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { cn } from "~/lib/utils";
+import { format, isValid } from "date-fns";
 import { toast } from "~/hooks/use-toast";
+import { ModalWorkExpButton } from "./modal-work-exp";
 
-export function PersonalInfo({ user }: { user: ExtendedUser }) {
+type WorkExperienceProps = {
+  workExperience: {
+    id: number;
+    jobTitle: string;
+    companyName: string;
+    startDate: string;
+    endDate: string | null;
+    userId: string;
+  };
+};
+
+export function WorkExperiences({ workExperience }: WorkExperienceProps) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof ProfileSchema>>({
-    resolver: zodResolver(ProfileSchema),
+  const form = useForm<z.infer<typeof WorkExperienceSchema>>({
+    resolver: zodResolver(WorkExperienceSchema),
     defaultValues: {
-      name: user.name ?? undefined,
-      location: user.location || undefined,
-      email: user.email ?? undefined,
-      linkedinUrl: user.linkedinUrl || undefined,
+      jobTitle: workExperience.jobTitle,
+      companyName: workExperience.companyName,
+      startDate: workExperience.startDate,
+      endDate: workExperience.endDate ?? "",
     },
   });
-
-  const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
+  const onSubmit = (values: z.infer<typeof WorkExperienceSchema>) => {
     startTransition(() => {
-      ProfileUpdate(values)
+      WorkUpdate(values, workExperience.id)
         .then(async (data) => {
           if (data?.error) {
             // setError(data.error);
@@ -53,7 +70,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
           if (data?.success) {
             await update();
             // setSuccess(data.success);
-            toast({ title: "Profile updated", description: data.success });
+            toast({
+              title: "Work Experience updated",
+              description: data.success,
+            });
             setEdit(false);
           }
         })
@@ -62,13 +82,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card
-      className="mt-14 h-fit w-[350px] sm:min-w-[450px]"
-      title="Personal Information"
-    >
+    <>
       <CardHeader>
         <div className="flex justify-between">
-          <h2 className="text-lg text-violet">Personal Information</h2>
+          <h2 className="text-lg text-violet">Work Experience</h2>
           {edit ? null : (
             <div className="cursor-pointer" onClick={() => setEdit(true)}>
               <Image
@@ -83,24 +100,24 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form id="workExperienceForm" onSubmit={form.handleSubmit(onSubmit)}>
             <div>
               <FormField
                 control={form.control}
-                name="name"
+                name="jobTitle"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Full Name</FormLabel>
+                    <FormLabel className="w-full">Job Title</FormLabel>
 
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Full Name"
+                          placeholder="Job title"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.name}</p>
+                        <p className="w-full">{workExperience.jobTitle}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -110,19 +127,63 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="location"
+                name="companyName"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Location</FormLabel>
+                    <FormLabel className="w-full">Company Name</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Location"
+                          placeholder="Company Name"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.location ?? "N/A"}</p>
+                        <p className="w-full">
+                          {workExperience.companyName ?? "N/A"}
+                        </p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="userId"
+                defaultValue={workExperience.userId}
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormControl>
+                      <Input {...field} disabled={isPending} type="hidden" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="startDate"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Start Date</FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          onSelect={field.onChange}
+                          placeholder="startDate"
+                          disabled={isPending}
+                          type="date"
+                          value={
+                            field.value
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
+                        />
+                      ) : (
+                        <p className="w-full">{workExperience.startDate}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -132,63 +193,26 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="endDate"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Email</FormLabel>
+                    <FormLabel className="w-full">End Date</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Email"
+                          onSelect={field.onChange}
+                          placeholder="startDate"
                           disabled={isPending}
+                          type="date"
+                          value={
+                            field.value
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
                         />
                       ) : (
-                        <p className="w-full">{user.email}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="linkedinUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Linkedin URL"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="githubUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Github URL"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                        <p className="w-full">{workExperience.endDate}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -216,6 +240,6 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
           </form>
         </Form>
       </CardContent>
-    </Card>
+    </>
   );
 }

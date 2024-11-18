@@ -22,21 +22,31 @@ import { FormError } from "../../../components/form-error";
 import { FormSuccess } from "../../../components/form-success";
 import Image from "next/image";
 import { type ExtendedUser } from "~/next-auth";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { toast } from "~/hooks/use-toast";
 
 export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string | undefined>();
+  // const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      name: user.name ?? undefined,
-      location: user.location || undefined,
-      email: user.email ?? undefined,
-      linkedinUrl: user.linkedinUrl || undefined,
+      jobTitle: user.jobTitle ?? undefined,
+      jobRoleFamily: user.jobRoleFamily ?? undefined,
+      employmentStatus: user.employmentStatus ?? undefined,
+      workMode: user.workMode || undefined,
+      availability: user.availability || undefined,
+      currentCompany: user.currentCompany || undefined,
     },
   });
 
@@ -50,19 +60,30 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
           if (data.success) {
             await update();
-            setSuccess(data.success);
+            toast({
+              title: "Profile updated!",
+            });
             setEdit(false);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() =>
+          toast({
+            title: "Oh no something went wrong!",
+            description: "There was a problem with your request.",
+            variant: "destructive",
+          }),
+        );
     });
   };
 
   return (
-    <Card className="mt-14 w-[450px]" title="Personal Information">
+    <Card
+      className="mt-14 h-fit w-[350px] sm:min-w-[450px]"
+      title="Personal Information"
+    >
       <CardHeader>
         <div className="flex justify-between">
-          <h2 className="text-lg text-violet">Personal Information</h2>
+          <h2 className="text-lg text-violet">Professional Overview</h2>
           {edit ? null : (
             <div className="cursor-pointer" onClick={() => setEdit(true)}>
               <Image
@@ -81,20 +102,20 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
             <div>
               <FormField
                 control={form.control}
-                name="name"
+                name="jobTitle"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Full Name</FormLabel>
+                    <FormLabel className="w-full">Job Title</FormLabel>
 
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Full Name"
+                          placeholder="Job title"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.name}</p>
+                        <p className="w-full">{user.jobTitle ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -104,21 +125,66 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="location"
+                name="jobRoleFamily"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Location</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Location"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.location ?? "N/A"}</p>
-                      )}
-                    </FormControl>
+                    <FormLabel className="w-full">Job role family</FormLabel>
+                    {edit ? (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a verified email to display" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="SoftwareDevelopment"
+                            className="cursor-pointer"
+                          >
+                            Software Development
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Design">
+                            Design
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ProductManagement"
+                          >
+                            Product Management
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="DataScience"
+                          >
+                            Data Science
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="DevOps">
+                            DevOps
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="QualityAssurance"
+                          >
+                            Quality Assurance
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="Engineering"
+                          >
+                            Engineering
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Other">
+                            Other
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="w-full">{user.jobRoleFamily ?? "N/A"}</p>
+                    )}
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -126,21 +192,51 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="email"
+                name="employmentStatus"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Email</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Email"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.email}</p>
-                      )}
-                    </FormControl>
+                    <FormLabel className="w-full">Employment Status</FormLabel>
+                    {edit ? (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a verified email to display" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="Freelance"
+                            className="cursor-pointer"
+                          >
+                            Freelance
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="FullTime"
+                          >
+                            FullTime
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="PartTime"
+                          >
+                            PartTime
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="OpentoOpportunities"
+                          >
+                            OpenToOpportunities
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="w-full">{user.employmentStatus ?? "N/A"}</p>
+                    )}
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -148,21 +244,36 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="linkedinUrl"
+                name="workMode"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Linkedin URL"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
-                      )}
-                    </FormControl>
+                    <FormLabel className="w-full">Work Mode</FormLabel>
+                    {edit ? (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a verified email to display" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem value="Hybrid" className="cursor-pointer">
+                            Hybrid
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Remote">
+                            Remote
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Onsite">
+                            Onsite
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="w-full">{user.workMode ?? "N/A"}</p>
+                    )}
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -170,19 +281,64 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
 
               <FormField
                 control={form.control}
-                name="githubUrl"
+                name="availability"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
+                    <FormLabel className="w-full">Availability</FormLabel>
+                    {edit ? (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="OneMonth"
+                            className="cursor-pointer"
+                          >
+                            1 Month
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ThreeMonths"
+                          >
+                            3 Months
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="SixMonths"
+                          >
+                            6 Months
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="w-full">{user.availability ?? "N/A"}</p>
+                    )}
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="currentCompany"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Current Company</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Github URL"
+                          placeholder="Current Company"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                        <p className="w-full">{user.currentCompany ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -190,8 +346,8 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                 )}
               />
             </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
+            {/* <FormError message={error} />
+            <FormSuccess message={success} /> */}
             {edit ? (
               <div className="mt-4 space-x-2">
                 {" "}

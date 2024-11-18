@@ -25,7 +25,7 @@ model User {
 
     // Professional Overview
     jobTitle         String?
-    jobRoleFamily    String?
+    jobRoleFamily    JobRoleFamily    @default(Other)
     employmentStatus EmploymentStatus @default(Freelance)
     workMode         WorkMode         @default(Hybrid)
     availability     String?
@@ -55,22 +55,22 @@ model User {
 }
 
 model WorkExperience {
-    id          Int       @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     jobTitle    String
     companyName String
-    startDate   DateTime
-    endDate     DateTime?
-    user        User      @relation(fields: [userId], references: [id])
+    startDate   String
+    endDate     String?
+    user        User    @relation(fields: [userId], references: [id])
     userId      String
 }
 
 model Education {
-    id             Int    @id @default(autoincrement())
+    id             Int     @id @default(autoincrement())
     degree         String
     fieldOfStudy   String
     institution    String
-    graduationYear Int?
-    user           User   @relation(fields: [userId], references: [id])
+    graduationYear String?
+    user           User    @relation(fields: [userId], references: [id])
     userId         String
 }
 
@@ -142,6 +142,23 @@ enum EmploymentStatus {
     FullTime
     PartTime
     OpenToOpportunities
+}
+
+enum Availability {
+    OneMonth
+    ThreeMonths
+    SixMonths
+}
+
+enum JobRoleFamily {
+    SoftwareDevelopment
+    Design
+    ProductManagement
+    DataScience
+    DevOps
+    QualityAssurance
+    Engineering
+    Other
 }
 
 enum WorkMode {
