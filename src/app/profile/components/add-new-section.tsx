@@ -3,27 +3,31 @@ import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
 import { Bio } from "./short-bio-form";
 import { ModalEducation } from "./(educationCertidication)/modal-education";
+import { ModalProfessionalOverview } from "./(professionalOverview)/modal-professional-overview";
 
 export function AddNewSection({
   userId,
   workExperienceLenght,
   educationLength,
+  jobTitle,
 }: {
   userId: string;
   workExperienceLenght: number;
   educationLength: number;
+  jobTitle: string;
 }) {
   return (
     <div className="mb-14 mt-14">
       <h2 className="text-center text-xl">Add new section</h2>
       <div className="flex flex-col items-center justify-center text-center">
         <div className="mt-4 flex flex-wrap gap-2">
-          <Button
-            className="border-[1px] border-tree-poppy bg-white"
-            variant="secondary"
-          >
-            Professional Overview
-          </Button>
+          {jobTitle ? null : (
+            <ModalProfessionalOverview
+              userId={userId}
+              title="Professional Overview"
+            />
+          )}
+
           {workExperienceLenght ? null : (
             <ModalWorkExpButton userId={userId} title="Work Experience" />
           )}
