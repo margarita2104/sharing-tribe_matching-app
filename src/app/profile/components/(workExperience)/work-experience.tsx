@@ -62,10 +62,10 @@ export function WorkExperiences({ workExperience }: WorkExperienceProps) {
     startTransition(() => {
       WorkUpdate(values, workExperience.id)
         .then(async (data) => {
-          if (data?.error) {
-            // setError(data.error);
-            toast({ title: "Error", description: data.error });
-          }
+          // if (data?.error) {
+          //   // setError(data.error);
+          //   toast({ title: "Error", description: data.error });
+          // }
 
           if (data?.success) {
             await update();
@@ -77,7 +77,13 @@ export function WorkExperiences({ workExperience }: WorkExperienceProps) {
             setEdit(false);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() =>
+          toast({
+            title: "Error",
+            description: "An error occurred",
+            variant: "destructive",
+          }),
+        );
     });
   };
 

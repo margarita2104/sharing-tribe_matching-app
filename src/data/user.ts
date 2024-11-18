@@ -14,7 +14,12 @@ export const getUserById = async (id: string) => {
   try {
     const user = await db.user.findFirst({
       where: { id },
-      include: { workExperiences: true, education: true },
+      include: {
+        workExperiences: true,
+        education: true,
+        technicalSkills: true,
+        softSkills: true,
+      },
     });
 
     return user;

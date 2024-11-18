@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { RxAvatar } from "react-icons/rx";
 import { Button } from "~/components/ui/button";
-import { ExtendedUser } from "~/next-auth";
+import { type ExtendedUser } from "~/next-auth";
 
 export function ProfileHeader({ user }: { user: ExtendedUser }) {
   return (

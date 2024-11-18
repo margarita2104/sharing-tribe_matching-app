@@ -53,10 +53,10 @@ export function ModalEducation({
     startTransition(() => {
       EducationCreate(values)
         .then(async (data) => {
-          if (data?.error) {
-            // setError(data.error);
-            toast({ title: "Error", description: data.error });
-          }
+          // if (data?.error) {
+          //   // setError(data.error);
+          //   toast({ title: "Error", description: data.error });
+          // }
 
           if (data.success) {
             await update();
@@ -68,7 +68,13 @@ export function ModalEducation({
             setEdit(false);
           }
         })
-        .catch(() => setError("Something went wrong!"));
+        .catch(() =>
+          toast({
+            title: "Error",
+            description: "An error occurred",
+            variant: "destructive",
+          }),
+        );
     });
   };
   return (

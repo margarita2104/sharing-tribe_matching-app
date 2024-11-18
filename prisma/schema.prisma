@@ -36,8 +36,8 @@ model User {
     education       Education[]
 
     // Skills
-    technicalSkills TechnicalSkill[]
-    softSkills      SoftSkill[]
+    technicalSkills TechnicalSkills[]
+    softSkills      SoftSkills[]
 
     // Job and Tandem Preferences
     jobPreferences    JobPreference[]
@@ -52,6 +52,20 @@ model User {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model TechnicalSkills {
+    id     Int    @id @default(autoincrement())
+    name   String
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+}
+
+model SoftSkills {
+    id     Int    @id @default(autoincrement())
+    name   String
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
 }
 
 model WorkExperience {
@@ -72,20 +86,6 @@ model Education {
     graduationYear String?
     user           User    @relation(fields: [userId], references: [id])
     userId         String
-}
-
-model TechnicalSkill {
-    id     Int    @id @default(autoincrement())
-    name   String
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
-}
-
-model SoftSkill {
-    id     Int    @id @default(autoincrement())
-    name   String
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
 }
 
 model JobPreference {

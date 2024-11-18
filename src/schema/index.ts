@@ -88,6 +88,20 @@ export const EducationSchema = z.object({
   graduationYear: z.string().optional(),
   userId: z.string(),
 });
+export const TechSkillsSchema = z.object({
+  name: z.string().min(4, {
+    message: "A skill name is required.",
+  }),
+
+  userId: z.string(),
+});
+export const SoftSKilsSchema = z.object({
+  name: z.string().min(4, {
+    message: "A soft skill is required.",
+  }),
+
+  userId: z.string(),
+});
 
 export const RegisterSchema = z.object({
   firstName: z.string().min(1, {

@@ -11,6 +11,8 @@ import {
   type WorkExperienceSchema,
   type ProfileSchema,
   type EducationSchema,
+  type TechSkillsSchema,
+  SoftSKilsSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 
@@ -183,4 +185,59 @@ export const getEducation = async (id: string) => {
   });
 
   return educations;
+};
+
+// TECH SKILLS
+
+export const TechSkillCreate = async (
+  values: z.infer<typeof TechSkillsSchema>,
+) => {
+  await db.technicalSkills.create({ data: values });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Tech skill added!",
+    error: "Oh no something went wrong",
+  };
+};
+export const TechSkillDelete = async (id: number) => {
+  await db.technicalSkills.delete({ where: { id } });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Tech skill deleted!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const getTechnicalSkills = async (id: string) => {
+  const techSkills = await db.technicalSkills.findMany({
+    where: { userId: id },
+  });
+
+  return techSkills;
+};
+
+// SOFT SKILLS
+export const SoftSkillCreate = async (
+  values: z.infer<typeof SoftSKilsSchema>,
+) => {
+  await db.softSkills.create({ data: values });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Soft skill added!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const getSoftSkills = async (id: string) => {
+  const softSkills = await db.softSkills.findMany({
+    where: { userId: id },
+  });
+
+  return softSkills;
 };

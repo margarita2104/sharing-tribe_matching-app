@@ -7,35 +7,45 @@ import { ProfileHeader } from "./profile-header";
 import { AddNewSection } from "./add-new-section";
 
 import {
+  type SoftSkills,
+  type TechSkills,
   type Education,
   type ExtendedUser,
   type WorkExperience,
 } from "~/next-auth";
-import { Card, CardFooter } from "~/components/ui/card";
+import { Card, CardFooter, CardHeader } from "~/components/ui/card";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
 import { ModalEducation } from "./(educationCertidication)/modal-education";
 import { EducationCertification } from "./(educationCertidication)/education-certification";
+import { TechnicalSkills } from "./(techSkills)/tech-skils";
+import Image from "next/image";
 
 type ProfileProps = {
   user: ExtendedUser;
   workExperiences: WorkExperience[];
   education: Education[];
+  techSkills: TechSkills[];
+  softSkills: SoftSkills[];
 };
 
 export default function Profile({
   user,
   workExperiences,
   education,
+  techSkills,
+  softSkills,
 }: ProfileProps) {
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   if (!user) return null;
   if (!workExperiences) return null;
   if (!education) return null;
-  console.log(user);
+  if (!techSkills) return null;
+  if (!softSkills) return null;
 
   return (
     <>
@@ -101,6 +111,31 @@ export default function Profile({
           </Card>
         ) : null}
       </div>
+      <Card className="m-14 h-fit w-10/12">
+        <CardHeader>
+          <div className="flex justify-between">
+            <h2 className="text-lg text-violet">Technical Skills</h2>
+            {edit ? null : (
+              <div className="cursor-pointer" onClick={() => setEdit(true)}>
+                <Image
+                  src="/icons/profile-edit.png"
+                  alt="Profile edit icon"
+                  width={16}
+                  height={16}
+                />
+              </div>
+            )}
+          </div>
+        </CardHeader>
+
+        <TechnicalSkills
+          userId={user.id}
+          techSkills={techSkills}
+          setEdit={setEdit}
+          edit={edit}
+        />
+      </Card>
+
       <AddNewSection
         userId={user.id ?? ""}
         workExperienceLenght={workExperiences.length}
