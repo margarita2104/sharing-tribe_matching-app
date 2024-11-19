@@ -14,6 +14,7 @@ import {
   type jobRoleFamily,
   type workMode,
 } from "./next-auth";
+import { type JobPreference } from "@prisma/client";
 
 export const {
   handlers: { GET, POST },
@@ -73,6 +74,7 @@ export const {
       session.user.education = token.education as Education[];
       session.user.technicalSkills = token.technicalSkills as TechSkills[];
       session.user.softSkills = token.softSkills as SoftSkills[];
+      session.user.jobPreferences = token.jobPreferences as JobPreference;
 
       return session;
     },
@@ -103,6 +105,7 @@ export const {
       token.id = existingUser.id;
       token.technicalSkills = existingUser.technicalSkills;
       token.softSkills = existingUser.softSkills;
+      token.jobPreferences = existingUser.jobPreferences;
 
       return token;
     },

@@ -6,6 +6,7 @@ import { ModalEducation } from "./(educationCertidication)/modal-education";
 import { ModalProfessionalOverview } from "./(professionalOverview)/modal-professional-overview";
 
 export function AddNewSection({
+  jobPreferences,
   userId,
   workExperienceLenght,
   educationLength,
@@ -13,6 +14,7 @@ export function AddNewSection({
   setShowTechSkills,
   showTechSkills,
   techSkills,
+  setShowJobPreferences,
 }: {
   userId: string;
   workExperienceLenght: number;
@@ -20,6 +22,8 @@ export function AddNewSection({
   jobTitle: string;
   showTechSkills: boolean;
   techSkills: number;
+  jobPreferences: boolean;
+  setShowJobPreferences: React.Dispatch<React.SetStateAction<boolean>>;
 
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -53,13 +57,15 @@ export function AddNewSection({
               Tech Skills
             </Button>
           )}
-
-          <Button
-            className="border-[1px] border-tree-poppy bg-white"
-            variant="secondary"
-          >
-            Job Preferences
-          </Button>
+          {jobPreferences ? null : (
+            <Button
+              className="border-[1px] border-tree-poppy bg-white"
+              variant="secondary"
+              onClick={() => setShowJobPreferences(true)}
+            >
+              Job Preferences
+            </Button>
+          )}
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
           <Button

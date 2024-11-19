@@ -1,6 +1,7 @@
 import Profile from "./components/profile";
 import {
   getEducation,
+  getJobPreferences,
   getSoftSkills,
   getTechnicalSkills,
   getWorkExperience,
@@ -14,6 +15,8 @@ export default async function ProfileMain() {
   const education = await getEducation(user?.id ?? "");
   const techSkills = await getTechnicalSkills(user?.id ?? "");
   const softSkills = await getSoftSkills(user?.id ?? "");
+  const jobPreferences = await getJobPreferences(user?.id ?? "");
+  console.log(jobPreferences);
 
   return (
     <Profile
@@ -22,6 +25,7 @@ export default async function ProfileMain() {
       education={education}
       techSkills={techSkills}
       softSkills={softSkills}
+      jobPreferences={jobPreferences}
     />
   );
 }

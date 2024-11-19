@@ -12,7 +12,8 @@ import {
   type ProfileSchema,
   type EducationSchema,
   type TechSkillsSchema,
-  SoftSKilsSchema,
+  type SoftSKilsSchema,
+  type JobPreferenceSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 
@@ -251,4 +252,103 @@ export const getSoftSkills = async (id: string) => {
   });
 
   return softSkills;
+};
+
+// JOB PREFERENCES
+
+export const JobPreferenceCreate = async (
+  values: z.infer<typeof JobPreferenceSchema>,
+) => {
+  const uniqueRoles = [...new Set(values.role)];
+  const uniquePreference = [...new Set(values.workPreference)];
+  const uniqueIndustry = [...new Set(values.industry)];
+  await db.jobPreference.create({
+    data: {
+      ...values,
+      role: uniqueRoles,
+      workPreference: uniquePreference,
+      industry: uniqueIndustry,
+    },
+  });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Job preference added!",
+    error: "Oh no something went wrong",
+  };
+};
+export const JobPreferenceUpdate = async (
+  values: z.infer<typeof JobPreferenceSchema>,
+  id: number,
+) => {
+  try {
+    const updatedJobPreference = await db.jobPreference.updateMany({
+      where: { id },
+      data: {
+        workPreference: {
+          push: values.workPreference,
+        },
+        role: {
+          push: values.role,
+        },
+        industry: {
+          push: values.industry,
+        },
+      },
+    });
+    revalidatePath("/profile");
+
+    return { success: "Job Preference updated!", updatedJobPreference };
+  } catch (error) {
+    console.error("Error updating job preference:", error);
+    return { error: "Failed to update job preference" };
+  }
+};
+
+export const JobPreferenceDelete = async (
+  id: number,
+  field: "role" | "workPreference" | "industry",
+  index: number,
+) => {
+  try {
+    // Fetch the current job preference
+    const jobPreference = await db.jobPreference.findUnique({
+      where: { id },
+    });
+
+    if (!jobPreference) {
+      throw new Error("Job preference not found");
+    }
+
+    const currentArray = jobPreference[field] || [];
+
+    const updatedArray = currentArray.filter((_, i) => i !== index);
+
+    await db.jobPreference.update({
+      where: { id },
+      data: {
+        [field]: updatedArray,
+      },
+    });
+
+    revalidatePath("/profile");
+
+    return {
+      success: "Job preference updated successfully!",
+    };
+  } catch (error) {
+    console.error("Error deleting item from job preference:", error);
+    return {
+      error: "Failed to delete item from job preference",
+    };
+  }
+};
+
+export const getJobPreferences = async (id: string) => {
+  const jobPreferences = await db.jobPreference.findFirst({
+    where: { userId: id },
+  });
+
+  return jobPreferences;
 };

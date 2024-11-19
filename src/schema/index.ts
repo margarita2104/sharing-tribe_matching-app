@@ -1,3 +1,4 @@
+import { WorkPreference } from "@prisma/client";
 import { z } from "zod";
 
 export const ProfileSchema = z
@@ -103,10 +104,44 @@ export const SoftSKilsSchema = z.object({
   userId: z.string(),
 });
 
+export const JobPreferenceSchema = z.object({
+  workPreference: z.array(
+    z.enum(["FullTime", "PartTime", "JobSharing", "Hybrid", "Remote"]),
+  ),
+  role: z.array(
+    z.enum([
+      "FrontendDeveloper",
+      "BackendDeveloper",
+      "FullstackDeveloper",
+      "MobileDeveloper",
+      "Designer",
+      "ProductManager",
+      "DataScientist",
+      "DevOpsEngineer",
+      "QAEngineer",
+      "SoftwareEngineer",
+      "Other",
+    ]),
+  ),
+  industry: z.array(
+    z.enum([
+      "IT",
+      "Media",
+      "Education",
+      "Health",
+      "Finance",
+      "Retail",
+      "Other",
+    ]),
+  ),
+  userId: z.string(),
+});
+
 export const RegisterSchema = z.object({
   firstName: z.string().min(1, {
     message: "First Name is required.",
   }),
+
   lastName: z.string().min(1, {
     message: "Last Name is required.",
   }),
