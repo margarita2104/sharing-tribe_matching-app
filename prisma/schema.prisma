@@ -40,7 +40,7 @@ model User {
     softSkills      SoftSkills[]
 
     // Job and Tandem Preferences
-    jobPreferences    JobPreference[]
+    jobPreferences    JobPreference?
     tandemPreferences TandemPreference[]
 
     // Projects & Portfolio
@@ -90,11 +90,11 @@ model Education {
 
 model JobPreference {
     id             Int              @id @default(autoincrement())
-    role           String
+    role           Roles[]
     workPreference WorkPreference[]
-    industry       String
+    industry       Industry[]
     user           User             @relation(fields: [userId], references: [id])
-    userId         String
+    userId         String           @unique
 }
 
 model TandemPreference {
@@ -171,6 +171,32 @@ enum WorkPreference {
     FullTime
     PartTime
     JobSharing
+    Hybrid
+    Remote
+}
+
+enum Industry {
+    IT
+    Media
+    Education
+    Health
+    Finance
+    Retail
+    Other
+}
+
+enum Roles {
+    FrontendDeveloper
+    BackendDeveloper
+    FullstackDeveloper
+    MobileDeveloper
+    Designer
+    ProductManager
+    DataScientist
+    DevOpsEngineer
+    QAEngineer
+    SoftwareEngineer
+    Other
 }
 
 model Account {

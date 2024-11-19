@@ -19,6 +19,7 @@ export const getUserById = async (id: string) => {
         education: true,
         technicalSkills: true,
         softSkills: true,
+        jobPreferences: true,
       },
     });
 
