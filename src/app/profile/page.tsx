@@ -14,7 +14,6 @@ export default async function ProfileMain() {
   const education = await getEducation(user?.id ?? "");
   const techSkills = await getTechnicalSkills(user?.id ?? "");
   const softSkills = await getSoftSkills(user?.id ?? "");
-  console.log(techSkills);
 
   return (
     <Profile

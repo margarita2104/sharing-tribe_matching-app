@@ -1,11 +1,9 @@
 "use client";
 import { PersonalInfo } from "./personal-info";
-
 import { ProfessionalOverview } from "./professional-overview";
 import { WorkExperiences } from "./(workExperience)/work-experience";
 import { ProfileHeader } from "./profile-header";
 import { AddNewSection } from "./add-new-section";
-
 import {
   type SoftSkills,
   type TechSkills,
@@ -13,7 +11,7 @@ import {
   type ExtendedUser,
   type WorkExperience,
 } from "~/next-auth";
-import { Card, CardFooter, CardHeader } from "~/components/ui/card";
+import { Card, CardFooter } from "~/components/ui/card";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
@@ -21,6 +19,7 @@ import { ModalEducation } from "./(educationCertidication)/modal-education";
 import { EducationCertification } from "./(educationCertidication)/education-certification";
 import { TechnicalSkills } from "./(techSkills)/tech-skils";
 import Image from "next/image";
+import { SoftSkillsMain } from "./(softSkills)/soft-skill";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -40,7 +39,9 @@ export default function Profile({
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [showTechSkills, setShowTechSkills] = useState(false);
+  const [showTechSkills, setShowTechSkills] = useState(
+    Boolean(techSkills.length),
+  );
 
   if (!user) return null;
   if (!workExperiences) return null;
@@ -51,12 +52,12 @@ export default function Profile({
   return (
     <>
       <ProfileHeader user={user} />
-      <div className="mt-8 grid grid-cols-1 gap-2 md:grid-cols-2">
+      <div className="mt-8 grid w-full grid-cols-1 justify-items-center gap-y-8 md:grid-cols-2">
         <PersonalInfo user={user} />
         {!user.jobTitle ? null : <ProfessionalOverview user={user} />}
 
         {workExperiences.length ? (
-          <Card className="h-fit w-[250px] sm:min-w-[350px]">
+          <Card className="h-fit w-11/12">
             {workExperiences
               .slice(0, showAll ? workExperiences.length : 1)
               .map((workExperience, index) => (
@@ -82,7 +83,7 @@ export default function Profile({
           </Card>
         ) : null}
         {education.length ? (
-          <Card className="h-fit w-[250px] sm:min-w-[350px]">
+          <Card className="h-fit w-11/12">
             {education
               .slice(0, showAllEducation ? education.length : 1)
               .map((educatio, index) => (
@@ -113,9 +114,9 @@ export default function Profile({
         ) : null}
       </div>
       {showTechSkills ? (
-        <Card className="m-14 h-fit w-10/12">
-          <CardHeader>
-            <div className="flex justify-between">
+        <Card className="m-14 h-fit w-11/12">
+          <div>
+            <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Technical Skills</h2>
               {edit ? null : (
                 <div className="cursor-pointer" onClick={() => setEdit(true)}>
@@ -128,14 +129,35 @@ export default function Profile({
                 </div>
               )}
             </div>
-          </CardHeader>
+            <TechnicalSkills
+              userId={user.id}
+              techSkills={techSkills}
+              setEdit={setEdit}
+              edit={edit}
+            />
+          </div>
+          <div>
+            <div className="flex justify-between p-4">
+              <h2 className="text-lg text-violet">Soft Skills</h2>
+              {edit ? null : (
+                <div className="cursor-pointer" onClick={() => setEdit(true)}>
+                  <Image
+                    src="/icons/profile-edit.png"
+                    alt="Profile edit icon"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+              )}
+            </div>
 
-          <TechnicalSkills
-            userId={user.id}
-            techSkills={techSkills}
-            setEdit={setEdit}
-            edit={edit}
-          />
+            <SoftSkillsMain
+              userId={user.id}
+              softSkills={softSkills}
+              setEdit={setEdit}
+              edit={edit}
+            />
+          </div>
         </Card>
       ) : null}
 
