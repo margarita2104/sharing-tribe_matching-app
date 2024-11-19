@@ -1,12 +1,12 @@
 "use client";
-import * as z from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
-import { TechSkillsSchema } from "../../../../schema/index";
+import { SoftSKilsSchema } from "../../../../schema/index";
 import { CardContent } from "../../../../components/ui/card";
-import { TechSkillCreate } from "../../../../actions/profile";
+import { SoftSkillCreate, TechSkillCreate } from "../../../../actions/profile";
 import {
   Form,
   FormField,
@@ -17,34 +17,34 @@ import {
 import { Input } from "../../../../components/ui/input";
 import { toast } from "~/hooks/use-toast";
 import { Button } from "~/components/ui/button";
-import { type TechSkills } from "~/next-auth";
-import Skill from "./skill";
+import { type SoftSkills } from "~/next-auth";
+import SoftSkillText from "./soft-skill-text";
 
-type TechSkillProps = {
-  techSkills: TechSkills[];
+type SoftSkillsProp = {
+  softSkills: SoftSkills[];
   userId: string;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
   edit: boolean;
 };
 
-export function TechnicalSkills({
-  techSkills,
+export function SoftSkillsMain({
+  softSkills,
   userId,
   setEdit,
   edit,
-}: TechSkillProps) {
+}: SoftSkillsProp) {
   const [error, setError] = useState<string | undefined>();
   // const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof TechSkillsSchema>>({
-    resolver: zodResolver(TechSkillsSchema),
+  const form = useForm<z.infer<typeof SoftSKilsSchema>>({
+    resolver: zodResolver(SoftSKilsSchema),
   });
-  const onSubmit = (values: z.infer<typeof TechSkillsSchema>) => {
+  const onSubmit = (values: z.infer<typeof SoftSKilsSchema>) => {
     startTransition(() => {
-      TechSkillCreate(values)
+      SoftSkillCreate(values)
         .then(async (data) => {
           // if (data?.error) {
           //   // setError(data.error);
@@ -74,8 +74,8 @@ export function TechnicalSkills({
   return (
     <>
       <div className="ml-5 flex flex-wrap items-center gap-2">
-        {techSkills.map((skill, index) => (
-          <Skill key={index} skill={skill} edit={edit} />
+        {softSkills.map((skill, index) => (
+          <SoftSkillText key={index} skill={skill} edit={edit} />
         ))}
       </div>
 

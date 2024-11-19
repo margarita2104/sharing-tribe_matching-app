@@ -62,10 +62,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card
-      className="h-fit w-[250px] sm:min-w-[350px]"
-      title="Personal Information"
-    >
+    <Card className="h-fit w-11/12" title="Personal Information">
       <CardHeader>
         <div className="flex justify-between">
           <h2 className="text-lg text-violet">Personal Information</h2>

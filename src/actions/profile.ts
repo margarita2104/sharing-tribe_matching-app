@@ -234,6 +234,17 @@ export const SoftSkillCreate = async (
   };
 };
 
+export const SoftSkillDelete = async (id: number) => {
+  await db.softSkills.delete({ where: { id } });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Soft skill deleted!",
+    error: "Oh no something went wrong",
+  };
+};
+
 export const getSoftSkills = async (id: string) => {
   const softSkills = await db.softSkills.findMany({
     where: { userId: id },

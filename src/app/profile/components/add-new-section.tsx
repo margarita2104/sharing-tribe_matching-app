@@ -20,6 +20,7 @@ export function AddNewSection({
   jobTitle: string;
   showTechSkills: boolean;
   techSkills: number;
+
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
@@ -43,7 +44,7 @@ export function AddNewSection({
               title="Education & Certifications"
             />
           )}
-          {techSkills ? null : showTechSkills ? null : (
+          {techSkills ? null : (
             <Button
               onClick={() => setShowTechSkills(!showTechSkills)}
               className="border-[1px] border-tree-poppy bg-white"
