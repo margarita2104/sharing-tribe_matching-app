@@ -1,6 +1,305 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Results = () => {
+  const router = useRouter();
+  const [result, setResult] = useState<string | null>(null);
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    setResult(query.get("mostAnsweredLetter"));
+  }, []);
+
+  if (!result) {
+    return (
+      <main>
+        <section className="hero">
+          <Image
+            src="/images/disc-results-hero.svg"
+            alt="Hero image"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </section>
+        <section className="flex flex-col items-center">
+          <h1 className="text-4xl font-semibold text-violet">
+            DISC Personality Test Results
+          </h1>
+          <p className="mt-4 text-center text-xl">
+            Oops! It&nbsp;looks like there&rsquo;s an&nbsp;issue retrieving your
+            result. Please retake the test or&nbsp;contact support.
+          </p>
+        </section>
+      </main>
+    );
+  }
+
+  const renderResultSection = () => {
+    switch (result) {
+      case "D":
+        return (
+          <section className="flex flex-col items-center">
+            <h2 className="mb-6 text-2xl font-semibold text-violet">
+              Your result is: Dominance (D)
+            </h2>
+            <p className="w-3/4">
+              <strong>Overview: </strong> Dominant personalities are natural
+              leaders who focus on&nbsp;results, challenges, and action. They
+              are assertive, decisive, and thrive in&nbsp;competitive
+              environments.
+            </p>
+            <div className="flex px-10 py-10">
+              <div className="mr-10 flex w-1/2 justify-center">
+                <Image
+                  src="/images/disc-results-d.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="w-1/2">
+                <p className="mb-3">
+                  <strong>Strengths:</strong> <br />
+                  &bull; Goal-oriented and driven by&nbsp;success
+                  <br /> &bull; Confident in&nbsp;decision-making, even under
+                  pressure
+                  <br /> &bull; Enjoy taking charge and overcoming obstacles
+                  <br />
+                  &bull; Comfortable taking risks and pushing boundaries
+                  <br /> &bull; Good at&nbsp;handling problems and finding
+                  solutions quickly
+                </p>
+                <p className="mb-3">
+                  <strong>Areas for Improvement:</strong>
+                  <br />
+                  &bull; May be&nbsp;too blunt or&nbsp;direct
+                  in&nbsp;communication
+                  <br />
+                  &bull; Can come across as&nbsp;impatient or&nbsp;aggressive
+                  <br />
+                  &bull; May overlook details or&nbsp;other people&rsquo;s input
+                  in&nbsp;pursuit of&nbsp;their goals
+                  <br />
+                  &bull; Can be&nbsp;seen as&nbsp;overly competitive
+                  or&nbsp;controlling
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong> Motivators:</strong>
+                  <br />
+                  &bull; Challenges and winning
+                  <br /> &bull; Opportunities to&nbsp;take charge
+                  <br /> &bull; Achieving tangible results
+                </p>
+              </div>
+            </div>
+          </section>
+        );
+      case "I":
+        return (
+          <section className="flex flex-col items-center">
+            <h2 className="mb-6 text-2xl font-semibold text-violet">
+              Your result is: Influence (I)
+            </h2>
+            <p className="w-3/4">
+              <strong>Overview: </strong> Influence personalities are outgoing,
+              enthusiastic, and people-focused. They excel in&nbsp;social
+              situations and enjoy motivating and inspiring others.
+            </p>
+            <div className="flex px-10 py-10">
+              <div className="mr-10 flex w-1/2 justify-center">
+                <Image
+                  src="/images/disc-results-i.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="w-1/2">
+                <p className="mb-3">
+                  <strong>Strengths:</strong> <br />
+                  &bull; Great at&nbsp;building relationships and networking
+                  <br />
+                  &bull; Optimistic, positive, and good at&nbsp;rallying others
+                  <br />
+                  &bull; Charismatic and persuasive
+                  <br />
+                  &bull; Enjoys collaboration and teamwork
+                  <br />
+                  &bull; Open-minded and adaptable
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong>Areas for Improvement:</strong>
+                  <br />
+                  &bull; May become disorganized or&nbsp;lack follow-through
+                  on&nbsp;tasks
+                  <br />
+                  &bull; Can be&nbsp;overly focused on&nbsp;social approval and
+                  recognition
+                  <br />
+                  &bull; May overlook details or&nbsp;accuracy in&nbsp;favor
+                  of&nbsp;big ideas
+                  <br />
+                  &bull; Tends to&nbsp;avoid conflict, even when necessary
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong> Motivators:</strong>
+                  <br />
+                  &bull; Social recognition and praise
+                  <br />
+                  &bull; Group activities and collaboration
+                  <br />
+                  &bull; Freedom to&nbsp;express creativity and ideas
+                  <br />
+                </p>
+              </div>
+            </div>
+          </section>
+        );
+      case "S":
+        return (
+          <section className="flex flex-col items-center">
+            <h2 className="mb-6 text-2xl font-semibold text-violet">
+              Your result is: Steadiness (S)
+            </h2>
+            <p className="w-3/4">
+              <strong>Overview: </strong> Steadiness personalities are
+              dependable, calm, and cooperative. They value stability,
+              consistency, and strong relationships, preferring a&nbsp;slower,
+              steady pace.
+            </p>
+            <div className="flex px-10 py-10">
+              <div className="mr-10 flex w-1/2 justify-center">
+                <Image
+                  src="/images/disc-results-s.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="w-1/2">
+                <p className="mb-3">
+                  <strong>Strengths:</strong> <br />
+                  &bull; Reliable and loyal, focused on&nbsp;long-term
+                  relationships
+                  <br />
+                  &bull; Good listeners who care about others&rsquo; well-being
+                  <br />
+                  &bull; Patient, supportive, and excellent team players
+                  <br />
+                  &bull; Consistent and methodical in&nbsp;their work
+                  <br />
+                  &bull; Avoids conflict and works to&nbsp;maintain harmony
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong>Areas for Improvement:</strong>
+                  <br />
+                  &bull; May resist change or&nbsp;new challenges
+                  <br />
+                  &bull; Can be&nbsp;too passive, avoiding confrontation even
+                  when needed
+                  <br />
+                  &bull; May have difficulty making quick decisions
+                  <br />
+                  &bull; Can prioritize relationships over personal
+                  or&nbsp;professional growth
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong> Motivators:</strong>
+                  <br />
+                  &bull; Stable, harmonious environments
+                  <br />
+                  &bull; Clear expectations and routines
+                  <br />
+                  &bull; Opportunities to&nbsp;support and help others
+                  <br />
+                </p>
+              </div>
+            </div>
+          </section>
+        );
+      case "C":
+        return (
+          <section className="flex flex-col items-center">
+            <h2 className="mb-6 text-2xl font-semibold text-violet">
+              Your result is: Conscientiousness (C)
+            </h2>
+            <p className="w-3/4">
+              <strong>Overview: </strong> Conscientious personalities are
+              detail-oriented, analytical, and focused on&nbsp;quality. They
+              value accuracy, precision, and consistency in&nbsp;their work.
+            </p>
+            <div className="flex px-10 py-10">
+              <div className="mr-10 flex w-1/2 justify-center">
+                <Image
+                  src="/images/disc-results-c.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                />
+              </div>
+              <div className="w-1/2">
+                <p className="mb-3">
+                  <strong>Strengths:</strong> <br />
+                  &bull; Strong attention to&nbsp;detail and focus
+                  on&nbsp;accuracy
+                  <br />
+                  &bull; Logical, analytical, and thorough
+                  in&nbsp;decision-making
+                  <br />
+                  &bull; Follows procedures and guidelines carefully
+                  <br />
+                  &bull; Dependable and organized in&nbsp;handling tasks
+                  <br />
+                  &bull; Values quality and works to&nbsp;achieve high standards
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong>Areas for Improvement:</strong>
+                  <br />
+                  &bull; May become overly critical or&nbsp;perfectionistic
+                  <br />
+                  &bull; Can be&nbsp;slow to&nbsp;make decisions, especially
+                  if&nbsp;not all data is&nbsp;available
+                  <br />
+                  &bull; May struggle with adapting to&nbsp;changes
+                  or&nbsp;ambiguity
+                  <br />
+                  &bull; Can appear overly cautious or&nbsp;rigid
+                  <br />
+                </p>
+                <p className="mb-3">
+                  <strong> Motivators:</strong>
+                  <br />
+                  &bull; Clear rules, standards, and procedures
+                  <br />
+                  &bull; Opportunities to&nbsp;work on&nbsp;precise,
+                  detail-oriented tasks
+                  <br />
+                  &bull; Autonomy to&nbsp;work at&nbsp;their own pace
+                  <br />
+                </p>
+              </div>
+            </div>
+          </section>
+        );
+      default:
+        return (
+          <p>
+            Your result doesn&rsquo;t match any known category. Please contact
+            support.
+          </p>
+        );
+    }
+  };
+
   return (
     <main>
       <section className="hero">
@@ -26,47 +325,9 @@ const Results = () => {
           partnership.
         </p>
       </section>
-      <section className="flex flex-col items-center">
-        <h2 className="mb-6 text-2xl font-semibold text-violet">
-          Your result is: Dominance (D)
-        </h2>
-        <p className="w-3/4">
-          <strong>Overview: </strong> Dominant personalities are natural leaders
-          who focus on&nbsp;results, challenges, and action. They are assertive,
-          decisive, and thrive in&nbsp;competitive environments.
-        </p>
-        <div className="flex">
-          {/* <div className="w-1/2">
-            <h2 className="mb-6 text-2xl font-semibold text-violet">
-              What is&nbsp;the DISC Personality Test?
-            </h2>
-            <p className="mb-3">
-              The DISC model is&nbsp;a&nbsp;widely recognized tool that
-              identifies four key personality types:
-              <strong> Dominance, Influence, Steadiness, </strong> and
-              <strong> Conscientiousness</strong>.
-            </p>
-            <p className="mb-3">
-              Each type reflects how you respond to&nbsp;challenges, interact
-              with others, pace your work, and approach rules and structure.
-            </p>
-            <p className="mb-3">
-              Understanding where you fall on&nbsp;the DISC spectrum helps you
-              become more aware of&nbsp;your strengths and working preferences,
-              as&nbsp;well as&nbsp;the type of&nbsp;partner who can complement
-              your style.
-            </p>
-          </div>
-          <div className="flex w-1/2 justify-center">
-            <Image
-              src="/images/disc-about.svg"
-              alt="Section illustration"
-              width={400}
-              height={400}
-            />
-          </div> */}
-        </div>
-      </section>
+
+      {renderResultSection()}
+
       <section className="flex flex-col items-center">
         <h2 className="mb-6 text-2xl font-semibold text-violet">
           What’s Next?
