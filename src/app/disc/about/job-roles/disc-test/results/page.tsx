@@ -29,8 +29,8 @@ const Results = () => {
             DISC Personality Test Results
           </h1>
           <p className="mt-4 text-center text-xl">
-            Oops! It looks like there's an issue retrieving your result. Please
-            retake the test or contact support.
+            Oops! It&nbsp;looks like there&rsquo;s an&nbsp;issue retrieving your
+            result. Please retake the test or&nbsp;contact support.
           </p>
         </section>
       </main>
@@ -293,7 +293,7 @@ const Results = () => {
       default:
         return (
           <p>
-            Your result doesn't match any known category. Please contact
+            Your result doesn&rsquo;t match any known category. Please contact
             support.
           </p>
         );
