@@ -25,7 +25,7 @@ export const UserButton = ({ user }: { user: Session | null }) => {
             height={36}
             width={36}
             alt="Profile picture"
-            className="rounded-full"
+            className="h-9 w-9 rounded-full object-cover"
           />
         ) : (
           <RxAvatar className="h-6 w-6" />
