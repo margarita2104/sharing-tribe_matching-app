@@ -165,7 +165,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                           placeholder="Linkedin URL"
                           disabled={isPending}
                         />
-                      ) : (
+                      ) : user.linkedinUrl ? (
                         <Link
                           href={user.linkedinUrl}
                           target="_blank"
@@ -173,6 +173,8 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                         >
                           {user.linkedinUrl ? "Linkedin" : "N/A"}
                         </Link>
+                      ) : (
+                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -195,7 +197,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                           placeholder="Github URL"
                           disabled={isPending}
                         />
-                      ) : (
+                      ) : user.githubUrl ? (
                         <Link
                           href={user.githubUrl}
                           target="_blank"
@@ -203,6 +205,8 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                         >
                           {user.githubUrl ? "Other Links" : "N/A"}
                         </Link>
+                      ) : (
+                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
