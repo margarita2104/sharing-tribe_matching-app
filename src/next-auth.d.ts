@@ -1,4 +1,4 @@
-import { JobPreference } from "@prisma/client";
+import { type TandemPreference, type JobPreference } from "@prisma/client";
 import { type DefaultSession } from "next-auth";
 
 type WorkExperience = {
@@ -9,14 +9,6 @@ type WorkExperience = {
   endDate: string | null;
   userId: string;
 };
-
-// type JobPreference = {
-//   id: number;
-//   workPreference: string[];
-//   role: string[];
-//   industry: string[];
-//   userId: string;
-// };
 
 type TechSkills = {
   id: number;
@@ -71,6 +63,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   technicalSkills: TechSkills[];
   softSkills: SoftSkills[];
   jobPreferences: JobPreference | null;
+  tandemPreferences: TandemPreference | null;
 };
 
 declare module "next-auth" {

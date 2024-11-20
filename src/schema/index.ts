@@ -1,4 +1,3 @@
-import { WorkPreference } from "@prisma/client";
 import { z } from "zod";
 
 export const ProfileSchema = z
@@ -134,6 +133,25 @@ export const JobPreferenceSchema = z.object({
       "Other",
     ]),
   ),
+  userId: z.string(),
+});
+export const WorkTandemSchema = z.object({
+  idealPartnerRole: z.array(
+    z.enum([
+      "FrontendDeveloper",
+      "BackendDeveloper",
+      "FullstackDeveloper",
+      "MobileDeveloper",
+      "Designer",
+      "ProductManager",
+      "DataScientist",
+      "DevOpsEngineer",
+      "QAEngineer",
+      "SoftwareEngineer",
+      "Other",
+    ]),
+  ),
+  complementarySkills: z.array(z.string()),
   userId: z.string(),
 });
 
