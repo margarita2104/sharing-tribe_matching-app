@@ -5,6 +5,7 @@ import {
   getSoftSkills,
   getTechnicalSkills,
   getWorkExperience,
+  getWorkTandem,
 } from "~/actions/profile";
 import { currentUser } from "~/lib/auth";
 
@@ -16,7 +17,7 @@ export default async function ProfileMain() {
   const techSkills = await getTechnicalSkills(user?.id ?? "");
   const softSkills = await getSoftSkills(user?.id ?? "");
   const jobPreferences = await getJobPreferences(user?.id ?? "");
-  console.log(jobPreferences);
+  const workTandemPreferences = await getWorkTandem(user?.id ?? "");
 
   return (
     <Profile
@@ -26,6 +27,7 @@ export default async function ProfileMain() {
       techSkills={techSkills}
       softSkills={softSkills}
       jobPreferences={jobPreferences}
+      workTandemPreferences={workTandemPreferences}
     />
   );
 }

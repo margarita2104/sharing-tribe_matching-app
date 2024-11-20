@@ -15,6 +15,8 @@ export function AddNewSection({
   showTechSkills,
   techSkills,
   setShowJobPreferences,
+  setShowWorkTandemPreferences,
+  workTandemPreferences,
 }: {
   userId: string;
   workExperienceLenght: number;
@@ -24,6 +26,8 @@ export function AddNewSection({
   techSkills: number;
   jobPreferences: boolean;
   setShowJobPreferences: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowWorkTandemPreferences: React.Dispatch<React.SetStateAction<boolean>>;
+  workTandemPreferences: boolean;
 
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -74,13 +78,16 @@ export function AddNewSection({
           >
             Short Bio
           </Button>
+          {workTandemPreferences ? null : (
+            <Button
+              className="border-[1px] border-tree-poppy bg-white"
+              variant="secondary"
+              onClick={() => setShowWorkTandemPreferences(true)}
+            >
+              Work Tandem Preference
+            </Button>
+          )}
 
-          <Button
-            className="border-[1px] border-tree-poppy bg-white"
-            variant="secondary"
-          >
-            Work Tandem Preference
-          </Button>
           <Button
             className="border-[1px] border-tree-poppy bg-white"
             variant="secondary"

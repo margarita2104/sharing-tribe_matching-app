@@ -14,6 +14,7 @@ import {
   type TechSkillsSchema,
   type SoftSKilsSchema,
   type JobPreferenceSchema,
+  WorkTandemSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 
@@ -351,4 +352,107 @@ export const getJobPreferences = async (id: string) => {
   });
 
   return jobPreferences;
+};
+
+// Tandem Work Preferences
+
+export const WorkTandemCreate = async (
+  values: z.infer<typeof WorkTandemSchema>,
+) => {
+  const uniqueRoles = [...new Set(values.idealPartnerRole)];
+  const uniqueSkills = Array.isArray(values.complementarySkills)
+    ? [
+        ...new Set(
+          values.complementarySkills
+            .map((skill: string) => skill.trim())
+            .filter((skill) => skill),
+        ),
+      ]
+    : [];
+  await db.tandemPreference.create({
+    data: {
+      ...values,
+      idealPartnerRole: uniqueRoles,
+      complementarySkills: uniqueSkills,
+    },
+  });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Work Tandem preference added!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const WorkTandemUpdate = async (
+  values: z.infer<typeof WorkTandemSchema>,
+  id: number,
+) => {
+  try {
+    const updatedWorkTandem = await db.tandemPreference.updateMany({
+      where: { id },
+      data: {
+        idealPartnerRole: {
+          push: values.idealPartnerRole,
+        },
+        complementarySkills: {
+          push: values.complementarySkills,
+        },
+      },
+    });
+    revalidatePath("/profile");
+
+    return { success: "Work Tandem Preference updated!", updatedWorkTandem };
+  } catch (error) {
+    console.error("Error updating job preference:", error);
+    return { error: "Failed to update job preference" };
+  }
+};
+
+export const getWorkTandem = async (id: string) => {
+  const workTandem = await db.tandemPreference.findFirst({
+    where: { userId: id },
+  });
+
+  return workTandem;
+};
+
+export const WorkTandemDelete = async (
+  id: number,
+  field: "idealPartnerRole" | "complementarySkills",
+  index: number,
+) => {
+  try {
+    // Fetch the current job preference
+    const tandemPreference = await db.tandemPreference.findUnique({
+      where: { id },
+    });
+
+    if (!tandemPreference) {
+      throw new Error("Tandem preference not found");
+    }
+
+    const currentArray = tandemPreference[field] || [];
+
+    const updatedArray = currentArray.filter((_, i) => i !== index);
+
+    await db.tandemPreference.update({
+      where: { id },
+      data: {
+        [field]: updatedArray,
+      },
+    });
+
+    revalidatePath("/profile");
+
+    return {
+      success: "Tandem preference updated successfully!",
+    };
+  } catch (error) {
+    console.error("Error deleting item from tandem preference:", error);
+    return {
+      error: "Failed to delete item from tandem preference",
+    };
+  }
 };

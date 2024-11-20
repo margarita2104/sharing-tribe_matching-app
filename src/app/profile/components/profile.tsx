@@ -20,9 +20,11 @@ import { EducationCertification } from "./(educationCertidication)/education-cer
 import { TechnicalSkills } from "./(techSkills)/tech-skils";
 import Image from "next/image";
 import { SoftSkillsMain } from "./(softSkills)/soft-skill";
-import { type JobPreference } from "@prisma/client";
+import { type TandemPreference, type JobPreference } from "@prisma/client";
 import { JobPreferences } from "./(jobPreferences)/job-preferences";
 import { JobPreferencesSave } from "./(jobPreferences)/job-preference-save";
+import { WorkTandemSave } from "./(work-tandem)/work-tandem-save";
+import { WorkTandem } from "./(work-tandem)/work-tandem";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -31,6 +33,7 @@ type ProfileProps = {
   techSkills: TechSkills[];
   softSkills: SoftSkills[];
   jobPreferences: JobPreference | null;
+  workTandemPreferences: TandemPreference | null;
 };
 
 export default function Profile({
@@ -40,6 +43,7 @@ export default function Profile({
   techSkills,
   softSkills,
   jobPreferences,
+  workTandemPreferences,
 }: ProfileProps) {
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
@@ -51,6 +55,13 @@ export default function Profile({
   const [ShowJobPreferences, setJobPreferences] = useState(
     Boolean(jobPreferences),
   );
+  const [ShowWorkTandemPreferences, setShowWorkTandemPreferences] = useState(
+    Boolean(
+      workTandemPreferences?.complementarySkills.length ??
+        workTandemPreferences?.idealPartnerRole.length,
+    ),
+  );
+  const [editWorkTandem, setEditWorkTandem] = useState(false);
   console.log("user", user);
 
   if (!user) return null;
@@ -125,7 +136,7 @@ export default function Profile({
         ) : null}
       </div>
       {showTechSkills ? (
-        <Card className="m-14 h-fit w-11/12">
+        <Card className="mt-6 h-fit w-11/12">
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Technical Skills</h2>
@@ -173,7 +184,7 @@ export default function Profile({
       ) : null}
 
       {ShowJobPreferences ? (
-        <Card className="m-14 h-fit w-11/12">
+        <Card className="mt-6 h-fit w-11/12">
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Job Preferences</h2>
@@ -205,6 +216,39 @@ export default function Profile({
         </Card>
       ) : null}
 
+      {ShowWorkTandemPreferences ? (
+        <Card className="mt-6 h-fit w-11/12">
+          <div>
+            <div className="flex justify-between p-4">
+              <h2 className="text-lg text-violet">Work Tandem Preferences</h2>
+              {editWorkTandem ? null : (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setEditWorkTandem(true)}
+                >
+                  <Image
+                    src="/icons/profile-edit.png"
+                    alt="Profile edit icon"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+              )}
+            </div>
+            {!workTandemPreferences ? (
+              <WorkTandem userId={user.id} />
+            ) : (
+              <WorkTandemSave
+                userId={user.id}
+                workTandemPreferences={workTandemPreferences}
+                editWorkTandem={editWorkTandem}
+                setEditWorkTandem={setEditWorkTandem}
+              />
+            )}
+          </div>
+        </Card>
+      ) : null}
+
       <AddNewSection
         userId={user.id ?? ""}
         workExperienceLenght={workExperiences.length}
@@ -215,6 +259,11 @@ export default function Profile({
         techSkills={techSkills.length}
         jobPreferences={Boolean(jobPreferences)}
         setShowJobPreferences={setJobPreferences}
+        workTandemPreferences={Boolean(
+          workTandemPreferences?.complementarySkills.length ??
+            workTandemPreferences?.idealPartnerRole.length,
+        )}
+        setShowWorkTandemPreferences={setShowWorkTandemPreferences}
       />
     </>
   );

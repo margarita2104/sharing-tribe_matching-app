@@ -41,7 +41,7 @@ model User {
 
     // Job and Tandem Preferences
     jobPreferences    JobPreference?
-    tandemPreferences TandemPreference[]
+    tandemPreferences TandemPreference?
 
     // Projects & Portfolio
     projects Project[]
@@ -99,10 +99,10 @@ model JobPreference {
 
 model TandemPreference {
     id                  Int      @id @default(autoincrement())
-    idealPartnerRole    String
+    idealPartnerRole    Roles[]
     complementarySkills String[]
     user                User     @relation(fields: [userId], references: [id])
-    userId              String
+    userId              String   @unique
 }
 
 model Project {
