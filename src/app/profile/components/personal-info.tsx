@@ -23,6 +23,7 @@ import { FormSuccess } from "../../../components/form-success";
 import Image from "next/image";
 import { type ExtendedUser } from "~/next-auth";
 import { toast } from "~/hooks/use-toast";
+import Link from "next/link";
 
 export function PersonalInfo({ user }: { user: ExtendedUser }) {
   const [error, setError] = useState<string | undefined>();
@@ -94,7 +95,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                         <Input
                           {...field}
                           placeholder="Full Name"
-                          disabled={isPending}
+                          disabled={isPending || user.isOAuth}
                         />
                       ) : (
                         <p className="w-full">{user.name}</p>
@@ -138,7 +139,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                         <Input
                           {...field}
                           placeholder="Email"
-                          disabled={isPending}
+                          disabled={isPending || user.isOAuth}
                         />
                       ) : (
                         <p className="w-full">{user.email}</p>
@@ -154,7 +155,9 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                 name="linkedinUrl"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
+                    <FormLabel className="w-full">
+                      Social Media (Linkedin)
+                    </FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
@@ -163,7 +166,13 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
+                        <Link
+                          href={user.linkedinUrl}
+                          target="_blank"
+                          className="w-full underline"
+                        >
+                          {user.linkedinUrl ? "Linkedin" : "N/A"}
+                        </Link>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -176,7 +185,9 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                 name="githubUrl"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Social Media</FormLabel>
+                    <FormLabel className="w-full">
+                      Social Media (Other links)
+                    </FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
@@ -185,7 +196,13 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                        <Link
+                          href={user.githubUrl}
+                          target="_blank"
+                          className="w-full underline"
+                        >
+                          {user.githubUrl ? "Other Links" : "N/A"}
+                        </Link>
                       )}
                     </FormControl>
                     <FormMessage />
