@@ -104,82 +104,29 @@ export function ProfileHeader({
     });
   };
   return (
-    <>
-      <div className="mt-12 grid w-6/12 grid-cols-3 items-start justify-items-center">
-        <div>
-          <div className="flex flex-col items-center space-y-6">
-            {user.image ? (
-              <Image
-                src={user.image}
-                alt="Profile picture"
-                width={100}
-                height={100}
-                className="h-24 w-24 rounded-full object-cover"
-              />
-            ) : (
-              <RxAvatar className="h-20 w-20 rounded-full" />
-            )}
-          </div>
-          {editProfile ? (
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="mt-8">
-                  <FormField
-                    control={form.control}
-                    name="image"
-                    render={({ field }) => (
-                      <FormItem className="w-full cursor-pointer">
-                        <FormLabel>Change your picture</FormLabel>
-                        <FormControl className="cursor-pointer">
-                          <Input
-                            type="file"
-                            onChange={(e) =>
-                              field.onChange(e.target.files?.[0])
-                            }
-                            onBlur={field.onBlur}
-                            name={field.name}
-                            ref={field.ref}
-                            className="w-full cursor-pointer"
-                          />
-                        </FormControl>
+    <div className="mt-14 flex flex-col items-center justify-center">
+      <div className="grid w-9/12 grid-cols-1 items-center md:grid-cols-2 md:space-x-16">
+        {user.image ? (
+          <Image
+            src={user.image}
+            alt="Profile picture"
+            width={100}
+            height={100}
+            className="h-24 w-24 justify-self-center rounded-full object-cover md:justify-self-end"
+          />
+        ) : (
+          <RxAvatar className="h-24 w-24 justify-self-center rounded-full object-cover md:justify-self-end" />
+        )}
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="mt-4 space-x-4">
-                  <Button
-                    className="border-[1px] border-tree-poppy bg-white"
-                    variant="secondary"
-                    type="submit"
-                    disabled={isPending}
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    className="border-[1px] border-tree-poppy bg-white"
-                    variant="secondary"
-                    disabled={isPending}
-                    onClick={() => setEditProfile(false)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-                {/* <FormError message={error} />
-                  <FormSuccess message={success} /> */}
-              </form>
-            </Form>
-          ) : null}
-        </div>
-        <div className="flex-col items-center justify-center space-y-4">
-          <div className="space-y-1">
-            <p className="text-2xl text-violet">{user.name}</p>
-            <p>{user.email}</p>
+        <div className="relative mt-6 space-y-1 md:justify-self-start">
+          <p className="text-2xl text-violet">{user.name}</p>
+          <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
+            <p>C</p>
           </div>
-          {editProfile ? null : (
+          <p>{user.email}</p>
+          {editProfile && !user.bio ? null : (
             <Button
-              className="border-[1px] border-tree-poppy bg-white"
+              className="w-full border-[1px] border-tree-poppy bg-white"
               variant="secondary"
               onClick={() => setEditProfile(true)}
             >
@@ -187,8 +134,56 @@ export function ProfileHeader({
             </Button>
           )}
         </div>
-        <p>C</p>
       </div>
-    </>
+      {editProfile && !user.isOAuth ? (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="mt-8">
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="w-full cursor-pointer">
+                    <FormLabel>Change your picture</FormLabel>
+                    <FormControl className="cursor-pointer">
+                      <Input
+                        type="file"
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
+                        className="w-full cursor-pointer"
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="mt-4 space-x-4">
+              <Button
+                className="border-[1px] border-tree-poppy bg-white"
+                variant="secondary"
+                type="submit"
+                disabled={isPending}
+              >
+                Save
+              </Button>
+              <Button
+                className="border-[1px] border-tree-poppy bg-white"
+                variant="secondary"
+                disabled={isPending}
+                onClick={() => setEditProfile(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+            {/* <FormError message={error} />
+                  <FormSuccess message={success} /> */}
+          </form>
+        </Form>
+      ) : null}
+    </div>
   );
 }
