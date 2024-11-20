@@ -4,6 +4,7 @@ import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
 import { Bio } from "./short-bio-form";
 import { ModalEducation } from "./(educationCertidication)/modal-education";
 import { ModalProfessionalOverview } from "./(professionalOverview)/modal-professional-overview";
+import { ModalReferences } from "./(references)/modal-references";
 
 export function AddNewSection({
   jobPreferences,
@@ -17,6 +18,7 @@ export function AddNewSection({
   setShowJobPreferences,
   setShowWorkTandemPreferences,
   workTandemPreferences,
+  referencesLength,
 }: {
   userId: string;
   workExperienceLenght: number;
@@ -28,6 +30,7 @@ export function AddNewSection({
   setShowJobPreferences: React.Dispatch<React.SetStateAction<boolean>>;
   setShowWorkTandemPreferences: React.Dispatch<React.SetStateAction<boolean>>;
   workTandemPreferences: boolean;
+  referencesLength: number;
 
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -94,12 +97,9 @@ export function AddNewSection({
           >
             Projects & Portfolio
           </Button>
-          <Button
-            variant="secondary"
-            className="border-[1px] border-tree-poppy bg-white"
-          >
-            References
-          </Button>
+          {referencesLength ? null : (
+            <ModalReferences userId={userId} title="References" />
+          )}
           <Button
             className="border-[1px] border-tree-poppy bg-white"
             variant="secondary"

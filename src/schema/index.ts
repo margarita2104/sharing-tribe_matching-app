@@ -155,6 +155,22 @@ export const WorkTandemSchema = z.object({
   userId: z.string(),
 });
 
+export const ReferencesSchema = z.object({
+  name: z.string().min(1, {
+    message: "Name is required.",
+  }),
+  relationship: z.string().min(1, {
+    message: "Relationship is required.",
+  }),
+  company: z.string().min(1, {
+    message: "Company is required.",
+  }),
+  contactInfo: z.string().min(1, {
+    message: "Contact info is required.",
+  }),
+  userId: z.string(),
+});
+
 export const RegisterSchema = z.object({
   firstName: z.string().min(1, {
     message: "First Name is required.",
