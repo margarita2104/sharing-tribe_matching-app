@@ -31,6 +31,7 @@ import { WorkTandemSave } from "./(work-tandem)/work-tandem-save";
 import { WorkTandem } from "./(work-tandem)/work-tandem";
 import { ReferenceComponent } from "./(references)/references";
 import { ModalReferences } from "./(references)/modal-references";
+import Bio from "./(short-bio)/bio";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -71,18 +72,26 @@ export default function Profile({
     ),
   );
   const [editWorkTandem, setEditWorkTandem] = useState(false);
+  const [editProfile, setEditProfile] = useState(false);
   console.log("user", user);
 
   if (!user) return null;
-  if (!workExperiences) return null;
-  if (!education) return null;
-  if (!techSkills) return null;
-  if (!softSkills) return null;
-  // if (!jobPreferences) return null;
 
   return (
     <>
-      <ProfileHeader user={user} />
+      <ProfileHeader
+        user={user}
+        editProfile={editProfile}
+        setEditProfile={setEditProfile}
+      />
+      <div className="mt-8 flex w-9/12 items-center space-x-8">
+        <Bio
+          user={user}
+          editProfile={editProfile}
+          setEditProfile={setEditProfile}
+        />
+      </div>
+
       <div className="mt-8 grid w-full grid-cols-1 justify-items-center gap-y-8 md:grid-cols-2">
         <PersonalInfo user={user} />
         {!user.jobTitle ? null : <ProfessionalOverview user={user} />}
@@ -291,6 +300,7 @@ export default function Profile({
 
       <AddNewSection
         userId={user.id ?? ""}
+        bio={user.bio}
         workExperienceLenght={workExperiences.length}
         educationLength={education.length}
         referencesLength={references.length}

@@ -36,13 +36,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
-export function ModalProfessionalOverview({
-  userId,
-  title,
-}: {
-  userId: string;
-  title: string;
-}) {
+export function ModalProfessionalOverview({ title }: { title: string }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();

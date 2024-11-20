@@ -51,6 +51,7 @@ type workMode = "Hybrid" | "Remote" | "Onsite";
 type availability = "OneMonth" | "ThreeMonths" | "SixMonths";
 export type ExtendedUser = DefaultSession["user"] & {
   id: string;
+  image: string;
   isOAuth: boolean;
   linkedinUrl: string;
   bio: string;
