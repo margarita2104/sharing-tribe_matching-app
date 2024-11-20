@@ -20,11 +20,17 @@ import { EducationCertification } from "./(educationCertidication)/education-cer
 import { TechnicalSkills } from "./(techSkills)/tech-skils";
 import Image from "next/image";
 import { SoftSkillsMain } from "./(softSkills)/soft-skill";
-import { type TandemPreference, type JobPreference } from "@prisma/client";
+import {
+  type TandemPreference,
+  type JobPreference,
+  type Reference,
+} from "@prisma/client";
 import { JobPreferences } from "./(jobPreferences)/job-preferences";
 import { JobPreferencesSave } from "./(jobPreferences)/job-preference-save";
 import { WorkTandemSave } from "./(work-tandem)/work-tandem-save";
 import { WorkTandem } from "./(work-tandem)/work-tandem";
+import { ReferenceComponent } from "./(references)/references";
+import { ModalReferences } from "./(references)/modal-references";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -34,6 +40,7 @@ type ProfileProps = {
   softSkills: SoftSkills[];
   jobPreferences: JobPreference | null;
   workTandemPreferences: TandemPreference | null;
+  references: Reference[];
 };
 
 export default function Profile({
@@ -44,9 +51,11 @@ export default function Profile({
   softSkills,
   jobPreferences,
   workTandemPreferences,
+  references,
 }: ProfileProps) {
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
+  const [showAllReference, setShowAllReferences] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editJobPreferences, setEditJobPreferences] = useState(false);
   const [showTechSkills, setShowTechSkills] = useState(
@@ -249,10 +258,42 @@ export default function Profile({
         </Card>
       ) : null}
 
+      {references.length ? (
+        <Card className="mt-6 h-fit w-11/12">
+          {references
+            .slice(0, showAllReference ? references.length : 1)
+            .map((reference, index) => (
+              <ReferenceComponent key={index} reference={reference} />
+            ))}
+          <CardFooter className="flex w-full justify-between">
+            {!showAllReference && references.length > 1 && (
+              <>
+                <Button onClick={() => setShowAllReferences(true)}>
+                  Show More
+                </Button>
+                <ModalReferences userId={user.id} title="Add more" />
+              </>
+            )}
+            {references.length === 1 ? (
+              <ModalReferences userId={user.id} title="Add more" />
+            ) : null}
+            {showAllReference && references.length > 1 ? (
+              <>
+                <Button onClick={() => setShowAllReferences(false)}>
+                  Show Less
+                </Button>
+                <ModalReferences userId={user.id} title="Add more" />
+              </>
+            ) : null}
+          </CardFooter>
+        </Card>
+      ) : null}
+
       <AddNewSection
         userId={user.id ?? ""}
         workExperienceLenght={workExperiences.length}
         educationLength={education.length}
+        referencesLength={references.length}
         jobTitle={user.jobTitle}
         setShowTechSkills={setShowTechSkills}
         showTechSkills={showTechSkills}

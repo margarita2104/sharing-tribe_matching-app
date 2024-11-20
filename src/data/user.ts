@@ -21,6 +21,7 @@ export const getUserById = async (id: string) => {
         softSkills: true,
         jobPreferences: true,
         tandemPreferences: true,
+        references: true,
       },
     });
 

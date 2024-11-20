@@ -14,9 +14,13 @@ import {
   type TechSkillsSchema,
   type SoftSKilsSchema,
   type JobPreferenceSchema,
-  WorkTandemSchema,
+  type WorkTandemSchema,
+  type ReferencesSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
+import { PrismaClient } from "@prisma/client";
+
+const dbReusable = new PrismaClient();
 
 export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
   const user = await currentUser();
@@ -453,6 +457,101 @@ export const WorkTandemDelete = async (
     console.error("Error deleting item from tandem preference:", error);
     return {
       error: "Failed to delete item from tandem preference",
+    };
+  }
+};
+
+// REFERENCES
+
+export const referenceCreate = async (
+  values: z.infer<typeof ReferencesSchema>,
+) => {
+  await db.reference.create({
+    data: {
+      ...values,
+    },
+  });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Reference added!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const referenceUpdate = async (
+  values: z.infer<typeof ReferencesSchema>,
+  id: number,
+) => {
+  const user = await currentUser();
+
+  if (!user?.email) {
+    throw new Error("User email not found");
+  }
+  const dbReference = await db.reference.findUnique({
+    where: { id },
+  });
+
+  if (!dbReference) {
+    throw new Error("Reference not found");
+  }
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  await db.reference.update({
+    where: { id },
+    data: values,
+  });
+
+  revalidatePath("/profile");
+
+  return { success: "Reference Updated", error: "Oh no something went wrong" };
+};
+
+export const getReferences = async (id: string) => {
+  const references = await db.reference.findMany({
+    where: { userId: id },
+  });
+
+  return references;
+};
+
+export const referenceDelete = async (id: number) => {
+  await db.reference.delete({ where: { id } });
+
+  revalidatePath("/profile");
+
+  return {
+    success: "Reference deleted!",
+    error: "Oh no something went wrong",
+  };
+};
+
+export const deleteActionModal = async <T extends keyof PrismaClient>(
+  id: number,
+  model: T,
+) => {
+  try {
+    const modelDelegate = dbReusable[model] as unknown as {
+      delete: (args: { where: { id: number } }) => Promise<unknown>;
+    };
+
+    await modelDelegate.delete({
+      where: { id },
+    });
+
+    revalidatePath("/profile");
+
+    return {
+      success: `Record deleted from ${String(model)}!`,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: `Failed to delete record from ${String(model)}.`,
     };
   }
 };
