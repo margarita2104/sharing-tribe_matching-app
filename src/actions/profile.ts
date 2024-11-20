@@ -19,6 +19,7 @@ import {
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 import { PrismaClient } from "@prisma/client";
+import cloudinary from "~/lib/cloudinary";
 
 const dbReusable = new PrismaClient();
 
@@ -79,12 +80,40 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     where: { id: dbUser.id },
     data: {
       ...values,
+      image: typeof values.image === "string" ? values.image : undefined,
     },
   });
 
   revalidatePath("/profile");
 
   return { success: "Profile Updated!" };
+};
+
+export const uploadImage = async (formData: FormData) => {
+  const imageFile = formData.get("image") as File | null;
+
+  if (!imageFile) {
+    return { error: "No file provided" };
+  }
+
+  let imageUrl: string;
+
+  try {
+    const base64Data = `data:${imageFile.type};base64,${Buffer.from(
+      await imageFile.arrayBuffer(),
+    ).toString("base64")}`;
+
+    const result = await cloudinary.uploader.upload(base64Data, {
+      folder: "user_profiles",
+    });
+
+    imageUrl = result.secure_url;
+    revalidatePath("/profile");
+
+    return { success: true, imageUrl };
+  } catch (error) {
+    return { error: "Image upload failed" };
+  }
 };
 
 export const WorkUpdate = async (

@@ -11,6 +11,7 @@ export const ProfileSchema = z
     githubUrl: z.optional(z.string().min(6)),
     bio: z.optional(z.string().min(6)),
     jobTitle: z.optional(z.string().min(6)),
+    image: z.union([z.instanceof(File), z.string()]).optional(),
     jobRoleFamily: z.optional(
       z.enum([
         "SoftwareDevelopment",

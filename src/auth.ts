@@ -82,6 +82,7 @@ export const {
       session.user.tandemPreferences =
         token.tandemPreferences as TandemPreference;
       session.user.references = token.references as Reference[];
+      session.user.image = token.image as string;
 
       return session;
     },
@@ -100,6 +101,7 @@ export const {
       token.linkedinUrl = existingUser.linkedinUrl;
       token.bio = existingUser.bio;
       token.githubUrl = existingUser.githubUrl;
+      token.image = existingUser.image;
       token.location = existingUser.location;
       token.jobTitle = existingUser.jobTitle;
       token.jobRoleFamily = existingUser.jobRoleFamily;

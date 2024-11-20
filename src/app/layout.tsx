@@ -7,7 +7,6 @@ import Container from "../components/Container";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "~/auth";
 import { Toaster } from "~/components/ui/toaster";
-import { db } from "~/server/db";
 
 export const metadata: Metadata = {
   title: "Sharing Tribe",
@@ -20,8 +19,6 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
-
-  
 
   return (
     <SessionProvider session={session}>

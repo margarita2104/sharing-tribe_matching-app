@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
-import { Bio } from "./short-bio-form";
 import { ModalEducation } from "./(educationCertidication)/modal-education";
 import { ModalProfessionalOverview } from "./(professionalOverview)/modal-professional-overview";
 import { ModalReferences } from "./(references)/modal-references";
+import { ModalBio } from "./(short-bio)/modal-short-bio";
 
 export function AddNewSection({
   jobPreferences,
@@ -15,6 +15,7 @@ export function AddNewSection({
   setShowTechSkills,
   showTechSkills,
   techSkills,
+  bio,
   setShowJobPreferences,
   setShowWorkTandemPreferences,
   workTandemPreferences,
@@ -24,6 +25,7 @@ export function AddNewSection({
   workExperienceLenght: number;
   educationLength: number;
   jobTitle: string;
+  bio: string;
   showTechSkills: boolean;
   techSkills: number;
   jobPreferences: boolean;
@@ -31,7 +33,6 @@ export function AddNewSection({
   setShowWorkTandemPreferences: React.Dispatch<React.SetStateAction<boolean>>;
   workTandemPreferences: boolean;
   referencesLength: number;
-
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
@@ -40,10 +41,7 @@ export function AddNewSection({
       <div className="flex flex-col items-center justify-center text-center">
         <div className="mt-4 flex flex-wrap gap-2">
           {jobTitle ? null : (
-            <ModalProfessionalOverview
-              userId={userId}
-              title="Professional Overview"
-            />
+            <ModalProfessionalOverview title="Professional Overview" />
           )}
 
           {workExperienceLenght ? null : (
@@ -75,12 +73,7 @@ export function AddNewSection({
           )}
         </div>
         <div className="mt-2 flex flex-wrap gap-2">
-          <Button
-            variant="secondary"
-            className="border-[1px] border-tree-poppy bg-white"
-          >
-            Short Bio
-          </Button>
+          {bio ? null : <ModalBio title="Bio" />}
           {workTandemPreferences ? null : (
             <Button
               className="border-[1px] border-tree-poppy bg-white"
