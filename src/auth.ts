@@ -18,6 +18,7 @@ import {
   type TandemPreference,
   type JobPreference,
   type Reference,
+  type Project,
 } from "@prisma/client";
 
 export const {
@@ -83,6 +84,7 @@ export const {
         token.tandemPreferences as TandemPreference;
       session.user.references = token.references as Reference[];
       session.user.image = token.image as string;
+      session.user.projects = token.projects as Project[];
 
       return session;
     },
@@ -117,6 +119,7 @@ export const {
       token.jobPreferences = existingUser.jobPreferences;
       token.tandemPreferences = existingUser.tandemPreferences;
       token.references = existingUser.references;
+      token.projects = existingUser.projects;
 
       return token;
     },

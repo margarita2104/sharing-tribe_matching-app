@@ -22,6 +22,7 @@ export const getUserById = async (id: string) => {
         jobPreferences: true,
         tandemPreferences: true,
         references: true,
+        projects: true,
       },
     });
 

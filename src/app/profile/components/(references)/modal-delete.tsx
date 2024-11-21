@@ -17,9 +17,10 @@ import { toast } from "~/hooks/use-toast";
 type DeleteModalProps = {
   id: number;
   name: keyof Omit<PrismaClient, `$${string}`>;
+  isPending: boolean;
 };
 
-export function DeleteModal({ id, name }: DeleteModalProps) {
+export function DeleteModal({ id, name, isPending }: DeleteModalProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -46,6 +47,7 @@ export function DeleteModal({ id, name }: DeleteModalProps) {
                 toast({ title: "Error", description: "An error occurred" });
               }
             }}
+            disabled={isPending}
           >
             Delete
           </AlertDialogAction>

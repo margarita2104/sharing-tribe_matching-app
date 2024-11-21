@@ -16,6 +16,7 @@ import {
   type JobPreferenceSchema,
   type WorkTandemSchema,
   type ReferencesSchema,
+  type ProjectSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 import { PrismaClient } from "@prisma/client";
@@ -583,4 +584,88 @@ export const deleteActionModal = async <T extends keyof PrismaClient>(
       error: `Failed to delete record from ${String(model)}.`,
     };
   }
+};
+
+///// PROJECTS SERVER ACTIONS
+
+export const uploadImageProject = async (formData: FormData) => {
+  const imageFile = formData.get("projectImage") as File | null;
+
+  if (!imageFile) {
+    return { error: "No file provided" };
+  }
+
+  let imageUrl: string;
+
+  try {
+    const base64Data = `data:${imageFile.type};base64,${Buffer.from(
+      await imageFile.arrayBuffer(),
+    ).toString("base64")}`;
+
+    const result = await cloudinary.uploader.upload(base64Data, {
+      folder: "user_project_images",
+    });
+
+    imageUrl = result.secure_url;
+    revalidatePath("/profile");
+
+    return { success: true, imageUrl };
+  } catch (error) {
+    return { error: "Image upload failed" };
+  }
+};
+
+export const ProjectCreate = async (values: z.infer<typeof ProjectSchema>) => {
+  await db.project.create({
+    data: {
+      ...values,
+      projectImage:
+        typeof values.projectImage === "string" ? values.projectImage : "",
+    },
+  });
+};
+
+export const projectUpdate = async (
+  values: z.infer<typeof ProjectSchema>,
+  id: number,
+) => {
+  const user = await currentUser();
+
+  if (!user?.email) {
+    throw new Error("User email not found");
+  }
+  const dbProject = await db.project.findUnique({
+    where: { id },
+  });
+
+  if (!dbProject) {
+    throw new Error("Project not found");
+  }
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  await db.project.update({
+    where: { id },
+    data: {
+      ...values,
+      projectImage:
+        typeof values.projectImage === "string"
+          ? values.projectImage
+          : undefined,
+    },
+  });
+
+  revalidatePath("/profile");
+
+  return { success: "Project Updated", error: "Oh no something went wrong" };
+};
+
+export const getProjects = async (id: string) => {
+  const projects = await db.project.findMany({
+    where: { userId: id },
+  });
+
+  return projects;
 };

@@ -136,6 +136,26 @@ export const JobPreferenceSchema = z.object({
   ),
   userId: z.string(),
 });
+
+// ZOD SCHEMA
+export const ProjectSchema = z.object({
+  title: z.string().min(1, {
+    message: "Title is required.",
+  }),
+  role: z.string().min(1, {
+    message: "role is required.",
+  }),
+  description: z.string().min(1, {
+    message: "description is required.",
+  }),
+  link: z.string().min(1, {
+    message: "link is required.",
+  }),
+  projectImage: z.union([z.instanceof(File), z.string()]),
+
+  userId: z.string(),
+});
+
 export const WorkTandemSchema = z.object({
   idealPartnerRole: z.array(
     z.enum([

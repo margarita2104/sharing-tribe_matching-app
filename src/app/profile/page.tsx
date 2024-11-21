@@ -2,6 +2,7 @@ import Profile from "./components/profile";
 import {
   getEducation,
   getJobPreferences,
+  getProjects,
   getReferences,
   getSoftSkills,
   getTechnicalSkills,
@@ -20,9 +21,11 @@ export default async function ProfileMain() {
   const jobPreferences = await getJobPreferences(user?.id ?? "");
   const workTandemPreferences = await getWorkTandem(user?.id ?? "");
   const references = await getReferences(user?.id ?? "");
+  const projects = await getProjects(user?.id ?? "");
 
   return (
     <Profile
+      projects={projects}
       user={user}
       workExperiences={workExperiences}
       education={education}
