@@ -247,13 +247,15 @@ export function ProjectComponent({ project }: ProjectProp) {
                         />
                       ) : (
                         <div className="w-full justify-end">
-                          <Image
-                            src={project.projectImage}
-                            alt="Project Image"
-                            width={128}
-                            height={96}
-                            className="h-24 w-32 rounded-md object-cover"
-                          />
+                          {project.projectImage ? (
+                            <Image
+                              src={project.projectImage}
+                              alt="Project Image"
+                              width={128}
+                              height={96}
+                              className="h-24 w-32 rounded-md object-cover"
+                            />
+                          ) : null}
                         </div>
                       )}
                     </FormControl>

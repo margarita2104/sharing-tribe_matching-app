@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
 import { JobPreferenceSchema } from "../../../../schema/index";
-import { Card, CardContent } from "../../../../components/ui/card";
+import { CardContent } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
 import {
   JobPreferenceDelete,

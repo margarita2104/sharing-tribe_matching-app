@@ -2,7 +2,7 @@ import {
   type TandemPreference,
   type JobPreference,
   type Reference,
-  Project,
+  type Project,
 } from "@prisma/client";
 import { type DefaultSession } from "next-auth";
 

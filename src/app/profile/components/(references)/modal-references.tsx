@@ -16,8 +16,8 @@ import { Input } from "../../../../components/ui/input";
 import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { EducationSchema, ReferencesSchema } from "~/schema";
-import { EducationCreate, referenceCreate } from "~/actions/profile";
+import { ReferencesSchema } from "~/schema";
+import { referenceCreate } from "~/actions/profile";
 import {
   Form,
   FormControl,

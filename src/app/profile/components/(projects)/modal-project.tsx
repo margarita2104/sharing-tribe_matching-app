@@ -93,8 +93,6 @@ export function ModalProject({
     });
   };
 
-  // Helper function to convert file to Base64
-
   return (
     <Dialog>
       <DialogTrigger asChild>
