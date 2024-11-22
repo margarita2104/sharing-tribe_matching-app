@@ -31,6 +31,10 @@ export const ProfileSchema = z
 
     availability: z.optional(z.enum(["OneMonth", "ThreeMonths", "SixMonths"])),
     currentCompany: z.optional(z.string().min(6)),
+
+    discTestResult: z.optional(
+      z.enum(["D", "I", "S", "C"])
+    ),
   })
   .refine(
     (data) => {

@@ -5,6 +5,7 @@ import testData from "./test.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { useSession } from "next-auth/react";
 
 type Selection = {
   most: string | null;
@@ -13,7 +14,7 @@ type Selection = {
 
 const DiscTest = () => {
   const router = useRouter();
-
+  const { data: session } = useSession();
   const [selections, setSelections] = useState<Selection[]>(
     testData.questions.map(() => ({
       most: null,

@@ -22,6 +22,7 @@ model User {
     linkedinUrl String?
     githubUrl   String?
     bio         String?
+    discTestResult String?
 
     // Professional Overview
     jobTitle         String?
