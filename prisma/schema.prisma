@@ -127,12 +127,13 @@ model Reference {
     userId       String
 }
 
+// PRISMA MODEL FOR ADDITIONAL INFORMATION
 model AdditionalInfo {
     id                    Int      @id @default(autoincrement())
     hobbiesAndInterests   String[]
     volunteering          String?
-    languages             String[]
-    preferredWorkSchedule String?
+    languages             Json
+    preferredWorkSchedule String
     user                  User     @relation(fields: [userId], references: [id])
     userId                String   @unique
 }

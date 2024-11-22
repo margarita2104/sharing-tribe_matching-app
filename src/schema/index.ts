@@ -176,6 +176,31 @@ export const WorkTandemSchema = z.object({
   userId: z.string(),
 });
 
+export const AdditionalInfoSchema = z.object({
+  hobbiesAndInterests: z.array(z.string()),
+  volunteering: z.string().optional(),
+  preferredWorkSchedule: z.enum([
+    "Flexible Hours",
+    "Fixed Hours",
+    "Full Time",
+    "Part Time",
+    "Job Sharing",
+  ]),
+
+  languages: z.array(
+    z.object({
+      name: z.string().min(1, { message: "Language is required." }),
+      proficiency: z.enum([
+        "Mother Tongue",
+        "Fluent",
+        "Intermediate",
+        "Beginner",
+      ]),
+    }),
+  ),
+  userId: z.string(),
+});
+
 export const ReferencesSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required.",

@@ -77,7 +77,7 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card className="h-fit w-11/12" title="Personal Information">
+    <Card className="h-fit w-full" title="Personal Information">
       <CardHeader>
         <div className="flex justify-between">
           <h2 className="text-lg text-violet">Professional Overview</h2>
