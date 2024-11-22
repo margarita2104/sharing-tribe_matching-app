@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import Profile from "./components/profile";
 import {
   getEducation,
   getJobPreferences,
+  getProjects,
   getReferences,
   getSoftSkills,
   getTechnicalSkills,
@@ -9,6 +11,7 @@ import {
   getWorkTandem,
 } from "~/actions/profile";
 import { currentUser } from "~/lib/auth";
+import Loading from "./loading";
 
 export default async function ProfileMain() {
   const user = await currentUser();
@@ -20,17 +23,21 @@ export default async function ProfileMain() {
   const jobPreferences = await getJobPreferences(user?.id ?? "");
   const workTandemPreferences = await getWorkTandem(user?.id ?? "");
   const references = await getReferences(user?.id ?? "");
+  const projects = await getProjects(user?.id ?? "");
 
   return (
-    <Profile
-      user={user}
-      workExperiences={workExperiences}
-      education={education}
-      techSkills={techSkills}
-      softSkills={softSkills}
-      jobPreferences={jobPreferences}
-      workTandemPreferences={workTandemPreferences}
-      references={references}
-    />
+    <Suspense fallback={<Loading />}>
+      <Profile
+        projects={projects}
+        user={user}
+        workExperiences={workExperiences}
+        education={education}
+        techSkills={techSkills}
+        softSkills={softSkills}
+        jobPreferences={jobPreferences}
+        workTandemPreferences={workTandemPreferences}
+        references={references}
+      />
+    </Suspense>
   );
 }

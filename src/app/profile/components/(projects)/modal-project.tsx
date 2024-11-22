@@ -16,8 +16,8 @@ import { Input } from "../../../../components/ui/input";
 import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ReferencesSchema } from "~/schema";
-import { referenceCreate } from "~/actions/profile";
+import { ProjectSchema } from "~/schema";
+import { ProjectCreate, uploadImageProject } from "~/actions/profile";
 import {
   Form,
   FormControl,
@@ -32,7 +32,7 @@ import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
 
-export function ModalReferences({
+export function ModalProject({
   userId,
   title,
 }: {
@@ -45,38 +45,54 @@ export function ModalReferences({
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof ReferencesSchema>>({
-    resolver: zodResolver(ReferencesSchema),
+  const form = useForm<z.infer<typeof ProjectSchema>>({
+    resolver: zodResolver(ProjectSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof ReferencesSchema>) => {
+  const onSubmit = async (data: z.infer<typeof ProjectSchema>) => {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "image" && value instanceof FileList && value.length > 0) {
+        if (value[0]) {
+          formData.append(key, value[0]);
+        }
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+
+    let imageUrl = "";
+
+    if (formData.get("projectImage")) {
+      const response = await uploadImageProject(formData);
+      if (response.error) {
+        toast({
+          title: "Error",
+          description: response.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      imageUrl = response.imageUrl ?? "";
+    }
+
     startTransition(() => {
-      referenceCreate(values)
-        .then(async (data) => {
-          // if (data?.error) {
-          //   // setError(data.error);
-          //   toast({ title: "Error", description: data.error });
-          // }
-
-          if (data.success) {
-            await update();
-
-            toast({
-              title: "Reference added",
-              description: data.success,
-            });
-            setEdit(false);
-          }
+      ProjectCreate({ ...data, projectImage: imageUrl })
+        .then(async (response) => {
+          await update();
         })
-        .catch(() =>
+        .catch((err) => {
+          console.error("Error during profile update:", err);
           toast({
             title: "Error",
-            description: "An error occurred",
+            description: "An error occurred while updating your profile.",
             variant: "destructive",
-          }),
-        );
+          });
+        });
     });
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -99,15 +115,15 @@ export function ModalReferences({
             <div>
               <FormField
                 control={form.control}
-                name="name"
+                name="title"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Reference Name</FormLabel>
+                    <FormLabel className="w-full">Project Title</FormLabel>
 
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Reference Name"
+                        placeholder="Project Title"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -118,16 +134,16 @@ export function ModalReferences({
 
               <FormField
                 control={form.control}
-                name="relationship"
+                name="role"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">
-                      Relationship to Candidate
+                      Role in the Project
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Relationship to Candidate"
+                        placeholder="Role in the Project"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -151,16 +167,14 @@ export function ModalReferences({
 
               <FormField
                 control={form.control}
-                name="company"
+                name="description"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Company/Organization
-                    </FormLabel>
+                    <FormLabel className="w-full">Description</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Company/Organization"
+                        placeholder="Description"
                         disabled={isPending}
                       />
                     </FormControl>
@@ -171,17 +185,37 @@ export function ModalReferences({
 
               <FormField
                 control={form.control}
-                name="contactInfo"
+                name="link"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">
-                      Contact Information
+                      Link to the Project
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Contact Information"
+                        placeholder="Link to the Project"
                         disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="projectImage"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Project Image</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        onChange={(e) => field.onChange(e.target.files?.[0])}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
+                        className="w-full cursor-pointer"
                       />
                     </FormControl>
                     <FormMessage />

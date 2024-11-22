@@ -105,14 +105,15 @@ model TandemPreference {
     userId              String   @unique
 }
 
+// PROJECT PRISMA SCHEMA
 model Project {
-    id           Int      @id @default(autoincrement())
+    id           Int     @id @default(autoincrement())
     title        String
     role         String
     description  String
     link         String?
-    projectFiles String[] // Store links to project files/images
-    user         User     @relation(fields: [userId], references: [id])
+    projectImage String // Store links to project files/images
+    user         User    @relation(fields: [userId], references: [id])
     userId       String
 }
 

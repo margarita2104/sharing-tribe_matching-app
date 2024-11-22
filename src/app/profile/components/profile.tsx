@@ -24,6 +24,7 @@ import {
   type TandemPreference,
   type JobPreference,
   type Reference,
+  type Project,
 } from "@prisma/client";
 import { JobPreferences } from "./(jobPreferences)/job-preferences";
 import { JobPreferencesSave } from "./(jobPreferences)/job-preference-save";
@@ -32,6 +33,8 @@ import { WorkTandem } from "./(work-tandem)/work-tandem";
 import { ReferenceComponent } from "./(references)/references";
 import { ModalReferences } from "./(references)/modal-references";
 import Bio from "./(short-bio)/bio";
+import { ProjectComponent } from "./(projects)/project";
+import { ModalProject } from "./(projects)/modal-project";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -42,6 +45,7 @@ type ProfileProps = {
   jobPreferences: JobPreference | null;
   workTandemPreferences: TandemPreference | null;
   references: Reference[];
+  projects: Project[];
 };
 
 export default function Profile({
@@ -53,10 +57,12 @@ export default function Profile({
   jobPreferences,
   workTandemPreferences,
   references,
+  projects,
 }: ProfileProps) {
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
   const [showAllReference, setShowAllReferences] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editJobPreferences, setEditJobPreferences] = useState(false);
   const [showTechSkills, setShowTechSkills] = useState(
@@ -298,12 +304,44 @@ export default function Profile({
         </Card>
       ) : null}
 
+      {projects.length ? (
+        <Card className="mt-6 h-fit w-11/12">
+          {projects
+            .slice(0, showAllProjects ? projects.length : 1)
+            .map((project, index) => (
+              <ProjectComponent key={index} project={project} />
+            ))}
+          <CardFooter className="flex w-full justify-between">
+            {!showAllProjects && projects.length > 1 && (
+              <>
+                <Button onClick={() => setShowAllProjects(true)}>
+                  Show More
+                </Button>
+                <ModalProject userId={user.id} title="Add more" />
+              </>
+            )}
+            {projects.length === 1 ? (
+              <ModalProject userId={user.id} title="Add more" />
+            ) : null}
+            {showAllProjects && projects.length > 1 ? (
+              <>
+                <Button onClick={() => setShowAllProjects(false)}>
+                  Show Less
+                </Button>
+                <ModalProject userId={user.id} title="Add more" />
+              </>
+            ) : null}
+          </CardFooter>
+        </Card>
+      ) : null}
+
       <AddNewSection
         userId={user.id ?? ""}
         bio={user.bio}
         workExperienceLenght={workExperiences.length}
         educationLength={education.length}
         referencesLength={references.length}
+        projectsLength={projects.length}
         jobTitle={user.jobTitle}
         setShowTechSkills={setShowTechSkills}
         showTechSkills={showTechSkills}

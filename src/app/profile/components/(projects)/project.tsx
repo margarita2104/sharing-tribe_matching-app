@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
-import { ReferencesSchema } from "../../../../schema/index";
+import { ProjectSchema, ReferencesSchema } from "../../../../schema/index";
 import { CardContent, CardHeader } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
-import { referenceUpdate } from "../../../../actions/profile";
+import { projectUpdate, uploadImageProject } from "../../../../actions/profile";
 import {
   Form,
   FormField,
@@ -19,61 +19,86 @@ import {
 import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
 import { toast } from "~/hooks/use-toast";
-import { DeleteModal } from "./modal-delete";
+import { DeleteModal } from "../(references)/modal-delete";
+import { set } from "date-fns";
+// import { DeleteModal } from "./modal-delete";
 
-type ReferenceProp = {
-  reference: {
+type ProjectProp = {
+  project: {
     id: number;
-    name: string;
-    relationship: string;
-    company: string;
-    contactInfo: string;
+    title: string;
+    role: string;
+    description: string;
+    link: string | null;
+    projectImage: string;
     userId: string;
   };
 };
 
-export function ReferenceComponent({ reference }: ReferenceProp) {
+export function ProjectComponent({ project }: ProjectProp) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof ReferencesSchema>>({
-    resolver: zodResolver(ReferencesSchema),
+  const form = useForm<z.infer<typeof ProjectSchema>>({
+    resolver: zodResolver(ProjectSchema),
     defaultValues: {
-      name: reference.name,
-      relationship: reference.relationship,
-      company: reference.company,
-      contactInfo: reference.contactInfo,
+      title: project.title,
+      role: project.role,
+      link: project.link ?? "",
+      description: project.description,
+      projectImage: project.projectImage,
     },
   });
-  const onSubmit = (values: z.infer<typeof ReferencesSchema>) => {
-    startTransition(() => {
-      referenceUpdate(values, reference.id)
-        .then(async (data) => {
-          // if (data?.error) {
-          //   // setError(data.error);
-          //   toast({ title: "Error", description: data.error });
-          // }
 
-          if (data?.success) {
-            await update();
-            // setSuccess(data.success);
-            toast({
-              title: "Reference updated",
-              description: data.success,
-            });
-            setEdit(false);
-          }
+  const onSubmit = async (data: z.infer<typeof ProjectSchema>) => {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "image" && value instanceof FileList && value.length > 0) {
+        if (value[0]) {
+          formData.append(key, value[0]);
+        }
+      } else {
+        formData.append(key, value as string);
+      }
+    });
+
+    let imageUrl = "";
+
+    if (formData.get("projectImage")) {
+      const response = await uploadImageProject(formData);
+      if (response.error) {
+        toast({
+          title: "Error",
+          description: response.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      imageUrl = response.imageUrl ?? "";
+    }
+
+    startTransition(() => {
+      projectUpdate({ ...data, projectImage: imageUrl }, project.id)
+        .then(async (response) => {
+          await update();
+          toast({
+            title: "Success",
+            description: "Project updated successfully!",
+          });
+          setEdit(false);
         })
-        .catch(() =>
+        .catch((err) => {
+          console.error("Error during project update:", err);
           toast({
             title: "Error",
-            description: "An error occurred",
+            description: "An error occurred while updating the project.",
             variant: "destructive",
-          }),
-        );
+          });
+        });
     });
   };
 
@@ -81,7 +106,7 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
     <>
       <CardHeader>
         <div className="flex justify-between">
-          <h2 className="text-lg text-violet">References</h2>
+          <h2 className="text-lg text-violet">Projects</h2>
           {edit ? null : (
             <div className="cursor-pointer" onClick={() => setEdit(true)}>
               <Image
@@ -100,20 +125,20 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
             <div>
               <FormField
                 control={form.control}
-                name="name"
+                name="title"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Reference Name</FormLabel>
+                    <FormLabel className="w-full">Project Title</FormLabel>
 
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Reference Name"
+                          placeholder="Project Title"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{reference.name}</p>
+                        <p className="w-full">{project.title}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -123,23 +148,21 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
 
               <FormField
                 control={form.control}
-                name="relationship"
+                name="role"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">
-                      Relationship to Candidate
+                      Role in the Project
                     </FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Relationship to Candidate"
+                          placeholder="Role in the Project"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">
-                          {reference.relationship ?? "N/A"}
-                        </p>
+                        <p className="w-full">{project.role ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -149,7 +172,7 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
               <FormField
                 control={form.control}
                 name="userId"
-                defaultValue={reference.userId}
+                defaultValue={project.userId}
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormControl>
@@ -162,21 +185,19 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
 
               <FormField
                 control={form.control}
-                name="company"
+                name="description"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Company/Organization
-                    </FormLabel>
+                    <FormLabel className="w-full">Description</FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
-                          placeholder="Company/Organization"
+                          placeholder="Description"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">{reference.company ?? "N/A"}</p>
+                        <p className="w-full">{project.description ?? "N/A"}</p>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -186,24 +207,56 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
 
               <FormField
                 control={form.control}
-                name="contactInfo"
+                name="link"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">
-                      Contact Information
+                      Link to the Project
                     </FormLabel>
                     <FormControl>
                       {edit ? (
                         <Input
                           {...field}
                           value={field.value ?? ""}
-                          placeholder="Graduation Year"
+                          placeholder="Link to the Project"
                           disabled={isPending}
                         />
                       ) : (
-                        <p className="w-full">
-                          {reference.contactInfo ?? "N/A"}
-                        </p>
+                        <p className="w-full">{project.link ?? "N/A"}</p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="projectImage"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Project Image</FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          type="file"
+                          onChange={(e) => field.onChange(e.target.files?.[0])}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          ref={field.ref}
+                          className="w-full cursor-pointer"
+                        />
+                      ) : (
+                        <div className="w-full justify-end">
+                          {project.projectImage ? (
+                            <Image
+                              src={project.projectImage}
+                              alt="Project Image"
+                              width={128}
+                              height={96}
+                              className="h-24 w-32 rounded-md object-cover"
+                            />
+                          ) : null}
+                        </div>
                       )}
                     </FormControl>
                     <FormMessage />
@@ -227,9 +280,9 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
                   Cancel
                 </Button>
                 <DeleteModal
-                  id={reference.id}
-                  name="reference"
                   isPending={isPending}
+                  id={project.id}
+                  name="project"
                 />
               </div>
             ) : null}
