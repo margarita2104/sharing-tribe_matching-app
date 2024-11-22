@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { ReferencesSchema } from "../../../../schema/index";
 import { CardContent, CardHeader } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
-import { referenceDelete, referenceUpdate } from "../../../../actions/profile";
+import { referenceUpdate } from "../../../../actions/profile";
 import {
   Form,
   FormField,
@@ -226,7 +226,11 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
                 >
                   Cancel
                 </Button>
-                <DeleteModal id={reference.id} name="reference" />
+                <DeleteModal
+                  id={reference.id}
+                  name="reference"
+                  isPending={isPending}
+                />
               </div>
             ) : null}
           </form>
