@@ -17,10 +17,13 @@ import {
   type WorkTandemSchema,
   type ReferencesSchema,
   type ProjectSchema,
+  type AdditionalInfoSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 import { PrismaClient } from "@prisma/client";
 import cloudinary from "~/lib/cloudinary";
+import { add } from "date-fns";
+import { JsonValue } from "@prisma/client/runtime/library";
 
 const dbReusable = new PrismaClient();
 
@@ -458,7 +461,6 @@ export const WorkTandemDelete = async (
   index: number,
 ) => {
   try {
-    // Fetch the current job preference
     const tandemPreference = await db.tandemPreference.findUnique({
       where: { id },
     });
@@ -586,8 +588,6 @@ export const deleteActionModal = async <T extends keyof PrismaClient>(
   }
 };
 
-///// PROJECTS SERVER ACTIONS
-
 export const uploadImageProject = async (formData: FormData) => {
   const imageFile = formData.get("projectImage") as File | null;
 
@@ -623,6 +623,8 @@ export const ProjectCreate = async (values: z.infer<typeof ProjectSchema>) => {
         typeof values.projectImage === "string" ? values.projectImage : "",
     },
   });
+
+  revalidatePath("/profile");
 };
 
 export const projectUpdate = async (
@@ -668,4 +670,128 @@ export const getProjects = async (id: string) => {
   });
 
   return projects;
+};
+
+/// ADDITIONAL INFORMATION SERVER ACTIONS
+
+export const AdditionalInfoCreate = async (
+  values: z.infer<typeof AdditionalInfoSchema>,
+) => {
+  console.log("Received Values: ", values);
+  await db.additionalInfo.create({
+    data: {
+      ...values,
+      languages: values.languages,
+    },
+  });
+
+  revalidatePath("/profile");
+};
+
+export const updateAdditionalInfo = async (
+  values: z.infer<typeof AdditionalInfoSchema>,
+  id: number,
+) => {
+  try {
+    const existingInfo = await db.additionalInfo.findUnique({
+      where: { id },
+    });
+
+    if (!existingInfo) {
+      throw new Error("AdditionalInfo not found");
+    }
+
+    const updatedHobbiesAndInterests = Array.isArray(
+      existingInfo.hobbiesAndInterests,
+    )
+      ? [
+          ...new Set([
+            ...existingInfo.hobbiesAndInterests,
+            ...values.hobbiesAndInterests,
+          ]),
+        ]
+      : values.hobbiesAndInterests;
+
+    const updatedLanguages: JsonValue =
+      Array.isArray(existingInfo.languages) && Array.isArray(values.languages)
+        ? [...values.languages]
+        : values.languages || existingInfo.languages;
+
+    const updatedVolunteering =
+      values.volunteering ?? existingInfo.volunteering;
+
+    const updatedWorkSchedule =
+      values.preferredWorkSchedule || existingInfo.preferredWorkSchedule;
+
+    const updatedAdditionalInfo = await db.additionalInfo.update({
+      where: { id },
+      data: {
+        hobbiesAndInterests: updatedHobbiesAndInterests,
+        languages: updatedLanguages,
+        volunteering: updatedVolunteering,
+        preferredWorkSchedule: updatedWorkSchedule,
+      },
+    });
+
+    revalidatePath("/profile");
+
+    return {
+      success: "Additional info updated successfully!",
+      updatedAdditionalInfo,
+    };
+  } catch (error) {
+    console.error("Error updating additional info:", error);
+    return { error: "Failed to update additional info" };
+  }
+};
+
+export const getAdditionalInfo = async (id: string) => {
+  const additionalInfos = await db.additionalInfo.findFirst({
+    where: { userId: id },
+  });
+
+  return additionalInfos;
+};
+
+export const deleteLanguage = async ({
+  userId,
+  languageIndex,
+}: {
+  userId: string;
+  languageIndex: number;
+}) => {
+  try {
+    const existingInfo = await db.additionalInfo.findUnique({
+      where: { userId },
+    });
+
+    if (!existingInfo || !Array.isArray(existingInfo.languages)) {
+      throw new Error(
+        "Additional information not found or invalid languages format",
+      );
+    }
+
+    const updatedLanguages = existingInfo.languages.filter(
+      (_, index) => index !== languageIndex,
+    );
+
+    const updatedInfo = await db.additionalInfo.update({
+      where: { userId },
+      data: {
+        languages: updatedLanguages,
+      },
+    });
+    revalidatePath("/profile");
+    return {
+      success: true,
+      message: "Language deleted successfully",
+      updatedInfo,
+    };
+  } catch (error) {
+    console.error("Error deleting language:", error);
+    return {
+      success: false,
+      message: "Failed to delete language",
+    };
+  }
 };

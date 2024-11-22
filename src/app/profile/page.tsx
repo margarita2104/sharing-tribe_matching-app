@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Profile from "./components/profile";
 import {
+  getAdditionalInfo,
   getEducation,
   getJobPreferences,
   getProjects,
@@ -24,6 +25,7 @@ export default async function ProfileMain() {
   const workTandemPreferences = await getWorkTandem(user?.id ?? "");
   const references = await getReferences(user?.id ?? "");
   const projects = await getProjects(user?.id ?? "");
+  const infos = await getAdditionalInfo(user?.id ?? "");
 
   return (
     <Suspense fallback={<Loading />}>
@@ -37,6 +39,7 @@ export default async function ProfileMain() {
         jobPreferences={jobPreferences}
         workTandemPreferences={workTandemPreferences}
         references={references}
+        infos={infos}
       />
     </Suspense>
   );

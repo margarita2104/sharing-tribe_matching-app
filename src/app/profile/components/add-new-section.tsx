@@ -22,6 +22,8 @@ export function AddNewSection({
   workTandemPreferences,
   referencesLength,
   projectsLength,
+  setShowAdditionalInfo,
+  infos,
 }: {
   userId: string;
   workExperienceLenght: number;
@@ -37,6 +39,8 @@ export function AddNewSection({
   referencesLength: number;
   projectsLength: number;
   setShowTechSkills: React.Dispatch<React.SetStateAction<boolean>>;
+  infos: boolean;
+  setShowAdditionalInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <div className="mb-14 mt-14">
@@ -93,12 +97,15 @@ export function AddNewSection({
           {referencesLength ? null : (
             <ModalReferences userId={userId} title="References" />
           )}
-          <Button
-            className="border-[1px] border-tree-poppy bg-white"
-            variant="secondary"
-          >
-            Additional Information
-          </Button>
+          {infos ? null : (
+            <Button
+              className="border-[1px] border-tree-poppy bg-white"
+              variant="secondary"
+              onClick={() => setShowAdditionalInfo(true)}
+            >
+              Additional info
+            </Button>
+          )}
         </div>
       </div>
     </div>

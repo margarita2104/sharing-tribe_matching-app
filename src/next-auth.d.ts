@@ -3,6 +3,7 @@ import {
   type JobPreference,
   type Reference,
   type Project,
+  type AdditionalInfo,
 } from "@prisma/client";
 import { type DefaultSession } from "next-auth";
 
@@ -72,6 +73,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   tandemPreferences: TandemPreference | null;
   references: Reference[];
   projects: Project[];
+  additionalInfo: AdditionalInfo | null;
 };
 
 declare module "next-auth" {

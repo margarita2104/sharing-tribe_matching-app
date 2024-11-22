@@ -20,6 +20,7 @@ import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
 import { toast } from "~/hooks/use-toast";
 import { DeleteModal } from "../(references)/modal-delete";
+import { LoadingSpinner } from "~/components/ui/loading-spinner";
 
 type ProjectProp = {
   project: {
@@ -116,174 +117,182 @@ export function ProjectComponent({ project }: ProjectProp) {
         </div>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Project Title</FormLabel>
+        {isPending ? (
+          <LoadingSpinner className="mx-auto" />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Project Title</FormLabel>
 
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Project Title"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{project.title}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Project Title"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{project.title}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Role in the Project
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Role in the Project"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{project.role ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="userId"
-                defaultValue={project.userId}
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormControl>
-                      <Input {...field} disabled={isPending} type="hidden" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Role in the Project
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Role in the Project"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{project.role ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="userId"
+                  defaultValue={project.userId}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormControl>
+                        <Input {...field} disabled={isPending} type="hidden" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Description</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Description"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{project.description ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Description</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Description"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {project.description ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="link"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Link to the Project
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          value={field.value ?? ""}
-                          placeholder="Link to the Project"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{project.link ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="projectImage"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Project Image</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          type="file"
-                          onChange={(e) => field.onChange(e.target.files?.[0])}
-                          onBlur={field.onBlur}
-                          name={field.name}
-                          ref={field.ref}
-                          className="w-full cursor-pointer"
-                        />
-                      ) : (
-                        <div className="w-full justify-end">
-                          {project.projectImage ? (
-                            <Image
-                              src={project.projectImage}
-                              alt="Project Image"
-                              width={128}
-                              height={96}
-                              className="h-24 w-32 rounded-md object-cover"
-                            />
-                          ) : null}
-                        </div>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            {/* <FormError message={error} />
-            <FormSuccess message={success} /> */}
-            {edit ? (
-              <div className="mt-4 space-x-2">
-                {" "}
-                <Button disabled={isPending} type="submit">
-                  Save
-                </Button>
-                <Button
-                  disabled={isPending}
-                  onClick={() => setEdit(false)}
-                  type="reset"
-                >
-                  Cancel
-                </Button>
-                <DeleteModal
-                  isPending={isPending}
-                  id={project.id}
-                  name="project"
+                <FormField
+                  control={form.control}
+                  name="link"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Link to the Project
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            value={field.value ?? ""}
+                            placeholder="Link to the Project"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{project.link ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="projectImage"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Project Image</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            type="file"
+                            onChange={(e) =>
+                              field.onChange(e.target.files?.[0])
+                            }
+                            onBlur={field.onBlur}
+                            name={field.name}
+                            ref={field.ref}
+                            className="w-full cursor-pointer"
+                          />
+                        ) : (
+                          <div className="w-full justify-end">
+                            {project.projectImage ? (
+                              <Image
+                                src={project.projectImage}
+                                alt="Project Image"
+                                width={128}
+                                height={96}
+                                className="h-24 w-32 rounded-md object-cover"
+                              />
+                            ) : null}
+                          </div>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-            ) : null}
-          </form>
-        </Form>
+              {/* <FormError message={error} />
+            <FormSuccess message={success} /> */}
+              {edit ? (
+                <div className="mt-4 space-x-2">
+                  {" "}
+                  <Button disabled={isPending} type="submit">
+                    Save
+                  </Button>
+                  <Button
+                    disabled={isPending}
+                    onClick={() => setEdit(false)}
+                    type="reset"
+                  >
+                    Cancel
+                  </Button>
+                  <DeleteModal
+                    isPending={isPending}
+                    id={project.id}
+                    name="project"
+                  />
+                </div>
+              ) : null}
+            </form>
+          </Form>
+        )}
       </CardContent>
     </>
   );

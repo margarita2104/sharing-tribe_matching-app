@@ -25,6 +25,7 @@ import {
   type JobPreference,
   type Reference,
   type Project,
+  type AdditionalInfo,
 } from "@prisma/client";
 import { JobPreferences } from "./(jobPreferences)/job-preferences";
 import { JobPreferencesSave } from "./(jobPreferences)/job-preference-save";
@@ -35,6 +36,8 @@ import { ModalReferences } from "./(references)/modal-references";
 import Bio from "./(short-bio)/bio";
 import { ProjectComponent } from "./(projects)/project";
 import { ModalProject } from "./(projects)/modal-project";
+import { AdditionalInfoSave } from "./(additionalInfo)/additional-info-save";
+import { AdditionalInfoComponent } from "./(additionalInfo)/additional-info";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -46,6 +49,7 @@ type ProfileProps = {
   workTandemPreferences: TandemPreference | null;
   references: Reference[];
   projects: Project[];
+  infos: AdditionalInfo | null;
 };
 
 export default function Profile({
@@ -58,6 +62,7 @@ export default function Profile({
   workTandemPreferences,
   references,
   projects,
+  infos,
 }: ProfileProps) {
   const [showAll, setShowAll] = useState(false);
   const [showAllEducation, setShowAllEducation] = useState(false);
@@ -77,6 +82,15 @@ export default function Profile({
         workTandemPreferences?.idealPartnerRole.length,
     ),
   );
+  const [ShowAdditionalInfo, setShowAdditionalInfo] = useState(
+    Boolean(
+      infos?.languages ??
+        infos?.hobbiesAndInterests ??
+        infos?.volunteering ??
+        infos?.preferredWorkSchedule,
+    ),
+  );
+  const [editAdditionalInfo, setEditAdditionalInfo] = useState(false);
   const [editWorkTandem, setEditWorkTandem] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
   console.log("user", user);
@@ -90,7 +104,8 @@ export default function Profile({
         editProfile={editProfile}
         setEditProfile={setEditProfile}
       />
-      <div className="mt-8 flex w-9/12 items-center space-x-8">
+
+      <div className="mt-8 flex w-9/12 items-center justify-center space-x-8">
         <Bio
           user={user}
           editProfile={editProfile}
@@ -98,12 +113,13 @@ export default function Profile({
         />
       </div>
 
-      <div className="mt-8 grid w-full grid-cols-1 justify-items-center gap-y-8 md:grid-cols-2">
+      <div className="mt-8 grid w-11/12 grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
         <PersonalInfo user={user} />
+
         {!user.jobTitle ? null : <ProfessionalOverview user={user} />}
 
         {workExperiences.length ? (
-          <Card className="h-fit w-11/12">
+          <Card className="h-fit w-full">
             {workExperiences
               .slice(0, showAll ? workExperiences.length : 1)
               .map((workExperience, index) => (
@@ -129,7 +145,7 @@ export default function Profile({
           </Card>
         ) : null}
         {education.length ? (
-          <Card className="h-fit w-11/12">
+          <Card className="h-fit w-full">
             {education
               .slice(0, showAllEducation ? education.length : 1)
               .map((educatio, index) => (
@@ -335,6 +351,39 @@ export default function Profile({
         </Card>
       ) : null}
 
+      {ShowAdditionalInfo ? (
+        <Card className="mt-6 h-fit w-11/12">
+          <div>
+            <div className="flex justify-between p-4">
+              <h2 className="text-lg text-violet">Additional Information</h2>
+              {editAdditionalInfo ? null : (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => setEditAdditionalInfo(true)}
+                >
+                  <Image
+                    src="/icons/profile-edit.png"
+                    alt="Profile edit icon"
+                    width={16}
+                    height={16}
+                  />
+                </div>
+              )}
+            </div>
+            {!infos ? (
+              <AdditionalInfoComponent userId={user.id} />
+            ) : (
+              <AdditionalInfoSave
+                userId={user.id}
+                infos={infos}
+                editAdditionalInfo={editAdditionalInfo}
+                setEditAdditionalInfo={setEditAdditionalInfo}
+              />
+            )}
+          </div>
+        </Card>
+      ) : null}
+
       <AddNewSection
         userId={user.id ?? ""}
         bio={user.bio}
@@ -353,6 +402,8 @@ export default function Profile({
             workTandemPreferences?.idealPartnerRole.length,
         )}
         setShowWorkTandemPreferences={setShowWorkTandemPreferences}
+        setShowAdditionalInfo={setShowAdditionalInfo}
+        infos={Boolean(infos)}
       />
     </>
   );
