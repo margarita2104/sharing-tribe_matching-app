@@ -4,6 +4,7 @@ import Image from "next/image";
 import testData from "./test.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 
 type Selection = {
   most: string | null;
@@ -131,7 +132,7 @@ const DiscTest = () => {
       </section>
       <section className="flex flex-col items-center space-y-8">
         {testData.questions.map((question, index) => (
-          <div key={index} className="mb-8 w-1/2">
+          <div key={index} className="mb-8 w-1/2 border border-alto rounded-xl p-10">
             <h2 className="text-xl font-semibold">{question.question}</h2>
             <div className="mt-4">
               <h3 className="text-lg">
@@ -139,42 +140,91 @@ const DiscTest = () => {
               </h3>
               <div className="mt-4 space-y-4">
                 {question.options.map((option, i) => (
-                  <div key={i} className="flex items-center justify-between">
+                  <div
+                    key={i}
+                    className="flex items-center justify-between rounded-xl border border-alto py-3 pl-5"
+                    style={{ height: "60px" }} 
+                  >
                     <span>{option.text}</span>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
+                    <div className="flex h-full items-center">
+                      {/* Most Radio Button */}
+                      <RadioGroup.Root
+                        className="flex items-center"
+                        defaultValue={selections[index]?.most ?? undefined}
+                        aria-label="Most selection"
+                        onValueChange={(value) =>
+                          handleSelect(index, "most", value)
+                        }
+                      >
+                        <RadioGroup.Item
+                          className="RadioGroupItem thumbs-up"
+                          value={option.text}
                           id={`q${index}-most-${i}`}
-                          name={`q${index}-most`}
-                          value={option.text}
-                          checked={selections[index]?.most === option.text}
-                          onChange={() =>
-                            handleSelect(index, "most", option.text)
-                          }
-                        />
-                        <label htmlFor={`q${index}-most-${i}`} className="ml-2">
-                          Most
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
-                          id={`q${index}-least-${i}`}
-                          name={`q${index}-least`}
-                          value={option.text}
-                          checked={selections[index]?.least === option.text}
-                          onChange={() =>
-                            handleSelect(index, "least", option.text)
-                          }
-                        />
-                        <label
-                          htmlFor={`q${index}-least-${i}`}
-                          className="ml-2"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "60px", 
+                            height: "60px",
+                            border: "1px solid #D9D9D9",
+                            borderRadius: "12px 0 0 12px",
+                            backgroundColor:
+                              selections[index]?.most === option.text
+                                ? "#55D718"
+                                : "white",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s ease",
+                          }}
                         >
-                          Least
-                        </label>
-                      </div>
+                          <img
+                            src="/icons/thumbs-up.svg"
+                            alt="Thumbs Up"
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                            }}
+                          />
+                        </RadioGroup.Item>
+                      </RadioGroup.Root>
+                      {/* Least Radio Button */}
+                      <RadioGroup.Root
+                        className="flex items-center"
+                        defaultValue={selections[index]?.least ?? undefined}
+                        aria-label="Least selection"
+                        onValueChange={(value) =>
+                          handleSelect(index, "least", value)
+                        }
+                      >
+                        <RadioGroup.Item
+                          className="RadioGroupItem thumbs-down"
+                          value={option.text}
+                          id={`q${index}-least-${i}`}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "60px", 
+                            height: "60px",
+                            border: "1px solid #D9D9D9",
+                            borderRadius: "0 12px 12px 0",
+                            backgroundColor:
+                              selections[index]?.least === option.text
+                                ? "#D92530"
+                                : "white",
+                            cursor: "pointer",
+                            transition: "background-color 0.3s ease",
+                          }}
+                        >
+                          <img
+                            src="/icons/thumbs-down.svg"
+                            alt="Thumbs Down"
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                            }}
+                          />
+                        </RadioGroup.Item>
+                      </RadioGroup.Root>
                     </div>
                   </div>
                 ))}
@@ -183,6 +233,7 @@ const DiscTest = () => {
           </div>
         ))}
       </section>
+
       <section className="mt-8 flex justify-center">
         {isComplete ? (
           <button
