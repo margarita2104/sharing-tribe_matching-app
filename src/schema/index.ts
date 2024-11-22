@@ -151,7 +151,7 @@ export const ProjectSchema = z.object({
   link: z.string().min(1, {
     message: "link is required.",
   }),
-  projectImage: z.union([z.instanceof(File), z.string()]),
+  projectImage: z.union([z.instanceof(File), z.string()]).optional(),
 
   userId: z.string(),
 });

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
-import { ProjectSchema, ReferencesSchema } from "../../../../schema/index";
+import { ProjectSchema } from "../../../../schema/index";
 import { CardContent, CardHeader } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
 import { projectUpdate, uploadImageProject } from "../../../../actions/profile";
@@ -20,8 +20,6 @@ import { Input } from "../../../../components/ui/input";
 import Image from "next/image";
 import { toast } from "~/hooks/use-toast";
 import { DeleteModal } from "../(references)/modal-delete";
-import { set } from "date-fns";
-// import { DeleteModal } from "./modal-delete";
 
 type ProjectProp = {
   project: {
@@ -55,25 +53,23 @@ export function ProjectComponent({ project }: ProjectProp) {
 
   const onSubmit = async (data: z.infer<typeof ProjectSchema>) => {
     const formData = new FormData();
+    let imageUrl = project.projectImage || "";
 
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "image" && value instanceof FileList && value.length > 0) {
-        if (value[0]) {
-          formData.append(key, value[0]);
-        }
-      } else {
+      console.log(key, value);
+      if (key === "projectImage" && value instanceof File) {
+        formData.append(key, value);
+      } else if (key !== "projectImage") {
         formData.append(key, value as string);
       }
     });
-
-    let imageUrl = "";
 
     if (formData.get("projectImage")) {
       const response = await uploadImageProject(formData);
       if (response.error) {
         toast({
           title: "Error",
-          description: response.error,
+          description: "Image upload failed. " + response.error,
           variant: "destructive",
         });
         return;
