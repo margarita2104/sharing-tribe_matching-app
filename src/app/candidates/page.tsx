@@ -46,7 +46,7 @@ const Candidates = async () => {
       </section>
       <section className="mt-8 grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
         {users.map((user) => {
-          const [firstName, lastName] = user.name?.split(" ") || [];
+          const [firstName, lastName] = user.name?.split(" ") ?? [];
 
           return (
             <div
@@ -54,8 +54,8 @@ const Candidates = async () => {
               className="flex flex-col items-center rounded-lg border p-4 text-center shadow-lg"
             >
               <Image
-                src={user.image || "/images/default-avatar.png"}
-                alt={user.name || "User"}
+                src={user.image ?? "/images/default-avatar.png"}
+                alt={user.name ?? "User"}
                 width={100}
                 height={100}
                 className="mb-4 rounded-full"
@@ -68,7 +68,7 @@ const Candidates = async () => {
               <p className="text-sm text-gray-500">{user.jobTitle}</p>
 
               <p className="mt-2 text-sm text-gray-700">
-                {user.bio || "No bio available."}
+                {user.bio ?? "No bio available."}
               </p>
             </div>
           );
