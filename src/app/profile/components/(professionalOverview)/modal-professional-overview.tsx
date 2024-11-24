@@ -51,6 +51,7 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
     startTransition(() => {
       ProfileUpdate(values)
         .then(async (data) => {
+          console.log(data);
           // if (data?.error) {
           //   // setError(data.error);
           //   toast({ title: "Error", description: data.error });
@@ -137,35 +138,32 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                         >
                           Software Development
                         </SelectItem>
+                        <SelectItem className="cursor-pointer" value="Data">
+                          Data
+                        </SelectItem>
+                        <SelectItem className="cursor-pointer" value="Fintech">
+                          Fintech
+                        </SelectItem>
                         <SelectItem className="cursor-pointer" value="Design">
                           Design
                         </SelectItem>
                         <SelectItem
                           className="cursor-pointer"
-                          value="ProductManagement"
+                          value="SalesMarketing"
                         >
-                          Product Management
+                          Sales / Marketing
                         </SelectItem>
                         <SelectItem
                           className="cursor-pointer"
-                          value="DataScience"
+                          value="ProductManagment"
                         >
-                          Data Science
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="DevOps">
-                          DevOps
+                          Product Managment
                         </SelectItem>
                         <SelectItem
                           className="cursor-pointer"
-                          value="QualityAssurance"
+                          value="ScrumMaster"
                         >
-                          Quality Assurance
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="Engineering"
-                        >
-                          Engineering
+                          Scrum Master
                         </SelectItem>
                         <SelectItem className="cursor-pointer" value="Other">
                           Other
