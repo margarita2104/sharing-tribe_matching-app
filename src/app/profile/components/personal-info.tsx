@@ -24,6 +24,7 @@ import Image from "next/image";
 import { type ExtendedUser } from "~/next-auth";
 import { toast } from "~/hooks/use-toast";
 import Link from "next/link";
+import { LoadingSpinner } from "~/components/ui/loading-spinner";
 
 export function PersonalInfo({ user }: { user: ExtendedUser }) {
   const [error, setError] = useState<string | undefined>();
@@ -63,7 +64,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   };
 
   return (
-    <Card className="h-fit w-11/12" title="Personal Information">
+    <Card className="h-fit w-full" title="Personal Information">
       <CardHeader>
         <div className="flex justify-between">
           <h2 className="text-lg text-violet">Personal Information</h2>
@@ -80,159 +81,163 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
         </div>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Full Name</FormLabel>
+        {isPending ? (
+          <LoadingSpinner className="mx-auto" />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Full Name</FormLabel>
 
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Full Name"
-                          disabled={isPending || user.isOAuth}
-                        />
-                      ) : (
-                        <p className="w-full">{user.name}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Full Name"
+                            disabled={isPending || user.isOAuth}
+                          />
+                        ) : (
+                          <p className="w-full">{user.name}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Location</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Location"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{user.location ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Location</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Location"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{user.location ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Email</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Email"
-                          disabled={isPending || user.isOAuth}
-                        />
-                      ) : (
-                        <p className="w-full">{user.email}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">Email</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Email"
+                            disabled={isPending || user.isOAuth}
+                          />
+                        ) : (
+                          <p className="w-full">{user.email}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="linkedinUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Social Media (Linkedin)
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Linkedin URL"
-                          disabled={isPending}
-                        />
-                      ) : user.linkedinUrl ? (
-                        <Link
-                          href={user.linkedinUrl}
-                          target="_blank"
-                          className="w-full underline"
-                        >
-                          {user.linkedinUrl ? "Linkedin" : "N/A"}
-                        </Link>
-                      ) : (
-                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="linkedinUrl"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Social Media (Linkedin)
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Linkedin URL"
+                            disabled={isPending}
+                          />
+                        ) : user.linkedinUrl ? (
+                          <Link
+                            href={user.linkedinUrl}
+                            target="_blank"
+                            className="w-full underline"
+                          >
+                            {user.linkedinUrl ? "Linkedin" : "N/A"}
+                          </Link>
+                        ) : (
+                          <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="githubUrl"
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Social Media (Other links)
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Github URL"
-                          disabled={isPending}
-                        />
-                      ) : user.githubUrl ? (
-                        <Link
-                          href={user.githubUrl}
-                          target="_blank"
-                          className="w-full underline"
-                        >
-                          {user.githubUrl ? "Other Links" : "N/A"}
-                        </Link>
-                      ) : (
-                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            {/* <FormError message={error} />
-            <FormSuccess message={success} /> */}
-            {edit ? (
-              <div className="mt-4 space-x-2">
-                {" "}
-                <Button disabled={isPending} type="submit">
-                  Save
-                </Button>
-                <Button
-                  disabled={isPending}
-                  onClick={() => setEdit(false)}
-                  type="reset"
-                >
-                  Cancel
-                </Button>
+                <FormField
+                  control={form.control}
+                  name="githubUrl"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Social Media (Other links)
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Github URL"
+                            disabled={isPending}
+                          />
+                        ) : user.githubUrl ? (
+                          <Link
+                            href={user.githubUrl}
+                            target="_blank"
+                            className="w-full underline"
+                          >
+                            {user.githubUrl ? "Other Links" : "N/A"}
+                          </Link>
+                        ) : (
+                          <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-            ) : null}
-          </form>
-        </Form>
+              {/* <FormError message={error} />
+            <FormSuccess message={success} /> */}
+              {edit ? (
+                <div className="mt-4 space-x-2">
+                  {" "}
+                  <Button disabled={isPending} type="submit">
+                    Save
+                  </Button>
+                  <Button
+                    disabled={isPending}
+                    onClick={() => setEdit(false)}
+                    type="reset"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              ) : null}
+            </form>
+          </Form>
+        )}
       </CardContent>
     </Card>
   );

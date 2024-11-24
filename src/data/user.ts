@@ -23,6 +23,7 @@ export const getUserById = async (id: string) => {
         tandemPreferences: true,
         references: true,
         projects: true,
+        additionalInfo: true,
       },
     });
 
