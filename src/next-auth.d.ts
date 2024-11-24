@@ -37,12 +37,12 @@ type Education = {
 
 type jobRoleFamily =
   | "SoftwareDevelopment"
+  | "Data"
+  | "Fintech"
   | "Design"
-  | "ProductManagement"
-  | "DataScience"
-  | "DevOps"
-  | "QualityAssurance"
-  | "Engineering"
+  | "SalesMarketing"
+  | "ProductManagment"
+  | "ScrumMaster"
   | "Other";
 type employmentStatus =
   | "Freelance"
@@ -74,6 +74,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   references: Reference[];
   projects: Project[];
   additionalInfo: AdditionalInfo | null;
+  discTestResult: string | null;
 };
 
 declare module "next-auth" {

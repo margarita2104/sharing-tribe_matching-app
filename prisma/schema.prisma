@@ -18,10 +18,10 @@ model User {
     accounts      Account[]
 
     // Personal Information
-    location    String?
-    linkedinUrl String?
-    githubUrl   String?
-    bio         String?
+    location       String?
+    linkedinUrl    String?
+    githubUrl      String?
+    bio            String?
     discTestResult String?
 
     // Professional Overview
@@ -155,12 +155,12 @@ enum Availability {
 
 enum JobRoleFamily {
     SoftwareDevelopment
+    Data
+    Fintech
     Design
-    ProductManagement
-    DataScience
-    DevOps
-    QualityAssurance
-    Engineering
+    SalesMarketing
+    ProductManagment
+    ScrumMaster
     Other
 }
 

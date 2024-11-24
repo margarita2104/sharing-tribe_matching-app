@@ -87,6 +87,7 @@ export const {
       session.user.image = token.image as string;
       session.user.projects = token.projects as Project[];
       session.user.additionalInfo = token.additionalInfo as AdditionalInfo;
+      session.user.discTestResult = token.discTestResult as string;
 
       return session;
     },
@@ -123,6 +124,7 @@ export const {
       token.references = existingUser.references;
       token.projects = existingUser.projects;
       token.additionalInfo = existingUser.additionalInfo;
+      token.discTestResult = existingUser.discTestResult;
 
       return token;
     },

@@ -15,12 +15,12 @@ export const ProfileSchema = z
     jobRoleFamily: z.optional(
       z.enum([
         "SoftwareDevelopment",
+        "Data",
+        "Fintech",
         "Design",
-        "ProductManagement",
-        "DataScience",
-        "DevOps",
-        "QualityAssurance",
-        "Engineering",
+        "SalesMarketing",
+        "ProductManagment",
+        "ScrumMaster",
         "Other",
       ]),
     ),
@@ -32,9 +32,7 @@ export const ProfileSchema = z
     availability: z.optional(z.enum(["OneMonth", "ThreeMonths", "SixMonths"])),
     currentCompany: z.optional(z.string().min(6)),
 
-    discTestResult: z.optional(
-      z.enum(["D", "I", "S", "C"])
-    ),
+    discTestResult: z.optional(z.enum(["D", "I", "S", "C"])),
   })
   .refine(
     (data) => {
