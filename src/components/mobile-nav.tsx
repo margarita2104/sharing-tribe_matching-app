@@ -31,7 +31,6 @@ export function MobileNav({ user }: { user: Session | null }) {
               Home
             </Link>
 
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
@@ -42,15 +41,20 @@ export function MobileNav({ user }: { user: Session | null }) {
               Sharing Tribe
             </Link>
 
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link className="w-full" href="/disc">
               DISC Personality Test
             </Link>
 
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
+          {user && (
+            <DropdownMenuItem>
+              <Link className="w-full" href="/candidates">
+                Candidates
+              </Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
