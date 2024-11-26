@@ -110,6 +110,8 @@ const DiscTest = () => {
 
   const handleFinishTest = () => {
     if (typeof window !== "undefined" && mostAnsweredLetter) {
+      // setting the test result in the localStorage
+      localStorage.setItem("discTestResult", mostAnsweredLetter);
       router.push(
         `/disc/about/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
       );
