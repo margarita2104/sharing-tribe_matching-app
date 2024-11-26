@@ -21,7 +21,6 @@ import { FormError } from "~/components/form-error";
 import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
-import { Textarea } from "~/components/ui/textarea";
 import { type ExtendedUser } from "~/next-auth";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";

@@ -143,35 +143,35 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                           >
                             Software Development
                           </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Data">
+                            Data
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="Fintech"
+                          >
+                            Fintech
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="SalesMarketing"
+                          >
+                            Sales / Marketing
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ProductManagment"
+                          >
+                            Product Managment
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ScrumMaster"
+                          >
+                            Scrum Master
+                          </SelectItem>
                           <SelectItem className="cursor-pointer" value="Design">
                             Design
-                          </SelectItem>
-                          <SelectItem
-                            className="cursor-pointer"
-                            value="ProductManagement"
-                          >
-                            Product Management
-                          </SelectItem>
-                          <SelectItem
-                            className="cursor-pointer"
-                            value="DataScience"
-                          >
-                            Data Science
-                          </SelectItem>
-                          <SelectItem className="cursor-pointer" value="DevOps">
-                            DevOps
-                          </SelectItem>
-                          <SelectItem
-                            className="cursor-pointer"
-                            value="QualityAssurance"
-                          >
-                            Quality Assurance
-                          </SelectItem>
-                          <SelectItem
-                            className="cursor-pointer"
-                            value="Engineering"
-                          >
-                            Engineering
                           </SelectItem>
                           <SelectItem className="cursor-pointer" value="Other">
                             Other

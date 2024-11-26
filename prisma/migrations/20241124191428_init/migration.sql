@@ -5,7 +5,7 @@ CREATE TYPE "EmploymentStatus" AS ENUM ('Freelance', 'FullTime', 'PartTime', 'Op
 CREATE TYPE "Availability" AS ENUM ('OneMonth', 'ThreeMonths', 'SixMonths');
 
 -- CreateEnum
-CREATE TYPE "JobRoleFamily" AS ENUM ('SoftwareDevelopment', 'Design', 'ProductManagement', 'DataScience', 'DevOps', 'QualityAssurance', 'Engineering', 'Other');
+CREATE TYPE "JobRoleFamily" AS ENUM ('SoftwareDevelopment', 'Data', 'Fintech', 'Design', 'SalesMarketing', 'ProductManagment', 'ScrumMaster', 'Other');
 
 -- CreateEnum
 CREATE TYPE "WorkMode" AS ENUM ('Hybrid', 'Remote', 'Onsite');
@@ -137,8 +137,8 @@ CREATE TABLE "AdditionalInfo" (
     "id" SERIAL NOT NULL,
     "hobbiesAndInterests" TEXT[],
     "volunteering" TEXT,
-    "languages" TEXT[],
-    "preferredWorkSchedule" TEXT,
+    "languages" JSONB NOT NULL,
+    "preferredWorkSchedule" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "AdditionalInfo_pkey" PRIMARY KEY ("id")
