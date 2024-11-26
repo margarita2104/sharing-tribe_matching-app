@@ -44,6 +44,7 @@ const JobRoles = () => {
             defaultValue=""
             aria-label="Job role"
             onValueChange={(value) =>
+               // setting the selected role in the localStorage
               localStorage.setItem("selectedRole", value)
             }
           >
