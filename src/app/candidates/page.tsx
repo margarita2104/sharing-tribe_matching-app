@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PrismaClient } from "@prisma/client";
+import { getUserFiltered } from "~/actions/profile";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,8 @@ interface CandidatesProps {
 }
 
 const Candidates = async () => {
+  const userss = await getUserFiltered();
+  console.log(userss);
 
   const users = await prisma.user.findMany({
     select: {

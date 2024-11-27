@@ -92,6 +92,22 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
   return { success: "Profile Updated!" };
 };
 
+export async function updateTest(value: string | null, id: string | undefined) {
+  await db.user.update({ where: { id }, data: { discTestResult: value } });
+}
+
+export async function getUserFiltered() {
+  const users = await db.user.findMany({
+    where: {
+      discTestResult: {
+        not: null,
+      },
+    },
+  });
+
+  return users;
+}
+
 export const uploadImage = async (formData: FormData) => {
   const imageFile = formData.get("image") as File | null;
 

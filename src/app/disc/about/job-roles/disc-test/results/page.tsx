@@ -3,9 +3,12 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCurrentUser } from "~/hooks/use-current-user";
 
 const Results = () => {
   const router = useRouter();
+  const user = useCurrentUser();
+  console.log(user);
   const [result, setResult] = useState<string | null>(null);
 
   useEffect(() => {
