@@ -120,7 +120,7 @@ export function ProfileHeader({
         <div className="relative mt-6 space-y-1 md:justify-self-start">
           <p className="text-2xl text-violet">{user.name}</p>
           <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
-            <p>C</p>
+            <p>{user.discTestResult ? user.discTestResult : ""}</p>
           </div>
           <p>{user.email}</p>
           {editProfile && !user.bio ? null : (

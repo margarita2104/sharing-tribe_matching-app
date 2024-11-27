@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useSession } from "next-auth/react";
+import { useCurrentUser } from "~/hooks/use-current-user";
+import { updateTest } from "~/actions/profile";
 
 type Selection = {
   most: string | null;
@@ -13,6 +15,8 @@ type Selection = {
 };
 
 const DiscTest = () => {
+  const user = useCurrentUser();
+  console.log(user);
   const router = useRouter();
   const { data: session } = useSession();
   const [selections, setSelections] = useState<Selection[]>(
@@ -108,7 +112,7 @@ const DiscTest = () => {
     }
   }, [selections]);
 
-  const handleFinishTest = () => {
+  const handleFinishTest = async () => {
     if (typeof window !== "undefined" && mostAnsweredLetter) {
       // setting the test result in the localStorage
       localStorage.setItem("discTestResult", mostAnsweredLetter);
@@ -116,6 +120,8 @@ const DiscTest = () => {
         `/disc/about/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
       );
     }
+
+    await updateTest(mostAnsweredLetter, user?.id);
   };
 
   return (
@@ -135,7 +141,10 @@ const DiscTest = () => {
       </section>
       <section className="flex flex-col items-center space-y-8">
         {testData.questions.map((question, index) => (
-          <div key={index} className="mb-8 w-1/2 border border-alto rounded-xl p-10">
+          <div
+            key={index}
+            className="mb-8 w-1/2 rounded-xl border border-alto p-10"
+          >
             <h2 className="text-xl font-semibold">{question.question}</h2>
             <div className="mt-4">
               <h3 className="text-lg">
@@ -146,7 +155,7 @@ const DiscTest = () => {
                   <div
                     key={i}
                     className="flex items-center justify-between rounded-xl border border-alto py-3 pl-5"
-                    style={{ height: "60px" }} 
+                    style={{ height: "60px" }}
                   >
                     <span>{option.text}</span>
                     <div className="flex h-full items-center">
@@ -167,7 +176,7 @@ const DiscTest = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            width: "60px", 
+                            width: "60px",
                             height: "60px",
                             border: "1px solid #D9D9D9",
                             borderRadius: "12px 0 0 12px",
@@ -206,7 +215,7 @@ const DiscTest = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            width: "60px", 
+                            width: "60px",
                             height: "60px",
                             border: "1px solid #D9D9D9",
                             borderRadius: "0 12px 12px 0",
