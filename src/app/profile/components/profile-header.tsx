@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ProfileSchema } from "~/schema";
+import { CiSettings } from "react-icons/ci";
 import { ProfileUpdate, uploadImage } from "~/actions/profile";
 import {
   Form,
@@ -25,6 +26,7 @@ import { type ExtendedUser } from "~/next-auth";
 import Image from "next/image";
 import { Input } from "~/components/ui/input";
 import { RxAvatar } from "react-icons/rx";
+import Link from "next/link";
 
 export function ProfileHeader({
   user,
@@ -44,7 +46,6 @@ export function ProfileHeader({
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
   });
-  console.log(user.image);
 
   const onSubmit = async (data: z.infer<typeof ProfileSchema>) => {
     const formData = new FormData();
@@ -119,19 +120,32 @@ export function ProfileHeader({
 
         <div className="relative mt-6 space-y-1 md:justify-self-start">
           <p className="text-2xl text-violet">{user.name}</p>
-          <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
-            <p>{user.discTestResult ? user.discTestResult : ""}</p>
-          </div>
+          {user.discTestResult ? (
+            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
+              <p>{user.discTestResult}</p>
+            </div>
+          ) : null}
+
           <p>{user.email}</p>
-          {editProfile && !user.bio ? null : (
-            <Button
-              className="w-full border-[1px] border-tree-poppy bg-white"
-              variant="secondary"
-              onClick={() => setEditProfile(true)}
-            >
-              Edit Profile
+          <div className="flex">
+            {!user.bio && user.isOAuth && !editProfile ? null : (
+              <Button
+                className="w-full border-[1px] border-tree-poppy bg-white"
+                variant="secondary"
+                onClick={() => setEditProfile(true)}
+              >
+                Edit Profile
+              </Button>
+            )}
+            <Button variant="outline" asChild className="bg-white">
+              <Link href="/profile/settings">
+                <CiSettings
+                  className="w-full bg-none text-6xl text-black"
+                  size="3xl"
+                />
+              </Link>
             </Button>
-          )}
+          </div>
         </div>
       </div>
       {editProfile && !user.isOAuth ? (

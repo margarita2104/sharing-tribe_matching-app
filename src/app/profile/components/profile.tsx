@@ -38,6 +38,7 @@ import { ProjectComponent } from "./(projects)/project";
 import { ModalProject } from "./(projects)/modal-project";
 import { AdditionalInfoSave } from "./(additionalInfo)/additional-info-save";
 import { AdditionalInfoComponent } from "./(additionalInfo)/additional-info";
+import Link from "next/link";
 
 type ProfileProps = {
   user: ExtendedUser;
@@ -93,7 +94,6 @@ export default function Profile({
   const [editAdditionalInfo, setEditAdditionalInfo] = useState(false);
   const [editWorkTandem, setEditWorkTandem] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
-  console.log("user", user);
 
   if (!user) return null;
 
@@ -112,6 +112,50 @@ export default function Profile({
           setEditProfile={setEditProfile}
         />
       </div>
+      {user.discTestResult ? null : (
+        <Button
+          asChild
+          className="mt-8 bg-tree-poppy text-white hover:bg-tree-poppy/90"
+        >
+          <Link href="/disc/about/job-roles">Take DISC Test</Link>
+        </Button>
+      )}
+      {user.workExperiences.length &&
+      user.education.length &&
+      (user.technicalSkills.length || user.softSkills.length) &&
+      user.jobPreferences &&
+      user.tandemPreferences &&
+      user.references.length &&
+      user.projects.length &&
+      user.additionalInfo &&
+      user.jobTitle &&
+      user.jobRoleFamily &&
+      user.employmentStatus &&
+      user.workMode &&
+      user.availability &&
+      user.currentCompany ? null : (
+        <AddNewSection
+          userId={user.id ?? ""}
+          bio={user.bio}
+          workExperienceLenght={workExperiences.length}
+          educationLength={education.length}
+          referencesLength={references.length}
+          projectsLength={projects.length}
+          jobTitle={user.jobTitle}
+          setShowTechSkills={setShowTechSkills}
+          showTechSkills={showTechSkills}
+          techSkills={techSkills.length}
+          jobPreferences={Boolean(jobPreferences)}
+          setShowJobPreferences={setJobPreferences}
+          workTandemPreferences={Boolean(
+            workTandemPreferences?.complementarySkills.length ??
+              workTandemPreferences?.idealPartnerRole.length,
+          )}
+          setShowWorkTandemPreferences={setShowWorkTandemPreferences}
+          setShowAdditionalInfo={setShowAdditionalInfo}
+          infos={Boolean(infos)}
+        />
+      )}
 
       <div className="mt-8 grid w-11/12 grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
         <PersonalInfo user={user} />
@@ -383,28 +427,6 @@ export default function Profile({
           </div>
         </Card>
       ) : null}
-
-      <AddNewSection
-        userId={user.id ?? ""}
-        bio={user.bio}
-        workExperienceLenght={workExperiences.length}
-        educationLength={education.length}
-        referencesLength={references.length}
-        projectsLength={projects.length}
-        jobTitle={user.jobTitle}
-        setShowTechSkills={setShowTechSkills}
-        showTechSkills={showTechSkills}
-        techSkills={techSkills.length}
-        jobPreferences={Boolean(jobPreferences)}
-        setShowJobPreferences={setJobPreferences}
-        workTandemPreferences={Boolean(
-          workTandemPreferences?.complementarySkills.length ??
-            workTandemPreferences?.idealPartnerRole.length,
-        )}
-        setShowWorkTandemPreferences={setShowWorkTandemPreferences}
-        setShowAdditionalInfo={setShowAdditionalInfo}
-        infos={Boolean(infos)}
-      />
     </>
   );
 }

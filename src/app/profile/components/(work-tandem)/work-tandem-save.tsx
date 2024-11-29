@@ -145,34 +145,36 @@ export function WorkTandemSave({
                   control={form.control}
                   name="idealPartnerRole"
                   render={({ field }) => (
-                    <FormItem className="flex items-center">
-                      <FormLabel className="w-full">
-                        Ideal Tandem Partner (Add a new one){" "}
-                      </FormLabel>
-                      <Select
-                        onValueChange={(value) => {
-                          // Ensure the value is wrapped in an array
-                          field.onChange([value]);
-                        }}
-                        value={field.value?.[0] ?? ""} // Use the first value in the array or an empty string
-                      >
-                        <FormControl className="cursor-pointer">
-                          <SelectTrigger>
-                            <SelectValue placeholder="Choose" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="cursor-pointer">
-                          {filteredRole?.map((role, index) => (
-                            <SelectItem
-                              className="cursor-pointer"
-                              key={index}
-                              value={role}
-                            >
-                              {role}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">
+                          Ideal Tandem Partner (Add a new one){" "}
+                        </FormLabel>
+                        <Select
+                          onValueChange={(value) => {
+                            // Ensure the value is wrapped in an array
+                            field.onChange([value]);
+                          }}
+                          value={field.value?.[0] ?? ""} // Use the first value in the array or an empty string
+                        >
+                          <FormControl className="cursor-pointer">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="cursor-pointer">
+                            {filteredRole?.map((role, index) => (
+                              <SelectItem
+                                className="cursor-pointer"
+                                key={index}
+                                value={role}
+                              >
+                                {role}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
                       <FormMessage />
                     </FormItem>
@@ -243,27 +245,29 @@ export function WorkTandemSave({
                   control={form.control}
                   name="complementarySkills"
                   render={({ field }) => (
-                    <FormItem className="flex items-center">
-                      <FormLabel className="w-full">
-                        Complementary Skills (Add a new one)
-                      </FormLabel>
-                      <FormControl>
-                        {editWorkTandem ? (
-                          <Input
-                            className="rounded-none border-b-2 border-l-0 border-r-0 border-t-0"
-                            placeholder="Add skills separated by commas"
-                            value={field.value ? field.value.join(", ") : ""}
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              // Convert comma-separated input into an array
-                              field.onChange(
-                                value.split(",").map((item) => item.trim()),
-                              );
-                            }}
-                            disabled={isPending}
-                          />
-                        ) : null}
-                      </FormControl>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">
+                          Complementary Skills (Add a new one)
+                        </FormLabel>
+                        <FormControl>
+                          {editWorkTandem ? (
+                            <Input
+                              className="rounded-none border-b-2 border-l-0 border-r-0 border-t-0"
+                              placeholder="Add skills separated by commas"
+                              value={field.value ? field.value.join(", ") : ""}
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                // Convert comma-separated input into an array
+                                field.onChange(
+                                  value.split(",").map((item) => item.trim()),
+                                );
+                              }}
+                              disabled={isPending}
+                            />
+                          ) : null}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}

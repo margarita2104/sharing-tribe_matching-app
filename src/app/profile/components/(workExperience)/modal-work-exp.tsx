@@ -27,14 +27,12 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 
-import { cn } from "~/lib/utils";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Calendar } from "~/components/ui/calendar";
 import { format } from "date-fns";
 import { FormError } from "~/components/form-error";
 import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
+import { Checkbox } from "~/components/ui/checkbox";
 
 export function ModalWorkExpButton({
   userId,
@@ -45,6 +43,8 @@ export function ModalWorkExpButton({
 }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [present, setPresent] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -55,6 +55,10 @@ export function ModalWorkExpButton({
 
   const onSubmit = (values: z.infer<typeof WorkExperienceSchema>) => {
     startTransition(() => {
+      if (present) {
+        values.endDate = "Present";
+      }
+
       WorkCreate(values)
         .then(async (data) => {
           // if (data?.error) {
@@ -64,9 +68,10 @@ export function ModalWorkExpButton({
 
           if (data.success) {
             await update();
+            setOpen(false);
 
             toast({
-              title: "Work Experience updated",
+              title: "Work Experience added",
               description: data.success,
             });
             setEdit(false);
@@ -82,7 +87,7 @@ export function ModalWorkExpButton({
     });
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -100,21 +105,23 @@ export function ModalWorkExpButton({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-1">
               <FormField
                 control={form.control}
                 name="jobTitle"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Job Title</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Job Title</FormLabel>
 
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Job title"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Job title"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -124,15 +131,17 @@ export function ModalWorkExpButton({
                 control={form.control}
                 name="companyName"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Company Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Company Name"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Company Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Company Name"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -155,22 +164,24 @@ export function ModalWorkExpButton({
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Start Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        onSelect={field.onChange}
-                        placeholder="startDate"
-                        disabled={isPending}
-                        type="date"
-                        value={
-                          field.value
-                            ? format(new Date(field.value), "yyyy-MM-dd")
-                            : ""
-                        }
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Start Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          onSelect={field.onChange}
+                          placeholder="startDate"
+                          disabled={isPending}
+                          type="date"
+                          value={
+                            field.value
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -180,22 +191,38 @@ export function ModalWorkExpButton({
                 control={form.control}
                 name="endDate"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">End Date</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        onSelect={field.onChange}
-                        placeholder="endDate"
-                        disabled={isPending}
-                        type="date"
-                        value={
-                          field.value
-                            ? format(new Date(field.value), "yyyy-MM-dd")
-                            : ""
-                        }
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">End Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          onSelect={field.onChange}
+                          placeholder="endDate"
+                          disabled={isPending || present}
+                          type="date"
+                          value={
+                            field.value && field.value !== "Present"
+                              ? format(new Date(field.value), "yyyy-MM-dd")
+                              : ""
+                          }
+                        />
+                      </FormControl>
+                    </div>
+                    <div className="mt-2 flex items-center">
+                      <Checkbox
+                        checked={present}
+                        onCheckedChange={(checked) => {
+                          const isChecked = checked === true;
+                          setPresent(isChecked);
+                          form.setValue("endDate", isChecked ? "Present" : "");
+                        }}
+                        id="present"
                       />
-                    </FormControl>
+                      <FormLabel htmlFor="present" className="ml-2">
+                        Present
+                      </FormLabel>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -211,15 +238,11 @@ export function ModalWorkExpButton({
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  disabled={isPending}
-                  onClick={() => setEdit(false)}
-                  type="submit"
-                >
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button disabled={isPending} type="submit">
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>

@@ -101,20 +101,22 @@ export function EducationCertification({ educatio }: EducationProps) {
                 control={form.control}
                 name="degree"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Degree</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Degree</FormLabel>
 
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Degree"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{educatio.degree}</p>
-                      )}
-                    </FormControl>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Degree"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{educatio.degree}</p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -124,21 +126,23 @@ export function EducationCertification({ educatio }: EducationProps) {
                 control={form.control}
                 name="fieldOfStudy"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Field Of Study</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Field Of Study"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">
-                          {educatio.fieldOfStudy ?? "N/A"}
-                        </p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Field Of Study</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Field Of Study"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {educatio.fieldOfStudy ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -161,21 +165,23 @@ export function EducationCertification({ educatio }: EducationProps) {
                 control={form.control}
                 name="institution"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Institution</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="institution"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">
-                          {educatio.institution ?? "N/A"}
-                        </p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Institution</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="institution"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {educatio.institution ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -185,22 +191,24 @@ export function EducationCertification({ educatio }: EducationProps) {
                 control={form.control}
                 name="graduationYear"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Graduation Year</FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          value={field.value ?? ""}
-                          placeholder="Graduation Year"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">
-                          {educatio.graduationYear ?? "N/A"}
-                        </p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Graduation Year</FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            value={field.value ?? ""}
+                            placeholder="Graduation Year"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {educatio.graduationYear ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

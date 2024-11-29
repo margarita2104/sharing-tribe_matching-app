@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -20,10 +19,8 @@ import { ProfileUpdate } from "~/actions/profile";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 
@@ -36,6 +33,7 @@ import { Textarea } from "~/components/ui/textarea";
 export function ModalBio({ title }: { title: string }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -55,6 +53,7 @@ export function ModalBio({ title }: { title: string }) {
 
           if (data.success) {
             await update();
+            setOpen(false);
 
             toast({
               title: "Short bio added",
@@ -73,7 +72,7 @@ export function ModalBio({ title }: { title: string }) {
     });
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -117,11 +116,11 @@ export function ModalBio({ title }: { title: string }) {
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button disabled={isPending} type="submit">
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button disabled={isPending} type="submit">
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>

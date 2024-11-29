@@ -27,7 +27,6 @@ import { useRouter } from "next/navigation";
 const JobRoles = () => {
   const user = useCurrentUser();
   const router = useRouter();
-  console.log(user);
 
   const [error, setError] = useState<string | undefined>();
   // const [edit, setEdit] = useState<boolean>(false);

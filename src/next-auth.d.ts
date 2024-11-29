@@ -75,6 +75,9 @@ export type ExtendedUser = DefaultSession["user"] & {
   projects: Project[];
   additionalInfo: AdditionalInfo | null;
   discTestResult: string | null;
+  marketingEmails: boolean;
+  profileVisibility: boolean;
+  receiveMarketingEmails: boolean;
 };
 
 declare module "next-auth" {

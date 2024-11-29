@@ -45,8 +45,10 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
+      console.log(values);
       ProfileUpdate(values)
         .then(async (data) => {
+          console.log(data);
           if (data?.error) {
             // setError(data.error);
             toast({ title: "Error", description: data.error });
