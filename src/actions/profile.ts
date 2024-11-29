@@ -6,7 +6,10 @@ import { db } from "../server/db";
 import { getUserByEmail, getUserById } from "~/data/user";
 import { currentUser } from "../lib/auth";
 import { generateVerificationToken } from "~/lib/tokens";
-import { sendVerificationEmail } from "~/lib/mail";
+import {
+  sendVerificationEmail,
+  sendVerificationEmailProfile,
+} from "~/lib/mail";
 import {
   type WorkExperienceSchema,
   type ProfileSchema,
@@ -70,7 +73,7 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     }
 
     const verificationToken = await generateVerificationToken(values.email);
-    await sendVerificationEmail(
+    await sendVerificationEmailProfile(
       verificationToken.email,
       verificationToken.token,
     );
