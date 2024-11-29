@@ -41,6 +41,7 @@ export function ModalEducation({
 }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -60,9 +61,10 @@ export function ModalEducation({
 
           if (data.success) {
             await update();
+            setOpen(false);
 
             toast({
-              title: "Work Experience updated",
+              title: "Education added",
               description: data.success,
             });
             setEdit(false);
@@ -78,7 +80,7 @@ export function ModalEducation({
     });
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -96,21 +98,23 @@ export function ModalEducation({
         </DialogHeader>
         <Form {...form}>
           <form id="createEducationForm" onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-1">
               <FormField
                 control={form.control}
                 name="degree"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Degree</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Degree</FormLabel>
 
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Degree"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Degree"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -120,15 +124,17 @@ export function ModalEducation({
                 control={form.control}
                 name="fieldOfStudy"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Field Of Study</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Field Of Study"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Field Of Study</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Field Of Study"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -151,15 +157,17 @@ export function ModalEducation({
                 control={form.control}
                 name="institution"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Institution</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Insitution"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Institution</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Insitution"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -169,15 +177,17 @@ export function ModalEducation({
                 control={form.control}
                 name="graduationYear"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Graduation Year</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Graduation Year"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Graduation Year</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Graduation Year"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -193,15 +203,15 @@ export function ModalEducation({
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  disabled={isPending}
-                  type="submit"
-                  id="createEducationForm"
-                >
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button
+                disabled={isPending}
+                type="submit"
+                id="createEducationForm"
+              >
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>

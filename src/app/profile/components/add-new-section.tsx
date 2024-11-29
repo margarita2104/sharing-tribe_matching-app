@@ -43,7 +43,7 @@ export function AddNewSection({
   setShowAdditionalInfo: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <div className="mb-14 mt-14">
+    <div className="mt-8">
       <h2 className="text-center text-xl">Add new section</h2>
       <div className="flex flex-col items-center justify-center text-center">
         <div className="mt-4 flex flex-wrap gap-2">

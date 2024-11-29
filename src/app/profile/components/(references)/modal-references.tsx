@@ -41,6 +41,7 @@ export function ModalReferences({
 }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -60,6 +61,7 @@ export function ModalReferences({
 
           if (data.success) {
             await update();
+            setOpen(false);
 
             toast({
               title: "Reference added",
@@ -78,7 +80,7 @@ export function ModalReferences({
     });
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -96,21 +98,23 @@ export function ModalReferences({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-1">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Reference Name</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Reference Name</FormLabel>
 
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Reference Name"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Reference Name"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -120,17 +124,19 @@ export function ModalReferences({
                 control={form.control}
                 name="relationship"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Relationship to Candidate
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Relationship to Candidate"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Relationship to Candidate
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Relationship to Candidate"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -153,17 +159,19 @@ export function ModalReferences({
                 control={form.control}
                 name="company"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Company/Organization
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Company/Organization"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Company/Organization
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Company/Organization"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -173,17 +181,19 @@ export function ModalReferences({
                 control={form.control}
                 name="contactInfo"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Contact Information
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Contact Information"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Contact Information
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Contact Information"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -199,11 +209,11 @@ export function ModalReferences({
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button disabled={isPending} type="submit">
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button disabled={isPending} type="submit">
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>

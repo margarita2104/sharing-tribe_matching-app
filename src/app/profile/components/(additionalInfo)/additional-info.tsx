@@ -50,16 +50,14 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
   const form = useForm<z.infer<typeof AdditionalInfoSchema>>({
     resolver: zodResolver(AdditionalInfoSchema),
     defaultValues: {
-      languages: [{ name: "", proficiency: "Beginner" }], // Default values
+      languages: [{ name: "", proficiency: "Beginner" }],
     },
   });
 
   const onSubmit = (values: z.infer<typeof AdditionalInfoSchema>) => {
-    console.log("Form submitted with values:", values); // Debug
     startTransition(() => {
       AdditionalInfoCreate(values)
         .then(async (data) => {
-          console.log("Server response:", data); // Debug
           await update();
         })
         .catch(() => setError("Something went wrong!"));
@@ -146,23 +144,22 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
                           }}
                         />
                       </FormControl>
+                      <FormMessage />
 
-                      {/* Dropdown for Proficiency */}
                       <FormControl>
                         <Select
-                          value={language.proficiency || "Beginner"} // Default to "Beginner" if undefined
+                          value={language.proficiency || "Beginner"}
                           onValueChange={(value) => {
                             const updatedLanguages = [...field.value];
 
-                            // Ensure both `name` and `proficiency` are defined
                             updatedLanguages[index] = {
                               ...updatedLanguages[index],
-                              name: updatedLanguages[index]?.name ?? "", // Default to an empty string if undefined
+                              name: updatedLanguages[index]?.name ?? "",
                               proficiency: value as
                                 | "Mother Tongue"
                                 | "Fluent"
                                 | "Intermediate"
-                                | "Beginner", // Assign proficiency
+                                | "Beginner",
                             };
 
                             field.onChange(updatedLanguages);
@@ -183,6 +180,7 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
                           </SelectContent>
                         </Select>
                       </FormControl>
+                      <FormMessage />
                     </div>
                   ))}
                 </>
@@ -197,8 +195,8 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
                   <FormLabel>Preferred Work Schedule</FormLabel>
                   <FormControl>
                     <Select
-                      onValueChange={field.onChange} // Hook Form handles the value change
-                      defaultValue={field.value} // Default value from the form state
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select your schedule" />

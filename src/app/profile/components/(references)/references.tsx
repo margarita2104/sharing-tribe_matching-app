@@ -97,25 +97,27 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-2">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Reference Name</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Reference Name</FormLabel>
 
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Reference Name"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{reference.name}</p>
-                      )}
-                    </FormControl>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Reference Name"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{reference.name}</p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -125,23 +127,25 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
                 control={form.control}
                 name="relationship"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Relationship to Candidate
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Relationship to Candidate"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">
-                          {reference.relationship ?? "N/A"}
-                        </p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Relationship to Candidate
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Relationship to Candidate"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {reference.relationship ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -164,21 +168,23 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
                 control={form.control}
                 name="company"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Company/Organization
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          placeholder="Company/Organization"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">{reference.company ?? "N/A"}</p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Company/Organization
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            placeholder="Company/Organization"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">{reference.company ?? "N/A"}</p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -188,24 +194,26 @@ export function ReferenceComponent({ reference }: ReferenceProp) {
                 control={form.control}
                 name="contactInfo"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Contact Information
-                    </FormLabel>
-                    <FormControl>
-                      {edit ? (
-                        <Input
-                          {...field}
-                          value={field.value ?? ""}
-                          placeholder="Graduation Year"
-                          disabled={isPending}
-                        />
-                      ) : (
-                        <p className="w-full">
-                          {reference.contactInfo ?? "N/A"}
-                        </p>
-                      )}
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Contact Information
+                      </FormLabel>
+                      <FormControl>
+                        {edit ? (
+                          <Input
+                            {...field}
+                            value={field.value ?? ""}
+                            placeholder="Graduation Year"
+                            disabled={isPending}
+                          />
+                        ) : (
+                          <p className="w-full">
+                            {reference.contactInfo ?? "N/A"}
+                          </p>
+                        )}
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

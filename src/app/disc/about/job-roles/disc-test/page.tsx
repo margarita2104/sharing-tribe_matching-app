@@ -16,7 +16,7 @@ type Selection = {
 
 const DiscTest = () => {
   const user = useCurrentUser();
-  console.log(user);
+
   const router = useRouter();
   const { data: session } = useSession();
   const [selections, setSelections] = useState<Selection[]>(

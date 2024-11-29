@@ -57,7 +57,6 @@ export function ProjectComponent({ project }: ProjectProp) {
     let imageUrl = project.projectImage || "";
 
     Object.entries(data).forEach(([key, value]) => {
-      console.log(key, value);
       if (key === "projectImage" && value instanceof File) {
         formData.append(key, value);
       } else if (key !== "projectImage") {
@@ -122,25 +121,27 @@ export function ProjectComponent({ project }: ProjectProp) {
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div>
+              <div className="space-y-2">
                 <FormField
                   control={form.control}
                   name="title"
                   render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Project Title</FormLabel>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">Project Title</FormLabel>
 
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Project Title"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          <p className="w-full">{project.title}</p>
-                        )}
-                      </FormControl>
+                        <FormControl>
+                          {edit ? (
+                            <Input
+                              {...field}
+                              placeholder="Project Title"
+                              disabled={isPending}
+                            />
+                          ) : (
+                            <p className="w-full">{project.title}</p>
+                          )}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -150,21 +151,23 @@ export function ProjectComponent({ project }: ProjectProp) {
                   control={form.control}
                   name="role"
                   render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">
-                        Role in the Project
-                      </FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Role in the Project"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          <p className="w-full">{project.role ?? "N/A"}</p>
-                        )}
-                      </FormControl>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">
+                          Role in the Project
+                        </FormLabel>
+                        <FormControl>
+                          {edit ? (
+                            <Input
+                              {...field}
+                              placeholder="Role in the Project"
+                              disabled={isPending}
+                            />
+                          ) : (
+                            <p className="w-full">{project.role ?? "N/A"}</p>
+                          )}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -187,21 +190,23 @@ export function ProjectComponent({ project }: ProjectProp) {
                   control={form.control}
                   name="description"
                   render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Description</FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Description"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          <p className="w-full">
-                            {project.description ?? "N/A"}
-                          </p>
-                        )}
-                      </FormControl>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">Description</FormLabel>
+                        <FormControl>
+                          {edit ? (
+                            <Input
+                              {...field}
+                              placeholder="Description"
+                              disabled={isPending}
+                            />
+                          ) : (
+                            <p className="w-full">
+                              {project.description ?? "N/A"}
+                            </p>
+                          )}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -211,22 +216,24 @@ export function ProjectComponent({ project }: ProjectProp) {
                   control={form.control}
                   name="link"
                   render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">
-                        Link to the Project
-                      </FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            value={field.value ?? ""}
-                            placeholder="Link to the Project"
-                            disabled={isPending}
-                          />
-                        ) : (
-                          <p className="w-full">{project.link ?? "N/A"}</p>
-                        )}
-                      </FormControl>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">
+                          Link to the Project
+                        </FormLabel>
+                        <FormControl>
+                          {edit ? (
+                            <Input
+                              {...field}
+                              value={field.value ?? ""}
+                              placeholder="Link to the Project"
+                              disabled={isPending}
+                            />
+                          ) : (
+                            <p className="w-full">{project.link ?? "N/A"}</p>
+                          )}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -235,34 +242,36 @@ export function ProjectComponent({ project }: ProjectProp) {
                   control={form.control}
                   name="projectImage"
                   render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Project Image</FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            type="file"
-                            onChange={(e) =>
-                              field.onChange(e.target.files?.[0])
-                            }
-                            onBlur={field.onBlur}
-                            name={field.name}
-                            ref={field.ref}
-                            className="w-full cursor-pointer"
-                          />
-                        ) : (
-                          <div className="w-full justify-end">
-                            {project.projectImage ? (
-                              <Image
-                                src={project.projectImage}
-                                alt="Project Image"
-                                width={128}
-                                height={96}
-                                className="h-24 w-32 rounded-md object-cover"
-                              />
-                            ) : null}
-                          </div>
-                        )}
-                      </FormControl>
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel className="w-full">Project Image</FormLabel>
+                        <FormControl>
+                          {edit ? (
+                            <Input
+                              type="file"
+                              onChange={(e) =>
+                                field.onChange(e.target.files?.[0])
+                              }
+                              onBlur={field.onBlur}
+                              name={field.name}
+                              ref={field.ref}
+                              className="w-full cursor-pointer"
+                            />
+                          ) : (
+                            <div className="w-full justify-end">
+                              {project.projectImage ? (
+                                <Image
+                                  src={project.projectImage}
+                                  alt="Project Image"
+                                  width={128}
+                                  height={96}
+                                  className="h-24 w-32 rounded-md object-cover"
+                                />
+                              ) : null}
+                            </div>
+                          )}
+                        </FormControl>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}

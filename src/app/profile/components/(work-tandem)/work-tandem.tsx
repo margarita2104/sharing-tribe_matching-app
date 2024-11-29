@@ -70,39 +70,43 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
               control={form.control}
               name="idealPartnerRole"
               render={({ field }) => (
-                <FormItem className="flex items-center justify-between">
-                  <FormLabel className="w-full">Ideal Tandem Partner</FormLabel>
+                <FormItem>
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="w-full">
+                      Ideal Tandem Partner
+                    </FormLabel>
 
-                  <Select
-                    onValueChange={(selectedRole) => {
-                      const updatedRoles = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selectedRole])]
-                        : [selectedRole];
-                      field.onChange(updatedRoles);
-                    }}
-                    value={
-                      Array.isArray(field.value)
-                        ? field.value.join(", ")
-                        : field.value
-                    }
-                  >
-                    <FormControl className="cursor-pointer">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choose" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent className="cursor-pointer">
-                      {availableRoles.map((role, index) => (
-                        <SelectItem
-                          className="cursor-pointer"
-                          key={index}
-                          value={role}
-                        >
-                          {role}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <Select
+                      onValueChange={(selectedRole) => {
+                        const updatedRoles = Array.isArray(field.value)
+                          ? [...new Set([...field.value, selectedRole])]
+                          : [selectedRole];
+                        field.onChange(updatedRoles);
+                      }}
+                      value={
+                        Array.isArray(field.value)
+                          ? field.value.join(", ")
+                          : field.value
+                      }
+                    >
+                      <FormControl className="cursor-pointer">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="cursor-pointer">
+                        {availableRoles.map((role, index) => (
+                          <SelectItem
+                            className="cursor-pointer"
+                            key={index}
+                            value={role}
+                          >
+                            {role}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
                   <FormMessage />
                 </FormItem>
@@ -112,22 +116,27 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
               control={form.control}
               name="complementarySkills"
               render={({ field }) => (
-                <FormItem className="flex items-center justify-between">
-                  <FormControl>
-                    <Input
-                      className="rounded-none border-b-2 border-l-0 border-r-0 border-t-0"
-                      placeholder="Add skills separated by commas"
-                      value={field.value ? field.value.join(", ") : ""}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        // Convert comma-separated input into an array
-                        field.onChange(
-                          value.split(",").map((item) => item.trim()),
-                        );
-                      }}
-                      disabled={isPending}
-                    />
-                  </FormControl>
+                <FormItem>
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="w-full">
+                      Complementary Skills
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="rounded-none border-b-2 border-l-0 border-r-0 border-t-0"
+                        placeholder="Add skills separated by commas"
+                        value={field.value ? field.value.join(", ") : ""}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          // Convert comma-separated input into an array
+                          field.onChange(
+                            value.split(",").map((item) => item.trim()),
+                          );
+                        }}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

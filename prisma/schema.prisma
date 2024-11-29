@@ -18,11 +18,14 @@ model User {
     accounts      Account[]
 
     // Personal Information
-    location       String?
-    linkedinUrl    String?
-    githubUrl      String?
-    bio            String?
-    discTestResult String?
+    location               String?
+    linkedinUrl            String?
+    githubUrl              String?
+    bio                    String?
+    discTestResult         String?
+    marketingEmails        Boolean @default(false)
+    profileVisibility      Boolean @default(true)
+    receiveMarketingEmails Boolean @default(false)
 
     // Professional Overview
     jobTitle         String?
