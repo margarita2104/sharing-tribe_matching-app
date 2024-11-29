@@ -26,6 +26,18 @@ import { type JsonValue } from "@prisma/client/runtime/library";
 
 const dbReusable = new PrismaClient();
 
+export async function DeleteProfile() {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  await db.user.delete({ where: { id: user.id } });
+
+  return { success: "Profile Deleted!" };
+}
+
 export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
   const user = await currentUser();
 
@@ -37,6 +49,7 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     return { error: "Unauthorized" };
   }
   const dbUser = await getUserById(user.id);
+  console.log("dbUser", dbUser);
 
   if (!dbUser) {
     return { error: "Unauthorized" };
@@ -50,6 +63,7 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
 
   if (values.email && values.email !== user.email) {
     const existingUser = await getUserByEmail(values.email);
+    console.log("existingUser", existingUser);
 
     if (existingUser && existingUser.id !== user.id) {
       return { error: "Email already in use!" };
@@ -84,6 +98,7 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     data: {
       ...values,
       image: typeof values.image === "string" ? values.image : undefined,
+      email: values.email,
     },
   });
 
@@ -168,7 +183,6 @@ export const WorkUpdate = async (
 export const WorkCreate = async (
   values: z.infer<typeof WorkExperienceSchema>,
 ) => {
-  console.log("Received Values: ", values);
   await db.workExperience.create({ data: values });
 
   revalidatePath("/profile");
@@ -692,7 +706,6 @@ export const getProjects = async (id: string) => {
 export const AdditionalInfoCreate = async (
   values: z.infer<typeof AdditionalInfoSchema>,
 ) => {
-  console.log("Received Values: ", values);
   await db.additionalInfo.create({
     data: {
       ...values,

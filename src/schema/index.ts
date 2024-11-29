@@ -6,11 +6,17 @@ export const ProfileSchema = z
     email: z.optional(z.string().email()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
-    location: z.optional(z.string().min(6)),
+    location: z.optional(
+      z.string().min(2, { message: "Location requires at least 2 characters" }),
+    ),
     linkedinUrl: z.optional(z.string().min(6)),
     githubUrl: z.optional(z.string().min(6)),
-    bio: z.optional(z.string().min(6)),
-    jobTitle: z.optional(z.string().min(6)),
+    bio: z.optional(
+      z.string().min(6, { message: "Bio requires at least 6 characters" }),
+    ),
+    jobTitle: z.optional(
+      z.string().min(1, { message: "Job title is required" }),
+    ),
     image: z.union([z.instanceof(File), z.string()]).optional(),
     jobRoleFamily: z.optional(
       z.enum([
@@ -30,9 +36,44 @@ export const ProfileSchema = z
     workMode: z.optional(z.enum(["Hybrid", "Remote", "Onsite"])),
 
     availability: z.optional(z.enum(["OneMonth", "ThreeMonths", "SixMonths"])),
-    currentCompany: z.optional(z.string().min(6)),
+    currentCompany: z.optional(z.string()),
 
     discTestResult: z.optional(z.enum(["D", "I", "S", "C"])),
+  })
+  .refine(
+    (data) => {
+      if (data.password && !data.newPassword) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "New password is required!",
+      path: ["newPassword"],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.newPassword && !data.password) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "Password is required!",
+      path: ["password"],
+    },
+  );
+
+export const SettingsSchema = z
+  .object({
+    marketingEmails: z.boolean().default(false),
+    profileVisibility: z.boolean().default(true),
+    receiveMarketingEmails: z.boolean().default(false),
+    password: z.optional(z.string().min(6)),
+    newPassword: z.optional(z.string().min(6)),
   })
   .refine(
     (data) => {
@@ -64,36 +105,47 @@ export const ProfileSchema = z
 export const WorkExperienceSchema = z
   .object({
     jobTitle: z.string().min(1, {
-      message: "First Name is required.",
+      message: "Job title is required.",
     }),
     companyName: z.string().min(1, {
-      message: "Last Name is required.",
+      message: "Company name is required.",
     }),
     userId: z.string(),
 
-    startDate: z.string(),
-    endDate: z.string(),
+    startDate: z.string().min(1, { message: "Start Date is required." }),
+    endDate: z.string().optional(),
   })
-  .refine((data) => data.endDate > data.startDate, {
-    message: "End Date must be greater than Start Date.",
-    path: ["endDate"],
-  });
+  .refine(
+    (data) => {
+      if (data.endDate === "Present") {
+        return true; // "Present" is valid
+      }
+      if (!data.endDate) {
+        return false; // Ensure endDate is not empty unless "Present"
+      }
+      return new Date(data.endDate) > new Date(data.startDate); // Compare dates
+    },
+    {
+      message: "End Date must be greater than Start Date.",
+      path: ["endDate"],
+    },
+  );
 export const EducationSchema = z.object({
   degree: z.string().min(1, {
-    message: "First Name is required.",
+    message: "Degre or Certification is required.",
   }),
   fieldOfStudy: z.string().min(1, {
-    message: "Last Name is required.",
+    message: "Field of study is required.",
   }),
   institution: z.string().min(1, {
-    message: "Last Name is required.",
+    message: "Institution is required.",
   }),
   graduationYear: z.string().optional(),
   userId: z.string(),
 });
 export const TechSkillsSchema = z.object({
   name: z.string().min(4, {
-    message: "A skill name is required.",
+    message: "A tech skill is required.",
   }),
 
   userId: z.string(),
@@ -145,13 +197,13 @@ export const ProjectSchema = z.object({
     message: "Title is required.",
   }),
   role: z.string().min(1, {
-    message: "role is required.",
+    message: "Role is required.",
   }),
   description: z.string().min(1, {
-    message: "description is required.",
+    message: "Description is required.",
   }),
   link: z.string().min(1, {
-    message: "link is required.",
+    message: "Link is required.",
   }),
   projectImage: z.union([z.instanceof(File), z.string()]).optional(),
 
@@ -228,8 +280,8 @@ export const RegisterSchema = z.object({
     message: "Last Name is required.",
   }),
   email: z.string().email({ message: "Invalid email address." }),
-  password: z.string().min(1, {
-    message: "Password is required.",
+  password: z.string().min(6, {
+    message: "Minimum of 6 characters required.",
   }),
 });
 export const LoginSchema = z.object({

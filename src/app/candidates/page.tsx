@@ -16,7 +16,6 @@ interface CandidatesProps {
 
 const Candidates = async () => {
   const userss = await getUserFiltered();
-  console.log(userss);
 
   const users = await prisma.user.findMany({
     select: {

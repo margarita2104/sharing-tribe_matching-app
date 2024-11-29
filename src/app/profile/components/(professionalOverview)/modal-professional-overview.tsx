@@ -40,6 +40,7 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
+  const [open, setOpen] = useState<boolean>(false);
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
 
@@ -51,7 +52,6 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
     startTransition(() => {
       ProfileUpdate(values)
         .then(async (data) => {
-          console.log(data);
           // if (data?.error) {
           //   // setError(data.error);
           //   toast({ title: "Error", description: data.error });
@@ -59,6 +59,7 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
 
           if (data.success) {
             await update();
+            setOpen(false);
 
             toast({
               title: "Professional Overview added!",
@@ -77,7 +78,7 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
     });
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -95,21 +96,23 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
         </DialogHeader>
         <Form {...form}>
           <form id="createEducationForm" onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-1">
               <FormField
                 control={form.control}
                 name="jobTitle"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Job Title</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Job Title</FormLabel>
 
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Job Title"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Job Title"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -119,57 +122,62 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                 control={form.control}
                 name="jobRoleFamily"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Job role family</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Job role family</FormLabel>
 
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl className="cursor-pointer">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="cursor-pointer">
-                        <SelectItem
-                          value="SoftwareDevelopment"
-                          className="cursor-pointer"
-                        >
-                          Software Development
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Data">
-                          Data
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Fintech">
-                          Fintech
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Design">
-                          Design
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="SalesMarketing"
-                        >
-                          Sales / Marketing
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="ProductManagment"
-                        >
-                          Product Managment
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="ScrumMaster"
-                        >
-                          Scrum Master
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Other">
-                          Other
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="SoftwareDevelopment"
+                            className="cursor-pointer"
+                          >
+                            Software Development
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Data">
+                            Data
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="Fintech"
+                          >
+                            Fintech
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Design">
+                            Design
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="SalesMarketing"
+                          >
+                            Sales / Marketing
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ProductManagment"
+                          >
+                            Product Managment
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ScrumMaster"
+                          >
+                            Scrum Master
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Other">
+                            Other
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     <FormMessage />
                   </FormItem>
@@ -179,39 +187,49 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                 control={form.control}
                 name="employmentStatus"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Employment Status</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Employment Status
+                      </FormLabel>
 
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl className="cursor-pointer">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="cursor-pointer">
-                        <SelectItem
-                          value="Freelance"
-                          className="cursor-pointer"
-                        >
-                          Freelance
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="FullTime">
-                          FullTime
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="PartTime">
-                          PartTime
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="OpentoOpportunities"
-                        >
-                          OpenToOpportunities
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="Freelance"
+                            className="cursor-pointer"
+                          >
+                            Freelance
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="FullTime"
+                          >
+                            FullTime
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="PartTime"
+                          >
+                            PartTime
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="OpentoOpportunities"
+                          >
+                            OpenToOpportunities
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     <FormMessage />
                   </FormItem>
@@ -222,30 +240,32 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                 control={form.control}
                 name="workMode"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Work Mode</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Work Mode</FormLabel>
 
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl className="cursor-pointer">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="cursor-pointer">
-                        <SelectItem value="Hybrid" className="cursor-pointer">
-                          Hybrid
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Remote">
-                          Remote
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="Onsite">
-                          Onsite
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem value="Hybrid" className="cursor-pointer">
+                            Hybrid
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Remote">
+                            Remote
+                          </SelectItem>
+                          <SelectItem className="cursor-pointer" value="Onsite">
+                            Onsite
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     <FormMessage />
                   </FormItem>
@@ -256,36 +276,41 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                 control={form.control}
                 name="availability"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Availability</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Availability</FormLabel>
 
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl className="cursor-pointer">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="cursor-pointer">
-                        <SelectItem value="OneMonth" className="cursor-pointer">
-                          1 Month
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="ThreeMonths"
-                        >
-                          3 Months
-                        </SelectItem>
-                        <SelectItem
-                          className="cursor-pointer"
-                          value="SixMonths"
-                        >
-                          6 Months
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl className="cursor-pointer">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="cursor-pointer">
+                          <SelectItem
+                            value="OneMonth"
+                            className="cursor-pointer"
+                          >
+                            1 Month
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="ThreeMonths"
+                          >
+                            3 Months
+                          </SelectItem>
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="SixMonths"
+                          >
+                            6 Months
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                     <FormMessage />
                   </FormItem>
@@ -295,15 +320,17 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                 control={form.control}
                 name="currentCompany"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Current Company</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Current Company"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Current Company</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Current Company"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -319,15 +346,15 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  disabled={isPending}
-                  type="submit"
-                  id="createEducationForm"
-                >
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button
+                disabled={isPending}
+                type="submit"
+                id="createEducationForm"
+              >
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>

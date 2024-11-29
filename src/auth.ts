@@ -88,6 +88,10 @@ export const {
       session.user.projects = token.projects as Project[];
       session.user.additionalInfo = token.additionalInfo as AdditionalInfo;
       session.user.discTestResult = token.discTestResult as string;
+      session.user.marketingEmails = token.marketingEmails as boolean;
+      session.user.profileVisibility = token.profileVisibility as boolean;
+      session.user.receiveMarketingEmails =
+        token.receiveMarketingEmails as boolean;
 
       return session;
     },
@@ -125,6 +129,9 @@ export const {
       token.projects = existingUser.projects;
       token.additionalInfo = existingUser.additionalInfo;
       token.discTestResult = existingUser.discTestResult;
+      token.marketingEmails = existingUser.marketingEmails;
+      token.profileVisibility = existingUser.profileVisibility;
+      token.receiveMarketingEmails = existingUser.receiveMarketingEmails;
 
       return token;
     },

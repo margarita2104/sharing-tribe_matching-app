@@ -1,7 +1,9 @@
-import { deleteActionModal } from "~/actions/profile";
+"use client";
+
+import { DeleteProfile } from "~/actions/profile";
+
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -11,19 +13,15 @@ import {
   AlertDialogTrigger,
 } from "../../../../components/ui/alert-dialog";
 import { Button } from "../../../../components/ui/button";
-import { type PrismaClient } from "@prisma/client";
+
 import { toast } from "~/hooks/use-toast";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-type DeleteModalProps = {
-  id: number;
-  name: keyof Omit<PrismaClient, `$${string}`>;
-  isPending: boolean;
-};
-
-export function DeleteModal({ id, name, isPending }: DeleteModalProps) {
+export function DeleteProfileModal() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
-  if (isPending) return null;
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
@@ -32,7 +30,7 @@ export function DeleteModal({ id, name, isPending }: DeleteModalProps) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you absolutely sure you want to delete?
+            Are you absolutely sure you want to delete your profile?
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone.
@@ -44,15 +42,12 @@ export function DeleteModal({ id, name, isPending }: DeleteModalProps) {
             className="bg-red-600 hover:bg-red-500"
             onClick={async () => {
               try {
-                await deleteActionModal(id, name);
-
-                toast({ title: "Success", description: "Deleted" });
-                setOpen(false);
+                await DeleteProfile();
+                router.push("/auth/register");
               } catch (error) {
                 toast({ title: "Error", description: "An error occurred" });
               }
             }}
-            disabled={isPending}
           >
             Delete
           </Button>

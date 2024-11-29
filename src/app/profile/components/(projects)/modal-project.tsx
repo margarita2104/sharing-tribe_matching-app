@@ -31,6 +31,7 @@ import { FormError } from "~/components/form-error";
 import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
+import { set } from "date-fns";
 
 export function ModalProject({
   userId,
@@ -41,6 +42,7 @@ export function ModalProject({
 }) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
@@ -81,6 +83,10 @@ export function ModalProject({
       ProjectCreate({ ...data, projectImage: imageUrl })
         .then(async (response) => {
           await update();
+          setOpen(false);
+          toast({
+            title: "Project added",
+          });
         })
         .catch((err) => {
           console.error("Error during profile update:", err);
@@ -94,7 +100,7 @@ export function ModalProject({
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className="border-[1px] border-tree-poppy bg-white"
@@ -112,21 +118,23 @@ export function ModalProject({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="space-y-1">
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Project Title</FormLabel>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Project Title</FormLabel>
 
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Project Title"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Project Title"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -136,17 +144,19 @@ export function ModalProject({
                 control={form.control}
                 name="role"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Role in the Project
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Role in the Project"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Role in the Project
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Role in the Project"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -169,15 +179,17 @@ export function ModalProject({
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Description</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Description"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Description</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Description"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -187,17 +199,19 @@ export function ModalProject({
                 control={form.control}
                 name="link"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">
-                      Link to the Project
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Link to the Project"
-                        disabled={isPending}
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">
+                        Link to the Project
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Link to the Project"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -206,18 +220,20 @@ export function ModalProject({
                 control={form.control}
                 name="projectImage"
                 render={({ field }) => (
-                  <FormItem className="flex items-center justify-between">
-                    <FormLabel className="w-full">Project Image</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="file"
-                        onChange={(e) => field.onChange(e.target.files?.[0])}
-                        onBlur={field.onBlur}
-                        name={field.name}
-                        ref={field.ref}
-                        className="w-full cursor-pointer"
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="w-full">Project Image</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="file"
+                          onChange={(e) => field.onChange(e.target.files?.[0])}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          ref={field.ref}
+                          className="w-full cursor-pointer"
+                        />
+                      </FormControl>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -233,11 +249,11 @@ export function ModalProject({
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button disabled={isPending} type="submit">
-                  Add
-                </Button>
-              </DialogClose>
+              {/* <DialogClose asChild> */}
+              <Button disabled={isPending} type="submit">
+                Add
+              </Button>
+              {/* </DialogClose> */}
             </DialogFooter>
           </form>
         </Form>
