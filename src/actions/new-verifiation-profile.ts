@@ -4,7 +4,7 @@ import { db } from "../server/db";
 import { getVerificationTokenByToken } from "../data/verification-token";
 import { currentUser } from "~/lib/auth";
 
-export const newVerification = async (token: string) => {
+export const newVerificationProfile = async (token: string) => {
   const user = await currentUser();
 
   if (!user) {
