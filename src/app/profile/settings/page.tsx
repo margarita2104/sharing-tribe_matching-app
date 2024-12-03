@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState, useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { RxAvatar } from "react-icons/rx";
 import { z } from "zod";
@@ -25,10 +25,10 @@ import { Switch } from "~/components/ui/switch";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { SettingsSchema } from "~/schema";
 import { DeleteProfileModal } from "./components/delete-profile-modal";
+import Loading from "./loading";
 
 const SettingsPage = () => {
   const user = useCurrentUser();
-  console.log(user);
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
@@ -64,12 +64,14 @@ const SettingsPage = () => {
     });
   };
 
-  if (!user) return null;
+  if (!user) {
+    return <Loading />;
+  }
 
   return (
     <div className="mt-8">
       <div className="grid w-9/12 grid-cols-1 items-center md:grid-cols-2 md:space-x-16">
-        {user.image ? (
+        {user?.image ? (
           <Image
             src={user.image}
             alt="Profile picture"
@@ -82,14 +84,14 @@ const SettingsPage = () => {
         )}
 
         <div className="relative mt-6 space-y-1 md:justify-self-start">
-          <p className="text-2xl text-violet">{user.name}</p>
-          {user.discTestResult ? (
+          <p className="text-2xl text-violet">{user?.name}</p>
+          {user?.discTestResult ? (
             <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
-              <p>{user.discTestResult}</p>
+              <p>{user?.discTestResult}</p>
             </div>
           ) : null}
 
-          <p>{user.email}</p>
+          <p>{user?.email}</p>
         </div>
       </div>
       <h2 className="mt-8 text-center text-2xl text-purple-900">Settings</h2>
