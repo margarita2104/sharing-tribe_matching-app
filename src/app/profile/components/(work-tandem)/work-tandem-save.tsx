@@ -152,10 +152,9 @@ export function WorkTandemSave({
                         </FormLabel>
                         <Select
                           onValueChange={(value) => {
-                            // Ensure the value is wrapped in an array
                             field.onChange([value]);
                           }}
-                          value={field.value?.[0] ?? ""} // Use the first value in the array or an empty string
+                          value={field.value?.[0] ?? ""}
                         >
                           <FormControl className="cursor-pointer">
                             <SelectTrigger>

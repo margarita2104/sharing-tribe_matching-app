@@ -6,10 +6,7 @@ import { db } from "../server/db";
 import { getUserByEmail, getUserById } from "~/data/user";
 import { currentUser } from "../lib/auth";
 import { generateVerificationToken } from "~/lib/tokens";
-import {
-  sendVerificationEmail,
-  sendVerificationEmailProfile,
-} from "~/lib/mail";
+import { sendVerificationEmailProfile } from "~/lib/mail";
 import {
   type WorkExperienceSchema,
   type ProfileSchema,
@@ -28,6 +25,28 @@ import cloudinary from "~/lib/cloudinary";
 import { type JsonValue } from "@prisma/client/runtime/library";
 
 const dbReusable = new PrismaClient();
+
+export async function fetchCities(query: string) {
+  if (!query) return [];
+
+  const response = await fetch(
+    `https://api.api-ninjas.com/v1/city?name=${encodeURIComponent(query)}&country=CH&limit=5`,
+    {
+      headers: {
+        "X-Api-Key": process.env.NINJA_API_KEY ?? "",
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch cities");
+  }
+
+  const data = (await response.json()) as { name: string }[];
+
+  return data.map((city: { name: string }) => city.name);
+}
 
 export async function DeleteProfile() {
   const user = await currentUser();
@@ -52,7 +71,6 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
     return { error: "Unauthorized" };
   }
   const dbUser = await getUserById(user.id);
-  console.log("dbUser", dbUser);
 
   if (!dbUser) {
     return { error: "Unauthorized" };
@@ -66,7 +84,6 @@ export const ProfileUpdate = async (values: z.infer<typeof ProfileSchema>) => {
 
   if (values.email && values.email !== user.email) {
     const existingUser = await getUserByEmail(values.email);
-    console.log("existingUser", existingUser);
 
     if (existingUser && existingUser.id !== user.id) {
       return { error: "Email already in use!" };

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-auto bg-violet px-7 pb-12 pt-2 text-tree-poppy">
+    <footer className="mt-14 bg-violet px-7 pb-12 pt-2 text-tree-poppy">
       <Link className="mb-3 flex justify-center sm:justify-start" href="/">
         <Image
           src={"/logo.svg"}
