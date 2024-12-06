@@ -195,7 +195,6 @@ export function AdditionalInfoSave({
                   <>
                     {field.value.map((language, index) => (
                       <div key={index} className="flex items-center space-x-4">
-                        {/* Input for Language Name */}
                         <FormControl>
                           <Input
                             placeholder="Language"
@@ -216,22 +215,20 @@ export function AdditionalInfoSave({
                           />
                         </FormControl>
 
-                        {/* Dropdown for Proficiency */}
                         <FormControl>
                           <Select
-                            value={language.proficiency || "Beginner"} // Default to "Beginner" if undefined
+                            value={language.proficiency || "Beginner"}
                             onValueChange={(value) => {
                               const updatedLanguages = [...field.value];
 
-                              // Ensure both `name` and `proficiency` are defined
                               updatedLanguages[index] = {
                                 ...updatedLanguages[index],
-                                name: updatedLanguages[index]?.name ?? "", // Default to an empty string if undefined
+                                name: updatedLanguages[index]?.name ?? "",
                                 proficiency: value as
                                   | "Mother Tongue"
                                   | "Fluent"
                                   | "Intermediate"
-                                  | "Beginner", // Assign proficiency
+                                  | "Beginner",
                               };
 
                               field.onChange(updatedLanguages);
@@ -253,7 +250,6 @@ export function AdditionalInfoSave({
                           </Select>
                         </FormControl>
 
-                        {/* Delete Button */}
                         <ButtonDeleteLanguage
                           userId={userId}
                           index={index}
@@ -262,7 +258,6 @@ export function AdditionalInfoSave({
                       </div>
                     ))}
 
-                    {/* Add Button */}
                     <Button
                       onClick={() => {
                         const updatedLanguages = [
@@ -297,8 +292,8 @@ export function AdditionalInfoSave({
                     <FormLabel>Preferred Work Schedule</FormLabel>
                     <FormControl>
                       <Select
-                        onValueChange={field.onChange} // Hook Form handles the value change
-                        defaultValue={field.value} // Default value from the form state
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select your schedule" />

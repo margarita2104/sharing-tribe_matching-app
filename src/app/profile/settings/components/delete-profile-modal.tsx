@@ -16,11 +16,9 @@ import { Button } from "../../../../components/ui/button";
 
 import { toast } from "~/hooks/use-toast";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 export function DeleteProfileModal() {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   return (
@@ -46,7 +44,11 @@ export function DeleteProfileModal() {
                 await DeleteProfile();
                 await signOut();
               } catch (error) {
-                toast({ title: "Error", description: "An error occurred" });
+                toast({
+                  title: "Error",
+                  description: "An error occurred",
+                  variant: "destructive",
+                });
               }
             }}
           >

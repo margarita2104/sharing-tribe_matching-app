@@ -46,7 +46,7 @@ export function AddNewSection({
     <div className="mt-8">
       <h2 className="text-center text-xl">Add new section</h2>
       <div className="flex flex-col items-center justify-center text-center">
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
           {jobTitle ? null : (
             <ModalProfessionalOverview title="Professional Overview" />
           )}
@@ -79,7 +79,7 @@ export function AddNewSection({
             </Button>
           )}
         </div>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
           {bio ? null : <ModalBio title="Bio" />}
           {workTandemPreferences ? null : (
             <Button

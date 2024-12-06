@@ -3,12 +3,12 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition, useState } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { ProfileSchema } from "../../../schema/index";
 import { Card, CardContent, CardHeader } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
-import { ProfileUpdate } from "../../../actions/profile";
+import { fetchCities, ProfileUpdate } from "../../../actions/profile";
 import {
   Form,
   FormField,
@@ -25,6 +25,7 @@ import { type ExtendedUser } from "~/next-auth";
 import { toast } from "~/hooks/use-toast";
 import Link from "next/link";
 import { LoadingSpinner } from "~/components/ui/loading-spinner";
+import debounce from "lodash.debounce";
 
 export function PersonalInfo({ user }: { user: ExtendedUser }) {
   const [error, setError] = useState<string | undefined>();
@@ -32,6 +33,9 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
   const [success, setSuccess] = useState<string | undefined>();
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -43,11 +47,33 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
     },
   });
 
+  useEffect(() => {
+    const debouncedFetch = debounce(async () => {
+      if (!query) {
+        setSuggestions([]);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const cities = await fetchCities(query);
+        setSuggestions(cities);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    void debouncedFetch();
+
+    return () => debouncedFetch.cancel(); // Cleanup debounce on unmount
+  }, [query]);
+
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
     startTransition(() => {
       ProfileUpdate(values)
         .then(async (data) => {
-          console.log(data);
           if (data?.error) {
             // setError(data.error);
             toast({ title: "Error", description: data.error });
@@ -119,17 +145,41 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                       <FormLabel className="w-full">Location</FormLabel>
                       <FormControl>
                         {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Location"
-                            disabled={isPending}
-                          />
+                          <div className="relative w-full">
+                            <Input
+                              {...field}
+                              placeholder="Enter city"
+                              value={field.value}
+                              onChange={(e) => {
+                                field.onChange(e.target.value);
+                                setQuery(e.target.value);
+                              }}
+                              disabled={isPending}
+                            />
+                            {loading && <LoadingSpinner className="h-6 w-6" />}
+                            {suggestions.length > 0 && (
+                              <ul className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-md">
+                                {suggestions.map((city) => (
+                                  <li
+                                    key={city}
+                                    className="cursor-pointer p-2 text-sm hover:bg-gray-100"
+                                    onClick={() => {
+                                      field.onChange(city);
+                                      setSuggestions([]);
+                                    }}
+                                  >
+                                    {city}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
                         ) : (
-                          <p className="w-full">{user.location ?? "N/A"}</p>
+                          <p className="w-full">
+                            {user.location ? user.location : "N/A"}
+                          </p>
                         )}
                       </FormControl>
-
-                      <FormMessage />
                     </FormItem>
                   )}
                 />

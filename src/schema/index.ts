@@ -118,12 +118,12 @@ export const WorkExperienceSchema = z
   .refine(
     (data) => {
       if (data.endDate === "Present") {
-        return true; // "Present" is valid
+        return true;
       }
       if (!data.endDate) {
-        return false; // Ensure endDate is not empty unless "Present"
+        return false;
       }
-      return new Date(data.endDate) > new Date(data.startDate); // Compare dates
+      return new Date(data.endDate) > new Date(data.startDate);
     },
     {
       message: "End Date must be greater than Start Date.",

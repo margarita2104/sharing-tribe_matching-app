@@ -128,7 +128,7 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
                         value={field.value ? field.value.join(", ") : ""}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // Convert comma-separated input into an array
+
                           field.onChange(
                             value.split(",").map((item) => item.trim()),
                           );

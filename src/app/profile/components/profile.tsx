@@ -115,7 +115,7 @@ export default function Profile({
       {user.discTestResult ? null : (
         <Button
           asChild
-          className="mt-8 bg-tree-poppy text-white hover:bg-tree-poppy/90"
+          className="bg-tree-poppy text-white hover:bg-tree-poppy/90"
         >
           <Link href="/disc/about/job-roles">Take DISC Test</Link>
         </Button>

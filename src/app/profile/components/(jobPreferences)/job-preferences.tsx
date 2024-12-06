@@ -120,11 +120,11 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
 
                   <Select
                     onValueChange={(selecteWorkPreference) => {
-                      // Ensure field.value is an array and update it
+                      
                       const updatedWorkPreference = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selecteWorkPreference])] // Add only unique roles
+                        ? [...new Set([...field.value, selecteWorkPreference])]
                         : [selecteWorkPreference];
-                      field.onChange(updatedWorkPreference); // Update the array
+                      field.onChange(updatedWorkPreference); 
                     }}
                     value={
                       Array.isArray(field.value)
@@ -163,11 +163,11 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
 
                   <Select
                     onValueChange={(selectedIndustry) => {
-                      // Ensure field.value is an array and update it
+                      
                       const updatedIndustry = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selectedIndustry])] // Add only unique roles
+                        ? [...new Set([...field.value, selectedIndustry])] 
                         : [selectedIndustry];
-                      field.onChange(updatedIndustry); // Update the array
+                      field.onChange(updatedIndustry); 
                     }}
                     value={
                       Array.isArray(field.value)
