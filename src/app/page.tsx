@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function HomePage() {
   return (
@@ -32,8 +33,8 @@ export default async function HomePage() {
           <Image
             src="/images/home-perfect-match.svg"
             alt="Section illustration"
-            width={400}
-            height={400}
+            width={300}
+            height={300}
           />
         </div>
         <div className="w-1/2">
@@ -83,8 +84,8 @@ export default async function HomePage() {
               <Image
                 src="/images/home-how-works-1.svg"
                 alt="Section illustration"
-                width={292}
-                height={200}
+                width={242}
+                height={150}
               />
             </div>
           </div>
@@ -104,8 +105,8 @@ export default async function HomePage() {
               <Image
                 src="/images/home-how-works-2.svg"
                 alt="Section illustration"
-                width={292}
-                height={200}
+                width={242}
+                height={150}
               />
             </div>
           </div>
@@ -122,8 +123,8 @@ export default async function HomePage() {
               <Image
                 src="/images/home-how-works-3.svg"
                 alt="Section illustration"
-                width={292}
-                height={200}
+                width={242}
+                height={150}
               />
             </div>
           </div>
@@ -142,8 +143,8 @@ export default async function HomePage() {
               <Image
                 src="/images/home-how-works-4.svg"
                 alt="Section illustration"
-                width={292}
-                height={200}
+                width={242}
+                height={150}
               />
             </div>
           </div>
@@ -158,11 +159,19 @@ export default async function HomePage() {
           Sharing Tribe. Together, we&rsquo;ll help you find the ideal partner
           to&nbsp;achieve your goals.
         </p>
+        <section className="flex justify-center">
+        <Link
+          href="/disc"
+          className="rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
+        >
+          Start DISC Test
+        </Link>
+      </section>
         <Image
           src="/images/home-perfect-partner.svg"
           alt="Section illustration"
-          width={910}
-          height={600}
+          width={710}
+          height={400}
         />
       </section>
     </main>

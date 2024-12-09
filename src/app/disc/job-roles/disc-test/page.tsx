@@ -117,7 +117,7 @@ const DiscTest = () => {
       // setting the test result in the localStorage
       localStorage.setItem("discTestResult", mostAnsweredLetter);
       router.push(
-        `/disc/about/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
+        `/disc/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
       );
     }
 
@@ -126,18 +126,24 @@ const DiscTest = () => {
 
   return (
     <main>
-      <section className="hero">
+      {/* <section className="hero">
         <Image
           src="/images/disc-about-page.svg"
           alt="Hero image"
           fill
           style={{ objectFit: "cover" }}
         />
-      </section>
-      <section className="flex flex-col items-center">
+      </section> */}
+      <section className="flex flex-col items-center mt-6">
         <h1 className="mb-6 text-4xl font-semibold text-violet">
           DISC Personality Test
         </h1>
+        <p className=" w-1/2 text-center">
+          Select the statement that best describes how you naturally behave
+          in&nbsp;a work setting and feels <strong>MOST</strong> true for you,
+          as&nbsp;well as&nbsp;the statement that feels <strong>LEAST </strong>
+          like you or&nbsp;doesn&rsquo;t apply as&nbsp;much.
+        </p>
       </section>
       <section className="flex flex-col items-center space-y-8">
         {testData.questions.map((question, index) => (

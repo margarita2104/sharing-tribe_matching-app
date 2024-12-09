@@ -8,10 +8,9 @@ export const publicRoutes = [
   "/auth/new-verification",
   "/auth/new-verification-profile",
   "/disc",
-  "/disc/about",
-  "/disc/about/job-roles",
-  "/disc/about/job-roles/disc-test",
-  "/disc/about/job-roles/disc-test/results",
+  "/disc/job-roles",
+  "/disc/job-roles/disc-test",
+  "/disc/job-roles/disc-test/results",
 ];
 
 /**
