@@ -30,6 +30,8 @@ const DiscTest = () => {
   const [mostAnsweredLetter, setMostAnsweredLetter] = useState<string | null>(
     null,
   );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const totalQuestions = testData.questions.length;
 
   const handleSelect = (
     questionIndex: number,
@@ -124,8 +126,23 @@ const DiscTest = () => {
     await updateTest(mostAnsweredLetter, user?.id);
   };
 
+  const handleNext = () => {
+    if (currentQuestionIndex < totalQuestions - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const isNextDisabled = currentQuestionIndex === testData.questions.length - 1;
+  const isPreviousDisabled = currentQuestionIndex === 0;
+
   return (
-    <main>
+    <main className="w-full">
       {/* <section className="hero">
         <Image
           src="/images/disc-about-page.svg"
@@ -134,30 +151,29 @@ const DiscTest = () => {
           style={{ objectFit: "cover" }}
         />
       </section> */}
-      <section className="flex flex-col items-center mt-6">
-        <h1 className="mb-6 text-4xl font-semibold text-violet">
+      <section className="mt-6 flex flex-col items-center">
+        <h1 className="text-4xl font-semibold text-violet">
           DISC Personality Test
         </h1>
-        <p className=" w-1/2 text-center">
+        {/* <p className="w-1/2 text-center">
           Select the statement that best describes how you naturally behave
           in&nbsp;a work setting and feels <strong>MOST</strong> true for you,
           as&nbsp;well as&nbsp;the statement that feels <strong>LEAST </strong>
           like you or&nbsp;doesn&rsquo;t apply as&nbsp;much.
-        </p>
+        </p> */}
       </section>
-      <section className="flex flex-col items-center space-y-8">
-        {testData.questions.map((question, index) => (
-          <div
-            key={index}
-            className="mb-8 w-1/2 rounded-xl border border-alto p-10"
-          >
-            <h2 className="text-xl font-semibold">{question.question}</h2>
-            <div className="mt-4">
-              <h3 className="text-lg">
-                Which statement describes you most and least?
-              </h3>
-              <div className="mt-4 space-y-4">
-                {question.options.map((option, i) => (
+      <div className="flex w-full flex-col items-center">
+        <div className="mb-8 w-1/2 rounded-xl border border-alto p-5">
+          <h2 className="text-xl font-semibold">
+            {testData.questions[currentQuestionIndex]?.question}
+          </h2>
+          <div className="mt-4">
+            <h3 className="text-lg">
+              Which statement describes you most and least?
+            </h3>
+            <div className="mt-4 space-y-4">
+              {testData.questions[currentQuestionIndex]?.options?.map(
+                (option, i) => (
                   <div
                     key={i}
                     className="flex items-center justify-between rounded-xl border border-alto py-3 pl-5"
@@ -168,16 +184,18 @@ const DiscTest = () => {
                       {/* Most Radio Button */}
                       <RadioGroup.Root
                         className="flex items-center"
-                        defaultValue={selections[index]?.most ?? undefined}
+                        defaultValue={
+                          selections[currentQuestionIndex]?.most ?? undefined
+                        }
                         aria-label="Most selection"
                         onValueChange={(value) =>
-                          handleSelect(index, "most", value)
+                          handleSelect(currentQuestionIndex, "most", value)
                         }
                       >
                         <RadioGroup.Item
                           className="RadioGroupItem thumbs-up"
                           value={option.text}
-                          id={`q${index}-most-${i}`}
+                          id={`q${currentQuestionIndex}-most-${i}`}
                           style={{
                             display: "flex",
                             alignItems: "center",
@@ -187,7 +205,8 @@ const DiscTest = () => {
                             border: "1px solid #D9D9D9",
                             borderRadius: "12px 0 0 12px",
                             backgroundColor:
-                              selections[index]?.most === option.text
+                              selections[currentQuestionIndex]?.most ===
+                              option.text
                                 ? "#55D718"
                                 : "white",
                             cursor: "pointer",
@@ -207,16 +226,18 @@ const DiscTest = () => {
                       {/* Least Radio Button */}
                       <RadioGroup.Root
                         className="flex items-center"
-                        defaultValue={selections[index]?.least ?? undefined}
+                        defaultValue={
+                          selections[currentQuestionIndex]?.least ?? undefined
+                        }
                         aria-label="Least selection"
                         onValueChange={(value) =>
-                          handleSelect(index, "least", value)
+                          handleSelect(currentQuestionIndex, "least", value)
                         }
                       >
                         <RadioGroup.Item
                           className="RadioGroupItem thumbs-down"
                           value={option.text}
-                          id={`q${index}-least-${i}`}
+                          id={`q${currentQuestionIndex}-least-${i}`}
                           style={{
                             display: "flex",
                             alignItems: "center",
@@ -226,7 +247,8 @@ const DiscTest = () => {
                             border: "1px solid #D9D9D9",
                             borderRadius: "0 12px 12px 0",
                             backgroundColor:
-                              selections[index]?.least === option.text
+                              selections[currentQuestionIndex]?.least ===
+                              option.text
                                 ? "#D92530"
                                 : "white",
                             cursor: "pointer",
@@ -245,12 +267,51 @@ const DiscTest = () => {
                       </RadioGroup.Root>
                     </div>
                   </div>
-                ))}
-              </div>
+                ),
+              )}
             </div>
           </div>
-        ))}
-      </section>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center">
+        <div className="w-1/2">
+          <div className="flex flex-col items-center justify-between">
+            <span className="mb-3">
+              Question {currentQuestionIndex + 1} of {totalQuestions}
+            </span>
+            <div className="h-2 w-full rounded-full bg-gray-200">
+              <div
+                className="h-2 rounded-full bg-violet"
+                style={{
+                  width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 flex w-1/2 justify-between">
+          <button
+            className={`rounded-lg bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange ${
+              isPreviousDisabled ? "cursor-not-allowed bg-gray-400" : ""
+            }`}
+            disabled={isPreviousDisabled}
+            onClick={handlePrev}
+          >
+            Previous
+          </button>
+          <button
+            className={`rounded-lg bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange ${
+              isNextDisabled ? "cursor-not-allowed bg-gray-400" : ""
+            }`}
+            disabled={isNextDisabled}
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        </div>
+      </div>
 
       <section className="mt-8 flex justify-center">
         {isComplete ? (
