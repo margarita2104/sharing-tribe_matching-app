@@ -10,17 +10,17 @@ export default function NavAuthButtons() {
       <div className="flex items-center justify-center gap-2 lg:gap-7">
         <Link
           className={
-            currentPath === "/auth"
+            currentPath === "/join"
               ? "font-semibold"
               : "border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
           }
-          href="/auth"
+          href="/join"
         >
           Sign in
         </Link>
         <Link
-          className="rounded-2xl bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange"
-          href="/join"
+          className="rounded-lg bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange"
+          href="/auth"
         >
           Join
         </Link>
