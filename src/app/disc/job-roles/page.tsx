@@ -320,7 +320,7 @@ const JobRoles = () => {
                 </p>
                 <Button
                   disabled={isPending}
-                  className="mb-8 rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
+                  className="mb-8 rounded-lg border text-violet border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
                   type="submit"
                 >
                   Next
