@@ -48,6 +48,11 @@ const Disc = () => {
             as&nbsp;well as&nbsp;the type of&nbsp;partner who can complement
             your style.
           </p>
+          <p className="mb-3">
+            This test is&nbsp;designed to&nbsp;help you understand your
+            personality and working style so&nbsp;that we&nbsp;can match you
+            with a&nbsp;professional who complements your strengths.
+          </p>
         </div>
         <div className="flex w-1/2 justify-center">
           <Image
@@ -62,6 +67,18 @@ const Disc = () => {
         <h2 className="mb-6 text-center text-2xl font-semibold text-violet">
           How the DISC Test Works
         </h2>
+        <p className="mb-6 text-center">
+          You will see 20&nbsp;questions, and for each question, you will have
+          4&nbsp;statements; you need to&nbsp;choose one that feels MOST like
+          you and one that feels LEAST like you.
+        </p>
+        <p className="mb-6 text-center">
+          <strong>Tips for Accurate Results: </strong>
+          Don&rsquo;t overthink your answers&mdash;go with your first instinct.
+          There are no&nbsp;right or&nbsp;wrong answers; simply choose what
+          feels most natural. Be&nbsp;honest with yourself to&nbsp;ensure your
+          DISC profile accurately reflects your true working style.
+        </p>
         <div className="flex flex-wrap justify-center gap-14">
           <div className="flex w-1/4 flex-col justify-between rounded-lg border border-alto px-10 py-9">
             <div className="mb-6">
@@ -77,8 +94,8 @@ const Disc = () => {
               <Image
                 src="/icons/disc-icon-1.svg"
                 alt="Section icon"
-                width={130}
-                height={114}
+                width={65}
+                height={57}
               />
             </div>
           </div>
@@ -95,8 +112,8 @@ const Disc = () => {
               <Image
                 src="/icons/disc-icon-2.svg"
                 alt="Section icon"
-                width={130}
-                height={130}
+                width={65}
+                height={65}
               />
             </div>
           </div>
@@ -115,40 +132,28 @@ const Disc = () => {
               <Image
                 src="/icons/disc-icon-3.svg"
                 alt="Section icon"
-                width={94}
-                height={130}
+                width={47}
+                height={65}
               />
             </div>
           </div>
         </div>
       </section>
-      <section className="px-36">
+      <section className="flex justify-center">
         <Link
-          href="/disc/about"
-          className="flex items-center justify-between rounded-lg border border-alto hover:bg-accent"
+          href="/disc/job-roles"
+          className="rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
         >
-          <h3 className="py-5 pl-10 text-xl font-semibold text-violet">
-            Ready to&nbsp;take the test?
-          </h3>
-          <div className="flex items-center rounded-lg border border-alto">
-            <div className="h-full border-r border-alto py-3 px-4">
-              <Image
-                src="/icons/test-yes.svg"
-                alt="Section icon"
-                width={40}
-                height={50}
-              />
-            </div>
-            <div className="h-full py-3 px-4">
-              <Image
-                src="/icons/test-no.svg"
-                alt="Section icon"
-                width={40}
-                height={50}
-              />
-            </div>
-          </div>
+          Start DISC Test
         </Link>
+      </section>
+      <section className="flex justify-center">
+        <a
+          className="border-b-2 border-transparent text-xl font-semibold hover:border-b-2 hover:border-tree-poppy"
+          href="mailto:contact@sharingtribe.tech"
+        >
+          Have a&nbsp;question about the DISC test? Ask&nbsp;us
+        </a>
       </section>
     </main>
   );

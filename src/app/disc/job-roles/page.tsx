@@ -54,7 +54,7 @@ const JobRoles = () => {
               title: "Job Role family updated",
               description: data.success,
             });
-            router.push("/disc/about/job-roles/disc-test");
+            router.push("/disc/job-roles/disc-test");
           }
         })
         .catch(() =>
@@ -195,7 +195,7 @@ const JobRoles = () => {
                   &laquo;Next&raquo; to&nbsp;proceed to&nbsp;the DISC test.
                 </p>
                 <Link
-                  href="/disc/about/job-roles/disc-test"
+                  href="/disc/job-roles/disc-test"
                   className="rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
                   type="button"
                   // onClick={saveRole}
