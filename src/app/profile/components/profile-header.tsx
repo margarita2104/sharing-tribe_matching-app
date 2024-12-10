@@ -134,7 +134,7 @@ export function ProfileHeader({
                 variant="secondary"
                 onClick={() => setEditProfile(true)}
               >
-                Edit Profile
+                {user.bio && user.isOAuth ? "Edit Bio" : "Edit Profile"}
               </Button>
             )}
             <Button variant="outline" asChild className="bg-white">
