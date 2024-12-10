@@ -120,10 +120,10 @@ export default function Bio({
           </Form>
         </>
       ) : (
-        <>
+        <div className="mb-8 flex items-center space-x-2">
           <h3 className="text-2xl text-purple-900">Short Bio:</h3>
           <p className="break-words text-xl text-slate-700">{user.bio}</p>
-        </>
+        </div>
       )}
     </>
   );

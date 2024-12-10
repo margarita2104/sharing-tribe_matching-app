@@ -61,14 +61,14 @@ model User {
 model TechnicalSkills {
     id     Int    @id @default(autoincrement())
     name   String
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 }
 
 model SoftSkills {
     id     Int    @id @default(autoincrement())
     name   String
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 }
 
@@ -78,7 +78,7 @@ model WorkExperience {
     companyName String
     startDate   String
     endDate     String?
-    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId      String
 }
 
@@ -88,7 +88,7 @@ model Education {
     fieldOfStudy   String
     institution    String
     graduationYear String?
-    user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user           User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId         String
 }
 
@@ -97,7 +97,7 @@ model JobPreference {
     role           Roles[]
     workPreference WorkPreference[]
     industry       Industry[]
-    user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user           User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId         String           @unique
 }
 
@@ -105,7 +105,7 @@ model TandemPreference {
     id                  Int      @id @default(autoincrement())
     idealPartnerRole    Roles[]
     complementarySkills String[]
-    user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user                User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId              String   @unique
 }
 
@@ -117,7 +117,7 @@ model Project {
     description  String
     link         String?
     projectImage String // Store links to project files/images
-    user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user         User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId       String
 }
 
@@ -127,7 +127,7 @@ model Reference {
     relationship String
     company      String
     contactInfo  String
-    user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user         User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId       String
 }
 
@@ -138,7 +138,7 @@ model AdditionalInfo {
     volunteering          String?
     languages             Json
     preferredWorkSchedule String
-    user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user                  User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId                String   @unique
 }
 
