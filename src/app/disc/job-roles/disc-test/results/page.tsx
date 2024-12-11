@@ -10,11 +10,34 @@ const Results = () => {
   const user = useCurrentUser();
 
   const [result, setResult] = useState<string | null>(null);
-
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     setResult(query.get("mostAnsweredLetter"));
   }, []);
+
+  const renderWhatsNext = () => {
+    const link = user ? "/candidates" : "/join";
+    const buttonText = user ? "Find Candidates" : "Join Now";
+
+    return (
+      <section className="flex flex-col items-center">
+        <h2 className="mb-6 text-2xl font-semibold text-violet">
+          What’s Next?
+        </h2>
+        <p className="w-2/4 text-center mb-6">
+          Explore potential matches on&nbsp;the platform, and start building
+          valuable connections that align with your DISC profile. The perfect
+          professional partner is&nbsp;just a&nbsp;click away!
+        </p>
+        <a
+          href={link}
+          className="rounded-lg border border-alto bg-tree-poppy px-7 py-3 font-semibold hover:bg-flush-orange"
+        >
+          {buttonText}
+        </a>
+      </section>
+    );
+  };
 
   if (!result) {
     return (
@@ -330,17 +353,8 @@ const Results = () => {
       </section>
 
       {renderResultSection()}
+      {renderWhatsNext()}
 
-      <section className="flex flex-col items-center">
-        <h2 className="mb-6 text-2xl font-semibold text-violet">
-          What’s Next?
-        </h2>
-        <p className="w-2/4 text-center">
-          Explore potential matches on&nbsp;the platform, and start building
-          valuable connections that align with your DISC profile. The perfect
-          professional partner is&nbsp;just a&nbsp;click away!
-        </p>
-      </section>
     </main>
   );
 };
