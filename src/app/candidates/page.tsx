@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PrismaClient } from "@prisma/client";
 import { getUserFiltered } from "~/actions/profile";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -56,7 +57,7 @@ const Candidates = async () => {
               className="flex flex-col items-center rounded-lg border p-4 text-center shadow-lg"
             >
               <Image
-                src={user.image ?? "/images/default-avatar.png"}
+                src={user.image ?? "/icons/default-avatar.png"}
                 alt={user.name ?? "User"}
                 width={100}
                 height={100}
@@ -69,9 +70,13 @@ const Candidates = async () => {
 
               <p className="text-sm text-gray-500">{user.jobTitle}</p>
 
-              <p className="mt-2 text-sm text-gray-700">
+              <p className="mt-2 mb-4 text-sm text-gray-700">
                 {user.bio ?? "No bio available."}
               </p>
+
+              <Link href={`/candidates/${user.id}`} className="rounded-lg border border-alto bg-tree-poppy px-7 py-3 font-semibold hover:bg-flush-orange">
+                View Profile
+              </Link>
             </div>
           );
         })}
