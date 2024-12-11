@@ -109,7 +109,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r1">
-                    <strong>I. Software Development</strong> (Software
+                    <strong>Software Development</strong> (Software
                     Development, Software Testing, DevOps, Full Stack
                     Development)
                   </label>
@@ -123,7 +123,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r2">
-                    <strong>II. Data</strong> (Data Science, Data Engineering,
+                    <strong>Data</strong> (Data Science, Data Engineering,
                     Machine Learning, Artificial Intelligence)
                   </label>
                 </div>
@@ -136,7 +136,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r3">
-                    <strong>III. Fintech</strong> (Fintech, Blockchain)
+                    <strong>Fintech</strong> (Fintech, Blockchain)
                   </label>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -148,7 +148,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r4">
-                    <strong>IV. Design</strong> (Design, UI/UX)
+                    <strong>Design</strong> (Design, UI/UX)
                   </label>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -160,7 +160,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r5">
-                    <strong>V. Sales & Marketing</strong>
+                    <strong>Sales & Marketing</strong>
                   </label>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -172,7 +172,7 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r6">
-                    <strong>VI. Product Management / Product Leadership</strong>
+                    <strong>Product Management / Product Leadership</strong>
                   </label>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -184,7 +184,19 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r7">
-                    <strong>VII. Scrum Master / Team Coach / Team Lead</strong>
+                    <strong>Scrum Master / Team Coach / Team Lead</strong>
+                  </label>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RadioGroupRadix.Item
+                    className="RadioGroupItem"
+                    value="Other"
+                    id="r8"
+                  >
+                    <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
+                  </RadioGroupRadix.Item>
+                  <label className="ml-3" htmlFor="r7">
+                    <strong>Other</strong>
                   </label>
                 </div>
               </RadioGroupRadix.Root>
@@ -248,7 +260,7 @@ const JobRoles = () => {
                             <RadioGroupItem value="SoftwareDevelopment" />
                           </FormControl>
                           <FormLabel className="font-normal">
-                            <strong>I. Software Development</strong> (Software
+                            <strong>Software Development</strong> (Software
                             Development, Software Testing, DevOps, Full Stack
                             Development)
                           </FormLabel>
@@ -258,7 +270,7 @@ const JobRoles = () => {
                             <RadioGroupItem value="Data" />
                           </FormControl>
                           <FormLabel className="font-normal">
-                            <strong>II. Data</strong> (Data Science, Data
+                            <strong>Data</strong> (Data Science, Data
                             Engineering, Machine Learning, Artificial
                             Intelligence)
                           </FormLabel>
@@ -268,7 +280,7 @@ const JobRoles = () => {
                             <RadioGroupItem value="Fintech" />
                           </FormControl>
                           <FormLabel className="font-normal">
-                            <strong>III. Fintech</strong> (Fintech, Blockchain)
+                            <strong>Fintech</strong> (Fintech, Blockchain)
                           </FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
@@ -276,7 +288,7 @@ const JobRoles = () => {
                             <RadioGroupItem value="Design" />
                           </FormControl>
                           <FormLabel className="font-normal">
-                            <strong>IV. Design</strong> (Design, UI/UX)
+                            <strong>Design</strong> (Design, UI/UX)
                           </FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
@@ -284,7 +296,7 @@ const JobRoles = () => {
                             <RadioGroupItem value="SalesMarketing" />
                           </FormControl>
                           <FormLabel className="font-normal">
-                            <strong>V. Sales & Marketing</strong>
+                            <strong>Sales & Marketing</strong>
                           </FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
@@ -293,7 +305,7 @@ const JobRoles = () => {
                           </FormControl>
                           <FormLabel className="font-normal">
                             <strong>
-                              VI. Product Management / Product Leadership
+                              Product Management / Product Leadership
                             </strong>
                           </FormLabel>
                         </FormItem>
@@ -303,7 +315,17 @@ const JobRoles = () => {
                           </FormControl>
                           <FormLabel className="font-normal">
                             <strong>
-                              VII. Scrum Master / Team Coach / Team Lead
+                              Scrum Master / Team Coach / Team Lead
+                            </strong>
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="Other" />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            <strong>
+                              Other
                             </strong>
                           </FormLabel>
                         </FormItem>
