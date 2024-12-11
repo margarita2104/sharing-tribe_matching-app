@@ -16,13 +16,13 @@ export default function NavAuthButtons() {
           }
           href="/join"
         >
-          Sign in
+          Login
         </Link>
         <Link
           className="rounded-lg bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange"
           href="/auth"
         >
-          Join
+          Register
         </Link>
       </div>
     </>
