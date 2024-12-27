@@ -112,6 +112,7 @@ export function ProfileHeader({
             alt="Profile picture"
             width={100}
             height={100}
+            quality={100}
             className="h-24 w-24 justify-self-center rounded-full object-cover md:justify-self-end"
           />
         ) : (

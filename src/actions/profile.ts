@@ -137,6 +137,38 @@ export async function getUserFiltered() {
       discTestResult: {
         not: null,
       },
+      profileVisibility: {
+        not: false,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      jobTitle: true,
+      image: true,
+      bio: true,
+      discTestResult: true,
+    },
+  });
+
+  return users;
+}
+
+export async function getCandidateById(id: string) {
+  const users = await db.user.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      workExperiences: true,
+      education: true,
+      technicalSkills: true,
+      softSkills: true,
+      jobPreferences: true,
+      tandemPreferences: true,
+      references: true,
+      projects: true,
+      additionalInfo: true,
     },
   });
 
