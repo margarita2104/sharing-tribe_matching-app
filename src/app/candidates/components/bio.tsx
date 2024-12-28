@@ -1,5 +1,4 @@
-import { User } from "@prisma/client";
-import { type ExtendedUser } from "~/next-auth";
+import { type User } from "@prisma/client";
 
 export default function CandidateBio({ user }: { user: User }) {
   return (

@@ -1,7 +1,5 @@
-import { User } from "@prisma/client";
-import Image from "next/image";
+import { type User } from "@prisma/client";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
-import { type ExtendedUser } from "~/next-auth";
 
 export default function CandidateProfessionalOverview({
   user,
@@ -16,16 +14,31 @@ export default function CandidateProfessionalOverview({
         </div>
       </CardHeader>
       <CardContent>
-        <div>
-          <p className="w-full">{user.jobTitle ?? "N/A"}</p>
-
-          <p className="w-full">{user.jobRoleFamily ?? "N/A"}</p>
-          <p className="w-full">{user.employmentStatus ?? "N/A"}</p>
-
-          <p className="w-full">{user.workMode ?? "N/A"}</p>
-
-          <p className="w-full">{user.availability ?? "N/A"}</p>
-          <p className="w-full">{user.currentCompany ?? "N/A"}</p>
+        <div className="space-y-3">
+          <div className="flex justify-between">
+            <p className="w-full">Job Title</p>
+            <p className="w-full">{user.jobTitle ?? "N/A"}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="w-full">Job role family</p>
+            <p className="w-full">{user.jobRoleFamily ?? "N/A"}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="w-full">Employment Status</p>
+            <p className="w-full">{user.employmentStatus ?? "N/A"}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="w-full">Work Mode</p>
+            <p className="w-full">{user.workMode ?? "N/A"}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="w-full">Availability</p>
+            <p className="w-full">{user.availability ?? "N/A"}</p>
+          </div>
+          <div className="flex justify-between">
+            <p className="w-full">Current Company</p>
+            <p className="w-full">{user.currentCompany ?? "N/A"}</p>
+          </div>
         </div>
       </CardContent>
     </Card>

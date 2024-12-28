@@ -16,14 +16,27 @@ export default function CandidateEducation({
       <CardContent>
         <div>
           {educatio.map((education: Education, index: number) => (
-            <ul key={index}>
-              <li className="w-full">{education.degree}</li>
-
-              <li className="w-full">{education.fieldOfStudy ?? "N/A"}</li>
-
-              <li className="w-full">{education.institution ?? "N/A"}</li>
-
-              <li className="w-full">{education.graduationYear ?? "N/A"}</li>
+            <ul key={index} className="space-y-3">
+              <li className="flex justify-between">
+                <span className="w-full">Degree</span>
+                <span className="w-full">{education.degree}</span>
+              </li>
+              <li className="flex justify-between">
+                <span className="w-full">Field Of Study</span>
+                <span className="w-full">
+                  {education.fieldOfStudy ?? "N/A"}
+                </span>
+              </li>
+              <li className="flex justify-between">
+                <span className="w-full">Institution</span>
+                <span className="w-full">{education.institution ?? "N/A"}</span>
+              </li>
+              <li className="flex justify-between">
+                <span className="w-full">Graduation Year</span>
+                <span className="w-full">
+                  {education.graduationYear ?? "N/A"}
+                </span>
+              </li>
             </ul>
           ))}
         </div>

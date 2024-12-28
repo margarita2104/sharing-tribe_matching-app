@@ -31,7 +31,7 @@ const Candidates = async () => {
           return (
             <div
               key={user.id}
-              className="relative flex flex-col items-center rounded-lg border p-4 text-center shadow-lg"
+              className="relative mx-3 flex flex-col items-center rounded-lg border p-4 text-center shadow-lg"
             >
               <div className="absolute right-0 top-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-tree-poppy text-center text-purple-800">
                 <span className="text-center">{user.discTestResult}</span>
