@@ -8,7 +8,11 @@ import CandidateWorkExperiences from "../components/candidate.work-experiences";
 import CandidateEducation from "../components/candidate-education";
 import CandidateTechSkills from "../components/candidate-tech-skills";
 import CandidateSoftSkills from "../components/candidate-soft-skills";
-// import CandidateJobPreferences from "../components/candidate-job-preferences";
+import CandidateJobPreferences from "../components/candidate-job-preferences";
+import CandidateWorkTandemPreferences from "../components/candiate-tandem-preference";
+import CandidateReferences from "../components/candidate-references";
+import CandidateProject from "../components/candidate-project";
+import CandidateAdditionalInfo from "../components/candidate-additional-info";
 
 interface CandidateProfileProps {
   params: {
@@ -58,23 +62,26 @@ const CandidateProfile = async ({ params }: CandidateProfileProps) => {
         ) : null}
       </div>
 
-      <Card className="mt-6 h-fit w-11/12">
-        <div>
-          <div className="flex justify-between p-4">
-            <h2 className="text-lg text-violet">Technical Skills</h2>
+      {!candidate.technicalSkills.length ||
+      !candidate.softSkills.length ? null : (
+        <Card className="mt-6 h-fit w-11/12 pb-6">
+          <div>
+            <div className="flex justify-between p-4">
+              <h2 className="text-lg text-violet">Technical Skills</h2>
+            </div>
+            <CandidateTechSkills techSkills={candidate.technicalSkills} />
           </div>
-          <CandidateTechSkills techSkills={candidate.technicalSkills} />
-        </div>
-        <div>
-          <div className="flex justify-between p-4">
-            <h2 className="text-lg text-violet">Soft Skills</h2>
+          <div>
+            <div className="flex justify-between p-4">
+              <h2 className="text-lg text-violet">Soft Skills</h2>
+            </div>
+
+            <CandidateSoftSkills softSkills={candidate.softSkills} />
           </div>
+        </Card>
+      )}
 
-          <CandidateSoftSkills softSkills={candidate.softSkills} />
-        </div>
-      </Card>
-
-      {/* {ShowJobPreferences ? (
+      {candidate.jobPreferences ? (
         <Card className="mt-6 h-fit w-11/12">
           <div>
             <div className="flex justify-between p-4">
@@ -88,125 +95,48 @@ const CandidateProfile = async ({ params }: CandidateProfileProps) => {
         </Card>
       ) : null}
 
-      {ShowWorkTandemPreferences ? (
+      {candidate.tandemPreferences ? (
         <Card className="mt-6 h-fit w-11/12">
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Work Tandem Preferences</h2>
-              {editWorkTandem ? null : (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setEditWorkTandem(true)}
-                >
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
             </div>
-            {!workTandemPreferences ? (
-              <WorkTandem userId={user.id} />
-            ) : (
-              <WorkTandemSave
-                userId={user.id}
-                workTandemPreferences={workTandemPreferences}
-                editWorkTandem={editWorkTandem}
-                setEditWorkTandem={setEditWorkTandem}
-              />
-            )}
+            <CandidateWorkTandemPreferences
+              tandemPreferences={candidate.tandemPreferences}
+            />
           </div>
         </Card>
       ) : null}
 
-      {references.length ? (
+      {candidate.references.length ? (
         <Card className="mt-6 h-fit w-11/12">
-          {references
-            .slice(0, showAllReference ? references.length : 1)
-            .map((reference, index) => (
-              <ReferenceComponent key={index} reference={reference} />
-            ))}
-          <CardFooter className="flex w-full justify-between">
-            {!showAllReference && references.length > 1 && (
-              <>
-                <Button onClick={() => setShowAllReferences(true)}>
-                  Show More
-                </Button>
-                <ModalReferences userId={user.id} title="Add more" />
-              </>
-            )}
-            {references.length === 1 ? (
-              <ModalReferences userId={user.id} title="Add more" />
-            ) : null}
-            {showAllReference && references.length > 1 ? (
-              <>
-                <Button onClick={() => setShowAllReferences(false)}>
-                  Show Less
-                </Button>
-                <ModalReferences userId={user.id} title="Add more" />
-              </>
-            ) : null}
-          </CardFooter>
+          {candidate.references.map((reference, index) => (
+            <CandidateReferences key={index} reference={reference} />
+          ))}
         </Card>
       ) : null}
 
-      {projects.length ? (
+      {candidate.projects.length ? (
         <Card className="mt-6 h-fit w-11/12">
-          {projects
-            .slice(0, showAllProjects ? projects.length : 1)
-            .map((project, index) => (
-              <ProjectComponent key={index} project={project} />
-            ))}
-          <CardFooter className="flex w-full justify-between">
-            {!showAllProjects && projects.length > 1 && (
-              <>
-                <Button onClick={() => setShowAllProjects(true)}>
-                  Show More
-                </Button>
-                <ModalProject userId={user.id} title="Add more" />
-              </>
-            )}
-            {projects.length === 1 ? (
-              <ModalProject userId={user.id} title="Add more" />
-            ) : null}
-            {showAllProjects && projects.length > 1 ? (
-              <>
-                <Button onClick={() => setShowAllProjects(false)}>
-                  Show Less
-                </Button>
-                <ModalProject userId={user.id} title="Add more" />
-              </>
-            ) : null}
-          </CardFooter>
+          {candidate.projects.map((project, index) => (
+            <CandidateProject key={index} project={project} />
+          ))}
         </Card>
       ) : null}
 
-      {ShowAdditionalInfo ? (
+      {candidate.additionalInfo ? (
         <Card className="mt-6 h-fit w-11/12">
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Additional Information</h2>
-              {editAdditionalInfo ? null : (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setEditAdditionalInfo(true)}
-                >
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
             </div>
 
-            <AdditionalInfoComponent userId={user.id} />
+            <CandidateAdditionalInfo
+              additionalInfo={candidate.additionalInfo}
+            />
           </div>
         </Card>
-      ) : null} */}
+      ) : null}
     </>
   );
 };

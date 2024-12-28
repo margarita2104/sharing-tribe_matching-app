@@ -16,14 +16,23 @@ export default function CandidateWorkExperiences({
       <CardContent>
         <div>
           {workExperience.map((experience: WorkExperience, index) => (
-            <ul key={index}>
-              <li className="w-full">{experience.jobTitle}</li>
-
-              <li className="w-full">{experience.companyName ?? "N/A"}</li>
-
-              <li className="w-full">{experience.startDate}</li>
-
-              <li className="w-full">{experience.endDate}</li>
+            <ul key={index} className="space-y-3">
+              <li className="flex justify-between">
+                <div className="w-full">Job Title</div>
+                <div className="w-full">{experience.jobTitle}</div>
+              </li>
+              <li className="flex justify-between">
+                <div className="w-full">Company Name</div>
+                <div className="w-full">{experience.companyName ?? "N/A"}</div>
+              </li>
+              <li className="flex justify-between">
+                <div className="w-full">Start Date</div>
+                <div className="w-full">{experience.startDate}</div>
+              </li>
+              <li className="flex justify-between">
+                <div className="w-full">End Date</div>
+                <div className="w-full">{experience.endDate}</div>
+              </li>
             </ul>
           ))}
         </div>
