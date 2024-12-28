@@ -49,7 +49,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
   useEffect(() => {
     const debouncedFetch = debounce(async () => {
-      if (!query) {
+      if (!query || query.length < 3) {
         setSuggestions([]);
         return;
       }
@@ -67,7 +67,7 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
 
     void debouncedFetch();
 
-    return () => debouncedFetch.cancel(); // Cleanup debounce on unmount
+    return () => debouncedFetch.cancel();
   }, [query]);
 
   const onSubmit = (values: z.infer<typeof ProfileSchema>) => {
@@ -108,188 +108,184 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
         </div>
       </CardHeader>
       <CardContent>
-        {isPending ? (
-          <LoadingSpinner className="mx-auto" />
-        ) : (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div>
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Full Name</FormLabel>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Full Name</FormLabel>
 
-                      <FormControl>
-                        {edit ? (
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          placeholder="Full Name"
+                          disabled={isPending || user.isOAuth}
+                        />
+                      ) : (
+                        <p className="w-full">{user.name}</p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Location</FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <div className="relative w-full">
                           <Input
                             {...field}
-                            placeholder="Full Name"
-                            disabled={isPending || user.isOAuth}
-                          />
-                        ) : (
-                          <p className="w-full">{user.name}</p>
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="location"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Location</FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <div className="relative w-full">
-                            <Input
-                              {...field}
-                              placeholder="Enter city"
-                              value={field.value}
-                              onChange={(e) => {
-                                field.onChange(e.target.value);
-                                setQuery(e.target.value);
-                              }}
-                              disabled={isPending}
-                            />
-                            {loading && <LoadingSpinner className="h-6 w-6" />}
-                            {suggestions.length > 0 && (
-                              <ul className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-md">
-                                {suggestions.map((city) => (
-                                  <li
-                                    key={city}
-                                    className="cursor-pointer p-2 text-sm hover:bg-gray-100"
-                                    onClick={() => {
-                                      field.onChange(city);
-                                      setSuggestions([]);
-                                    }}
-                                  >
-                                    {city}
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
-                        ) : (
-                          <p className="w-full">
-                            {user.location ? user.location : "N/A"}
-                          </p>
-                        )}
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">Email</FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Email"
-                            disabled={isPending || user.isOAuth}
-                          />
-                        ) : (
-                          <p className="w-full">{user.email}</p>
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="linkedinUrl"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">
-                        Social Media (Linkedin)
-                      </FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Linkedin URL"
+                            placeholder="Enter city"
+                            value={field.value}
+                            onChange={(e) => {
+                              field.onChange(e.target.value);
+                              setQuery(e.target.value);
+                            }}
                             disabled={isPending}
                           />
-                        ) : user.linkedinUrl ? (
-                          <Link
-                            href={user.linkedinUrl}
-                            target="_blank"
-                            className="w-full underline"
-                          >
-                            {user.linkedinUrl ? "Linkedin" : "N/A"}
-                          </Link>
-                        ) : (
-                          <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                          {loading && <LoadingSpinner className="h-6 w-6" />}
+                          {suggestions.length > 0 && (
+                            <ul className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-md">
+                              {suggestions.map((city) => (
+                                <li
+                                  key={city}
+                                  className="cursor-pointer p-2 text-sm hover:bg-gray-100"
+                                  onClick={() => {
+                                    field.onChange(city);
+                                    setSuggestions([]);
+                                  }}
+                                >
+                                  {city}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="w-full">
+                          {user.location ? user.location : "N/A"}
+                        </p>
+                      )}
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="githubUrl"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center justify-between">
-                      <FormLabel className="w-full">
-                        Social Media (Other links)
-                      </FormLabel>
-                      <FormControl>
-                        {edit ? (
-                          <Input
-                            {...field}
-                            placeholder="Github URL"
-                            disabled={isPending}
-                          />
-                        ) : user.githubUrl ? (
-                          <Link
-                            href={user.githubUrl}
-                            target="_blank"
-                            className="w-full underline"
-                          >
-                            {user.githubUrl ? "Other Links" : "N/A"}
-                          </Link>
-                        ) : (
-                          <p className="w-full">{user.githubUrl ?? "N/A"}</p>
-                        )}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {/* <FormError message={error} />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">Email</FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          placeholder="Email"
+                          disabled={isPending || user.isOAuth}
+                        />
+                      ) : (
+                        <p className="w-full">{user.email}</p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="linkedinUrl"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">
+                      Social Media (Linkedin)
+                    </FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          placeholder="Linkedin URL"
+                          disabled={isPending}
+                        />
+                      ) : user.linkedinUrl ? (
+                        <Link
+                          href={user.linkedinUrl}
+                          target="_blank"
+                          className="w-full underline"
+                        >
+                          {user.linkedinUrl ? "Linkedin" : "N/A"}
+                        </Link>
+                      ) : (
+                        <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="githubUrl"
+                render={({ field }) => (
+                  <FormItem className="flex items-center justify-between">
+                    <FormLabel className="w-full">
+                      Social Media (Other links)
+                    </FormLabel>
+                    <FormControl>
+                      {edit ? (
+                        <Input
+                          {...field}
+                          placeholder="Github URL"
+                          disabled={isPending}
+                        />
+                      ) : user.githubUrl ? (
+                        <Link
+                          href={user.githubUrl}
+                          target="_blank"
+                          className="w-full underline"
+                        >
+                          {user.githubUrl ? "Other Links" : "N/A"}
+                        </Link>
+                      ) : (
+                        <p className="w-full">{user.githubUrl ?? "N/A"}</p>
+                      )}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            {/* <FormError message={error} />
             <FormSuccess message={success} /> */}
-              {edit ? (
-                <div className="mt-4 space-x-2">
-                  {" "}
-                  <Button disabled={isPending} type="submit">
-                    Save
-                  </Button>
-                  <Button
-                    disabled={isPending}
-                    onClick={() => setEdit(false)}
-                    type="reset"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              ) : null}
-            </form>
-          </Form>
-        )}
+            {edit ? (
+              <div className="mt-4 space-x-2">
+                {" "}
+                <Button disabled={isPending} type="submit">
+                  Save
+                </Button>
+                <Button
+                  disabled={isPending}
+                  onClick={() => setEdit(false)}
+                  type="reset"
+                >
+                  Cancel
+                </Button>
+              </div>
+            ) : null}
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
