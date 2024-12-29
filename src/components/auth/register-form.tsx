@@ -19,11 +19,16 @@ import {
   FormMessage,
 } from "../ui/form";
 import { CardWrapper } from "./card-wrapper";
+import { type JobRoleFamily } from "@prisma/client";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const discResult = window.localStorage.getItem("discTestResult") ?? "";
+  const role = window.localStorage.getItem("selectedRole") as
+    | JobRoleFamily
+    | undefined;
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -40,7 +45,7 @@ export const RegisterForm = () => {
     setSuccess("");
 
     startTransition(async () => {
-      await register(values).then((data) => {
+      await register(values, discResult, role).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });

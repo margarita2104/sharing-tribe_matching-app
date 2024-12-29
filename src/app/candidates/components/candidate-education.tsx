@@ -4,7 +4,7 @@ import { CardContent, CardHeader } from "~/components/ui/card";
 export default function CandidateEducation({
   educatio,
 }: {
-  educatio: Education[];
+  educatio: Education;
 }) {
   return (
     <>
@@ -15,30 +15,24 @@ export default function CandidateEducation({
       </CardHeader>
       <CardContent>
         <div>
-          {educatio.map((education: Education, index: number) => (
-            <ul key={index} className="space-y-3">
-              <li className="flex justify-between">
-                <span className="w-full">Degree</span>
-                <span className="w-full">{education.degree}</span>
-              </li>
-              <li className="flex justify-between">
-                <span className="w-full">Field Of Study</span>
-                <span className="w-full">
-                  {education.fieldOfStudy ?? "N/A"}
-                </span>
-              </li>
-              <li className="flex justify-between">
-                <span className="w-full">Institution</span>
-                <span className="w-full">{education.institution ?? "N/A"}</span>
-              </li>
-              <li className="flex justify-between">
-                <span className="w-full">Graduation Year</span>
-                <span className="w-full">
-                  {education.graduationYear ?? "N/A"}
-                </span>
-              </li>
-            </ul>
-          ))}
+          <ul className="space-y-3">
+            <li className="flex justify-between">
+              <span className="w-full">Degree</span>
+              <span className="w-full">{educatio.degree}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="w-full">Field Of Study</span>
+              <span className="w-full">{educatio.fieldOfStudy ?? "N/A"}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="w-full">Institution</span>
+              <span className="w-full">{educatio.institution ?? "N/A"}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="w-full">Graduation Year</span>
+              <span className="w-full">{educatio.graduationYear ?? "N/A"}</span>
+            </li>
+          </ul>
         </div>
       </CardContent>
     </>

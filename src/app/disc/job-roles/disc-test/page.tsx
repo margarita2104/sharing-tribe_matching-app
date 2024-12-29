@@ -122,8 +122,9 @@ const DiscTest = () => {
         `/disc/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
       );
     }
-
-    await updateTest(mostAnsweredLetter, user?.id);
+    if (user) {
+      await updateTest(mostAnsweredLetter, user?.id);
+    }
   };
 
   const handleNext = () => {

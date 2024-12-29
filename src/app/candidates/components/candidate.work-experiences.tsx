@@ -4,7 +4,7 @@ import { CardContent, CardHeader } from "~/components/ui/card";
 export default function CandidateWorkExperiences({
   workExperience,
 }: {
-  workExperience: WorkExperience[];
+  workExperience: WorkExperience;
 }) {
   return (
     <>
@@ -15,26 +15,26 @@ export default function CandidateWorkExperiences({
       </CardHeader>
       <CardContent>
         <div>
-          {workExperience.map((experience: WorkExperience, index) => (
-            <ul key={index} className="space-y-3">
-              <li className="flex justify-between">
-                <div className="w-full">Job Title</div>
-                <div className="w-full">{experience.jobTitle}</div>
-              </li>
-              <li className="flex justify-between">
-                <div className="w-full">Company Name</div>
-                <div className="w-full">{experience.companyName ?? "N/A"}</div>
-              </li>
-              <li className="flex justify-between">
-                <div className="w-full">Start Date</div>
-                <div className="w-full">{experience.startDate}</div>
-              </li>
-              <li className="flex justify-between">
-                <div className="w-full">End Date</div>
-                <div className="w-full">{experience.endDate}</div>
-              </li>
-            </ul>
-          ))}
+          <ul className="space-y-3">
+            <li className="flex justify-between">
+              <div className="w-full">Job Title</div>
+              <div className="w-full">{workExperience.jobTitle}</div>
+            </li>
+            <li className="flex justify-between">
+              <div className="w-full">Company Name</div>
+              <div className="w-full">
+                {workExperience.companyName ?? "N/A"}
+              </div>
+            </li>
+            <li className="flex justify-between">
+              <div className="w-full">Start Date</div>
+              <div className="w-full">{workExperience.startDate}</div>
+            </li>
+            <li className="flex justify-between">
+              <div className="w-full">End Date</div>
+              <div className="w-full">{workExperience.endDate}</div>
+            </li>
+          </ul>
         </div>
       </CardContent>
     </>

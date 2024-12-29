@@ -48,7 +48,7 @@ const CandidateProfile = async ({ params }: CandidateProfileProps) => {
             {candidate.workExperiences.map((workExperience, index) => (
               <CandidateWorkExperiences
                 key={index}
-                workExperience={candidate.workExperiences}
+                workExperience={workExperience}
               />
             ))}
           </Card>
@@ -56,7 +56,7 @@ const CandidateProfile = async ({ params }: CandidateProfileProps) => {
         {candidate.education.length ? (
           <Card className="h-fit w-full">
             {candidate.education.map((educatio, index) => (
-              <CandidateEducation key={index} educatio={candidate.education} />
+              <CandidateEducation key={index} educatio={educatio} />
             ))}
           </Card>
         ) : null}
