@@ -17,37 +17,37 @@ export default function CandidateAdditionalInfo({
   return (
     <CardContent>
       <div className="space-y-4">
-        <div className="flex flex-wrap place-items-center items-center space-x-4 space-y-2">
-          <p className="">Hobbies and Interests</p>
-          {additionalInfo?.hobbiesAndInterests.length ? (
-            additionalInfo.hobbiesAndInterests.map((hobby, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <p className="flex w-full items-center justify-center place-self-center">
+        <div className="flex items-center space-x-6">
+          <p className="w-64">Hobbies and Interests</p>
+          <div className="flex w-full">
+            {additionalInfo?.hobbiesAndInterests.length ? (
+              additionalInfo.hobbiesAndInterests.map((hobby, index) => (
+                <p key={index} className="mr-4">
                   {hobby}
                 </p>
-              </div>
-            ))
-          ) : (
-            <p>No hobbies and interests</p>
-          )}
+              ))
+            ) : (
+              <p>No hobbies and interests</p>
+            )}
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-10">
           <p className="">Volunteering experience</p>
 
           <p className="">{additionalInfo?.volunteering}</p>
         </div>
 
-        <div className="flex items-center space-x-4 space-y-2">
+        <div className="flex items-center space-x-10">
           <p className="">Languages</p>
-          {parsedLanguages.map((language, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <p>
+          <div className="flex w-full">
+            {parsedLanguages.map((language, index) => (
+              <span key={index}>
                 {language.name} - {language.proficiency}
-              </p>
-            </div>
-          ))}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-10">
           <p className="">Preferred Work Schedule</p>
           <p>{additionalInfo?.preferredWorkSchedule}</p>
         </div>

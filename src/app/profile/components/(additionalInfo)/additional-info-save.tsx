@@ -147,7 +147,7 @@ export function AdditionalInfoSave({
                 />
               </>
             ) : (
-              <div className="flex flex-wrap items-center space-x-4 space-y-2">
+              <div className="flex flex-wrap items-center space-x-10">
                 <FormLabel>Hobbies and Interests</FormLabel>
                 {infos?.hobbiesAndInterests.length ? (
                   infos.hobbiesAndInterests.map((hobby, index) => (
@@ -181,7 +181,7 @@ export function AdditionalInfoSave({
                 )}
               />
             ) : (
-              <div className="flex flex-wrap items-center space-x-4 space-y-2">
+              <div className="flex flex-wrap items-center space-x-10">
                 <FormLabel>Volunteering experience</FormLabel>
                 <p>{infos?.volunteering}</p>
               </div>
@@ -273,7 +273,7 @@ export function AdditionalInfoSave({
                 )}
               />
             ) : (
-              <div className="flex items-center space-x-4 space-y-2">
+              <div className="flex items-center space-x-10">
                 <FormLabel>Languages</FormLabel>
                 {parsedLanguages.map((language, index) => (
                   <p key={index}>
@@ -312,7 +312,7 @@ export function AdditionalInfoSave({
                 )}
               />
             ) : (
-              <div className="flex flex-wrap items-center space-x-4 space-y-2">
+              <div className="flex flex-wrap items-center space-x-10">
                 <FormLabel>Preferred Work Schedule</FormLabel>
                 <p>{infos?.preferredWorkSchedule}</p>
               </div>
