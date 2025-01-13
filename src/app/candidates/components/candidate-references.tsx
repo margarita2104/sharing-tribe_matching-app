@@ -6,7 +6,6 @@ export default function CandidateReferences({
 }: {
   reference: Reference;
 }) {
-  console.log(reference);
   return (
     <>
       <CardHeader>

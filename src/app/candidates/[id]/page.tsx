@@ -13,6 +13,8 @@ import CandidateWorkTandemPreferences from "../components/candiate-tandem-prefer
 import CandidateReferences from "../components/candidate-references";
 import CandidateProject from "../components/candidate-project";
 import CandidateAdditionalInfo from "../components/candidate-additional-info";
+import { Suspense } from "react";
+import Loading from "~/app/profile/loading";
 
 interface CandidateProfileProps {
   params: {
@@ -23,13 +25,13 @@ interface CandidateProfileProps {
 const CandidateProfile = async ({ params }: CandidateProfileProps) => {
   const { id } = params;
   const candidate = await getCandidateById(id);
-  console.log(candidate);
+
   if (!candidate) {
     return <div>User not found</div>;
   }
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <CandidateProfileHeader user={candidate} />
 
       <div className="mt-8 flex w-9/12 items-center justify-center space-x-8">
@@ -137,7 +139,7 @@ const CandidateProfile = async ({ params }: CandidateProfileProps) => {
           </div>
         </Card>
       ) : null}
-    </>
+    </Suspense>
   );
 };
 
