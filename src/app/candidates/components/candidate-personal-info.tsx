@@ -19,10 +19,13 @@ export default function CandidatePersonalInfo({ user }: { user: User }) {
             <p className="w-full">Location</p>
             <p className="w-full">{user.location ? user.location : "N/A"}</p>
           </div>
-          <div className="flex items-center justify-between">
-            <p className="w-full">Email</p>
-            <p className="w-full">{user.email}</p>
-          </div>
+          {user.marketingEmails ? (
+            <div className="flex items-center justify-between">
+              <p className="w-full">Email</p>
+              <p className="w-full">{user.email}</p>
+            </div>
+          ) : null}
+
           <div className="flex items-center justify-between">
             <p className="w-full">Social Media (Linkedin)</p>
             <p className="w-full">{user.linkedinUrl ?? "N/A"}</p>
