@@ -1,25 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 
 export default async function HomePage() {
   return (
     <main>
-      <section className="hero">
+      <AspectRatio ratio={16 / 8} className="bg-muted">
         <Image
           src="/images/home-hero.svg"
-          alt="Hero image"
+          alt="Hero Image"
           fill
-          style={{ objectFit: "cover" }}
+          className="h-full w-full rounded-md object-cover"
         />
-      </section>
-      <section className="flex flex-col items-center">
-        <h1 className="mb-6 text-4xl font-semibold text-violet">
+      </AspectRatio>
+      <section className="my-12 flex flex-col items-center px-6">
+        <h1 className="mb-6 text-2xl font-semibold text-violet md:text-4xl">
           Welcome to Sharing Tribe
         </h1>
-        <h3 className="mb-6 text-xl font-semibold">
+        <h3 className="text-md mb-6 font-semibold md:text-xl">
           Connecting Talents, Creating Synergy
         </h3>
-        <p className="w-2/4 text-center">
+        <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
           At&nbsp;Sharing Tribe, we&nbsp;bring together professionals
           in&nbsp;the&nbsp;IT industry with complementary skills and
           personalities to&nbsp;form dynamic, successful tandems. Whether
@@ -28,7 +29,7 @@ export default async function HomePage() {
           helps you find the perfect match for your career goals.
         </p>
       </section>
-      <section className="bg-gallery flex items-center px-10 py-10">
+      {/* <section className="flex items-center bg-gallery px-10 py-10">
         <div className="flex w-1/2 justify-center">
           <Image
             src="/images/home-perfect-match.svg"
@@ -64,13 +65,15 @@ export default async function HomePage() {
             person to&nbsp;share the journey.
           </p>
         </div>
-      </section>
-      <section className="px-12">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-violet">
+      </section> */}
+
+      <MatchingPartner />
+      <section className="my-10 px-12">
+        <h2 className="mb-6 text-center text-2xl font-semibold text-violet md:text-4xl">
           How It Works
         </h2>
-        <div className="flex flex-wrap justify-center gap-14">
-          <div className="border-alto flex w-1/3 flex-col justify-between rounded-lg border px-10 py-9">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          <div className="flex w-full flex-col justify-between rounded-lg border border-alto px-10 py-9">
             <div className="mb-6">
               <h3 className="mb-6 text-xl font-semibold">
                 Sign Up&nbsp;&amp;&nbsp;Create Your Profile
@@ -89,7 +92,7 @@ export default async function HomePage() {
               />
             </div>
           </div>
-          <div className="border-alto flex w-1/3 flex-col justify-between rounded-lg border px-10 py-9">
+          <div className="flex w-full flex-col justify-between rounded-lg border border-alto px-10 py-9">
             <div className="mb-6">
               <h3 className="mb-6 text-xl font-semibold">
                 Take the DISC Personality Test
@@ -110,7 +113,7 @@ export default async function HomePage() {
               />
             </div>
           </div>
-          <div className="border-alto flex w-1/3 flex-col justify-between rounded-lg border px-10 py-9">
+          <div className="flex w-full flex-col justify-between rounded-lg border border-alto px-10 py-9">
             <div className="mb-6">
               <h3 className="mb-6 text-xl font-semibold">Find Your Match</h3>
               <p>
@@ -128,7 +131,7 @@ export default async function HomePage() {
               />
             </div>
           </div>
-          <div className="border-alto flex w-1/3 flex-col justify-between rounded-lg border px-10 py-9">
+          <div className="flex w-full flex-col justify-between rounded-lg border border-alto px-10 py-9">
             <div className="mb-6">
               <h3 className="mb-6 text-xl font-semibold">
                 Start Collaborating
@@ -151,22 +154,22 @@ export default async function HomePage() {
         </div>
       </section>
       <section className="flex flex-col items-center">
-        <h2 className="mb-6 text-2xl font-semibold text-violet">
+        <h2 className="mb-6 text-center text-2xl font-semibold text-violet">
           Ready to&nbsp;Find Your Perfect Partner?
         </h2>
-        <p className="w-2/3 text-center mb-12">
+        <p className="mb-12 w-2/3 text-center">
           Sign up&nbsp;today and take your career to&nbsp;the next level with
           Sharing Tribe. Together, we&rsquo;ll help you find the ideal partner
           to&nbsp;achieve your goals.
         </p>
         <section className="flex justify-center">
-        <Link
-          href="/disc"
-          className="rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
-        >
-          Start DISC Test
-        </Link>
-      </section>
+          <Link
+            href="/disc"
+            className="rounded-lg border border-alto bg-tree-poppy px-10 py-2 text-xl font-semibold hover:bg-flush-orange md:px-14 md:py-4"
+          >
+            Start DISC Test
+          </Link>
+        </section>
         <Image
           src="/images/home-perfect-partner.svg"
           alt="Section illustration"
@@ -175,5 +178,72 @@ export default async function HomePage() {
         />
       </section>
     </main>
+  );
+}
+
+const features = [
+  {
+    name: "Matching Complementary Skills:",
+    description:
+      " Our platform pairs individuals based on complementary hard and soft skills in the IT sector.",
+    // icon: CloudArrowUpIcon,
+  },
+  {
+    name: "Personality Alignment:",
+    description:
+      " To ensure a successful and productive partnership, we encourage all users to take the DISC Personality Test. This test helps you understand your working style and connects you with a partner whose personality complements yours.",
+    // icon: LockClosedIcon,
+  },
+  {
+    name: "Flexible Work Opportunities:",
+    description:
+      " Whether you’re looking for part-time collaboration or project-based partnerships, we help you find the right person to share the journey.",
+    // icon: ServerIcon,
+  },
+];
+
+function MatchingPartner() {
+  return (
+    <div className="overflow-hidden bg-gallery p-6 md:p-10">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 md:grid-cols-2 lg:mx-0 lg:max-w-none">
+          <div className="lg:pr-8 lg:pt-4">
+            <div className="lg:max-w-lg">
+              <p className="mb-6 text-center text-2xl font-semibold text-violet md:text-4xl">
+                Find Your Perfect Match
+              </p>
+              <p className="text-md mb-6 text-center md:text-xl">
+                Sharing Tribe is designed to help professionals build meaningful
+                connections by:
+              </p>
+              <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none">
+                {features.map((feature) => (
+                  <div key={feature.name} className="relative pl-9">
+                    {/* <dt className="inline font-semibold text-gray-900">
+                      <feature.icon
+                        aria-hidden="true"
+                        className="absolute left-1 top-1 size-5 text-indigo-600"
+                      />
+                      {feature.name}
+                    </dt>{" "} */}
+                    <dd className="inline">
+                      <b>{feature.name}</b>
+                      {feature.description}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+          <Image
+            alt="Product screenshot"
+            src="/images/home-perfect-match.svg"
+            width={500}
+            height={500}
+            className="h-full w-full"
+          />
+        </div>
+      </div>
+    </div>
   );
 }

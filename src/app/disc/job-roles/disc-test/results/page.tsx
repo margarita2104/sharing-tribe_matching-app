@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { useCurrentUser } from "~/hooks/use-current-user";
 
 const Results = () => {
@@ -24,7 +25,7 @@ const Results = () => {
         <h2 className="mb-6 text-2xl font-semibold text-violet">
           What’s Next?
         </h2>
-        <p className="w-2/4 text-center mb-6">
+        <p className="mb-6 w-2/4 text-center">
           Explore potential matches on&nbsp;the platform, and start building
           valuable connections that align with your DISC profile. The perfect
           professional partner is&nbsp;just a&nbsp;click away!
@@ -42,16 +43,16 @@ const Results = () => {
   if (!result) {
     return (
       <main>
-        <section className="hero">
+        <AspectRatio ratio={16 / 8} className="bg-muted">
           <Image
             src="/images/disc-results-hero.svg"
-            alt="Hero image"
+            alt="Hero Image"
             fill
-            style={{ objectFit: "cover" }}
+            className="h-full w-full rounded-md object-cover"
           />
-        </section>
+        </AspectRatio>
         <section className="flex flex-col items-center">
-          <h1 className="text-4xl font-semibold text-violet">
+          <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
             DISC Personality Test Results
           </h1>
           <p className="mt-4 text-center text-xl">
@@ -77,17 +78,9 @@ const Results = () => {
               are assertive, decisive, and thrive in&nbsp;competitive
               environments.
             </p>
-            <div className="flex px-10 py-10">
-              <div className="mr-10 flex w-1/2 justify-center">
-                <Image
-                  src="/images/disc-results-d.svg"
-                  alt="Section illustration"
-                  width={400}
-                  height={400}
-                />
-              </div>
-              <div className="w-1/2">
-                <p className="mb-3">
+            <div className="mt-4 grid grid-cols-1 place-items-center justify-items-center gap-8 px-12 py-8 lg:grid-cols-2">
+              <div className="w-full">
+                <p className="mb-3 leading-7">
                   <strong>Strengths:</strong> <br />
                   &bull; Goal-oriented and driven by&nbsp;success
                   <br /> &bull; Confident in&nbsp;decision-making, even under
@@ -98,7 +91,7 @@ const Results = () => {
                   <br /> &bull; Good at&nbsp;handling problems and finding
                   solutions quickly
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong>Areas for Improvement:</strong>
                   <br />
                   &bull; May be&nbsp;too blunt or&nbsp;direct
@@ -113,7 +106,7 @@ const Results = () => {
                   or&nbsp;controlling
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong> Motivators:</strong>
                   <br />
                   &bull; Challenges and winning
@@ -121,13 +114,22 @@ const Results = () => {
                   <br /> &bull; Achieving tangible results
                 </p>
               </div>
+              <div className="mr-10 flex w-full justify-center">
+                <Image
+                  src="/images/disc-results-d.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </section>
         );
       case "I":
         return (
           <section className="flex flex-col items-center">
-            <h2 className="mb-6 text-2xl font-semibold text-violet">
+            <h2 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
               Your result is: Influence (I)
             </h2>
             <p className="w-3/4">
@@ -135,17 +137,9 @@ const Results = () => {
               enthusiastic, and people-focused. They excel in&nbsp;social
               situations and enjoy motivating and inspiring others.
             </p>
-            <div className="flex px-10 py-10">
-              <div className="mr-10 flex w-1/2 justify-center">
-                <Image
-                  src="/images/disc-results-i.svg"
-                  alt="Section illustration"
-                  width={400}
-                  height={400}
-                />
-              </div>
-              <div className="w-1/2">
-                <p className="mb-3">
+            <div className="mt-4 grid grid-cols-1 place-items-center justify-items-center gap-8 px-12 py-8 lg:grid-cols-2">
+              <div className="w-full">
+                <p className="mb-3 leading-7">
                   <strong>Strengths:</strong> <br />
                   &bull; Great at&nbsp;building relationships and networking
                   <br />
@@ -158,7 +152,7 @@ const Results = () => {
                   &bull; Open-minded and adaptable
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong>Areas for Improvement:</strong>
                   <br />
                   &bull; May become disorganized or&nbsp;lack follow-through
@@ -173,7 +167,7 @@ const Results = () => {
                   &bull; Tends to&nbsp;avoid conflict, even when necessary
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong> Motivators:</strong>
                   <br />
                   &bull; Social recognition and praise
@@ -184,13 +178,22 @@ const Results = () => {
                   <br />
                 </p>
               </div>
+              <div className="mr-10 flex w-full justify-center">
+                <Image
+                  src="/images/disc-results-i.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </section>
         );
       case "S":
         return (
           <section className="flex flex-col items-center">
-            <h2 className="mb-6 text-2xl font-semibold text-violet">
+            <h2 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
               Your result is: Steadiness (S)
             </h2>
             <p className="w-3/4">
@@ -199,17 +202,9 @@ const Results = () => {
               consistency, and strong relationships, preferring a&nbsp;slower,
               steady pace.
             </p>
-            <div className="flex px-10 py-10">
-              <div className="mr-10 flex w-1/2 justify-center">
-                <Image
-                  src="/images/disc-results-s.svg"
-                  alt="Section illustration"
-                  width={400}
-                  height={400}
-                />
-              </div>
-              <div className="w-1/2">
-                <p className="mb-3">
+            <div className="mt-4 grid grid-cols-1 place-items-center justify-items-center gap-8 px-12 py-8 lg:grid-cols-2">
+              <div className="w-full">
+                <p className="mb-3 leading-7">
                   <strong>Strengths:</strong> <br />
                   &bull; Reliable and loyal, focused on&nbsp;long-term
                   relationships
@@ -223,7 +218,7 @@ const Results = () => {
                   &bull; Avoids conflict and works to&nbsp;maintain harmony
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong>Areas for Improvement:</strong>
                   <br />
                   &bull; May resist change or&nbsp;new challenges
@@ -237,7 +232,7 @@ const Results = () => {
                   or&nbsp;professional growth
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong> Motivators:</strong>
                   <br />
                   &bull; Stable, harmonious environments
@@ -248,13 +243,22 @@ const Results = () => {
                   <br />
                 </p>
               </div>
+              <div className="mr-10 flex w-full justify-center">
+                <Image
+                  src="/images/disc-results-s.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </section>
         );
       case "C":
         return (
           <section className="flex flex-col items-center">
-            <h2 className="mb-6 text-2xl font-semibold text-violet">
+            <h2 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
               Your result is: Conscientiousness (C)
             </h2>
             <p className="w-3/4">
@@ -262,17 +266,9 @@ const Results = () => {
               detail-oriented, analytical, and focused on&nbsp;quality. They
               value accuracy, precision, and consistency in&nbsp;their work.
             </p>
-            <div className="flex px-10 py-10">
-              <div className="mr-10 flex w-1/2 justify-center">
-                <Image
-                  src="/images/disc-results-c.svg"
-                  alt="Section illustration"
-                  width={400}
-                  height={400}
-                />
-              </div>
-              <div className="w-1/2">
-                <p className="mb-3">
+            <div className="mt-4 grid grid-cols-1 place-items-center justify-items-center gap-8 px-12 py-8 lg:grid-cols-2">
+              <div className="w-full">
+                <p className="mb-3 leading-7">
                   <strong>Strengths:</strong> <br />
                   &bull; Strong attention to&nbsp;detail and focus
                   on&nbsp;accuracy
@@ -287,7 +283,7 @@ const Results = () => {
                   &bull; Values quality and works to&nbsp;achieve high standards
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong>Areas for Improvement:</strong>
                   <br />
                   &bull; May become overly critical or&nbsp;perfectionistic
@@ -301,7 +297,7 @@ const Results = () => {
                   &bull; Can appear overly cautious or&nbsp;rigid
                   <br />
                 </p>
-                <p className="mb-3">
+                <p className="mb-3 leading-7">
                   <strong> Motivators:</strong>
                   <br />
                   &bull; Clear rules, standards, and procedures
@@ -312,6 +308,15 @@ const Results = () => {
                   &bull; Autonomy to&nbsp;work at&nbsp;their own pace
                   <br />
                 </p>
+              </div>
+              <div className="mr-10 flex w-full justify-center">
+                <Image
+                  src="/images/disc-results-c.svg"
+                  alt="Section illustration"
+                  width={400}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </section>
@@ -328,24 +333,24 @@ const Results = () => {
 
   return (
     <main>
-      <section className="hero">
+      <AspectRatio ratio={16 / 8} className="bg-muted">
         <Image
           src="/images/disc-results-hero.svg"
-          alt="Hero image"
+          alt="Hero Image"
           fill
-          style={{ objectFit: "cover" }}
+          className="h-full w-full rounded-md object-cover"
         />
-      </section>
+      </AspectRatio>
       <section className="flex flex-col items-center">
-        <h1 className="mb-6 text-4xl font-semibold text-violet">
+        <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
           DISC Personality Test Results
         </h1>
-        <p className="mb-5 w-2/4 text-center">
+        <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
           Congratulations on&nbsp;completing the DISC Personality Test! Based
           on&nbsp;your answers, we&rsquo;ve generated your personalized DISC
           profile, which outlines your unique strengths and working style.
         </p>
-        <p className="w-2/4 text-center">
+        <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
           Your profile will help&nbsp;us match you with professionals who
           complement your traits, ensuring a&nbsp;productive and successful
           partnership.
@@ -354,7 +359,6 @@ const Results = () => {
 
       {renderResultSection()}
       {renderWhatsNext()}
-
     </main>
   );
 };

@@ -3,22 +3,25 @@ import { getUserFiltered } from "~/actions/profile";
 import CandidateCard from "./components/candidate-card";
 import { Suspense } from "react";
 import { LoadingSpinner } from "~/components/ui/loading-spinner";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 
 const Candidates = async () => {
   const userss = await getUserFiltered();
   return (
     <main>
-      <section className="hero">
+      <AspectRatio ratio={16 / 8} className="bg-muted">
         <Image
           src="/images/candidates-hero.svg"
-          alt="Hero image"
+          alt="Hero Image"
           fill
-          style={{ objectFit: "cover" }}
+          className="h-full w-full rounded-md object-cover"
         />
-      </section>
-      <section className="flex flex-col items-center">
-        <h1 className="mb-6 text-4xl font-semibold text-violet">Candidates</h1>
-        <p className="w-2/4 text-center">
+      </AspectRatio>
+      <section className="flex flex-col items-center px-6">
+        <h1 className="m-10 text-2xl font-semibold text-violet md:text-4xl">
+          Candidates
+        </h1>
+        <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
           Discover professionals who share your interests, skills, and goals.
           Build meaningful connections, collaborate on&nbsp;exciting projects,
           and explore job-sharing opportunities that align with your work style
@@ -27,7 +30,7 @@ const Candidates = async () => {
       </section>
       <ul
         role="list"
-        className="mx-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        className="mx-8 mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
         {userss.map((person) => (
           <Suspense key={person.id} fallback={<LoadingSpinner />}>

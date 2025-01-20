@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Button } from "~/components/ui/button";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { useRouter } from "next/navigation";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 
 const JobRoles = () => {
   const user = useCurrentUser();
@@ -71,19 +72,19 @@ const JobRoles = () => {
     <>
       {!user ? (
         <main>
-          <section className="hero">
+          <AspectRatio ratio={16 / 8} className="bg-muted">
             <Image
               src="/images/disc-about-page.svg"
-              alt="Hero image"
+              alt="Hero Image"
               fill
-              style={{ objectFit: "cover" }}
+              className="h-full w-full rounded-md object-cover"
             />
-          </section>
+          </AspectRatio>
           <section className="flex flex-col items-center">
-            <h1 className="mb-6 text-4xl font-semibold text-violet">
+            <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
               Job roles
             </h1>
-            <p className="w-2/4 text-center">
+            <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
               Before taking the DISC test, please select the job role family
               that best matches your field of&nbsp;expertise. This will
               help&nbsp;us better match you with potential candidates for job
@@ -109,9 +110,8 @@ const JobRoles = () => {
                     <RadioGroupRadix.Indicator className="RadioGroupIndicator" />
                   </RadioGroupRadix.Item>
                   <label className="ml-3" htmlFor="r1">
-                    <strong>Software Development</strong> (Software
-                    Development, Software Testing, DevOps, Full Stack
-                    Development)
+                    <strong>Software Development</strong> (Software Development,
+                    Software Testing, DevOps, Full Stack Development)
                   </label>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -220,19 +220,19 @@ const JobRoles = () => {
         </main>
       ) : (
         <>
-          <section className="hero">
+          <AspectRatio ratio={16 / 8} className="bg-muted">
             <Image
               src="/images/disc-about-page.svg"
-              alt="Hero image"
+              alt="Hero Image"
               fill
-              style={{ objectFit: "cover" }}
+              className="h-full w-full rounded-md object-cover"
             />
-          </section>
+          </AspectRatio>
           <section className="flex flex-col items-center">
-            <h1 className="mb-6 text-4xl font-semibold text-violet">
+            <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
               Job roles
             </h1>
-            <p className="w-2/4 text-center">
+            <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
               Before taking the DISC test, please select the job role family
               that best matches your field of&nbsp;expertise. This will
               help&nbsp;us better match you with potential candidates for job
@@ -259,7 +259,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="SoftwareDevelopment" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>Software Development</strong> (Software
                             Development, Software Testing, DevOps, Full Stack
                             Development)
@@ -269,7 +269,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="Data" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>Data</strong> (Data Science, Data
                             Engineering, Machine Learning, Artificial
                             Intelligence)
@@ -279,7 +279,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="Fintech" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>Fintech</strong> (Fintech, Blockchain)
                           </FormLabel>
                         </FormItem>
@@ -287,7 +287,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="Design" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>Design</strong> (Design, UI/UX)
                           </FormLabel>
                         </FormItem>
@@ -295,7 +295,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="SalesMarketing" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>Sales & Marketing</strong>
                           </FormLabel>
                         </FormItem>
@@ -303,7 +303,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="ProductManagment" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>
                               Product Management / Product Leadership
                             </strong>
@@ -313,7 +313,7 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="ScrumMaster" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal leading-5">
                             <strong>
                               Scrum Master / Team Coach / Team Lead
                             </strong>
@@ -323,10 +323,8 @@ const JobRoles = () => {
                           <FormControl>
                             <RadioGroupItem value="Other" />
                           </FormControl>
-                          <FormLabel className="font-normal">
-                            <strong>
-                              Other
-                            </strong>
+                          <FormLabel className="font-normal leading-5">
+                            <strong>Other</strong>
                           </FormLabel>
                         </FormItem>
                       </RadioGroup>
@@ -342,7 +340,7 @@ const JobRoles = () => {
                 </p>
                 <Button
                   disabled={isPending}
-                  className="mb-8 rounded-lg border text-violet border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold hover:bg-flush-orange"
+                  className="mb-8 rounded-lg border border-alto bg-tree-poppy px-14 py-5 text-xl font-semibold text-violet hover:bg-flush-orange"
                   type="submit"
                 >
                   Next

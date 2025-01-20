@@ -153,7 +153,7 @@ const DiscTest = () => {
         />
       </section> */}
       <section className="mt-6 flex flex-col items-center">
-        <h1 className="text-4xl font-semibold text-violet">
+        <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
           DISC Personality Test
         </h1>
         {/* <p className="w-1/2 text-center">
@@ -164,7 +164,7 @@ const DiscTest = () => {
         </p> */}
       </section>
       <div className="flex w-full flex-col items-center">
-        <div className="mb-8 w-1/2 rounded-xl border border-alto p-5">
+        <div className="mb-8 w-full rounded-xl border border-alto p-5 lg:w-1/2">
           <h2 className="text-xl font-semibold">
             {testData.questions[currentQuestionIndex]?.question}
           </h2>
@@ -177,10 +177,10 @@ const DiscTest = () => {
                 (option, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between rounded-xl border border-alto py-3 pl-5"
+                    className="flex items-center justify-between rounded-xl border border-alto py-9 pl-5 md:py-5"
                     style={{ height: "60px" }}
                   >
-                    <span>{option.text}</span>
+                    <span className="h-fit py-8">{option.text}</span>
                     <div className="flex h-full items-center">
                       {/* Most Radio Button */}
                       <RadioGroup.Root
