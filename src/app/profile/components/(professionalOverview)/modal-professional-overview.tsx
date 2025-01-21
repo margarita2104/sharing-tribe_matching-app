@@ -213,19 +213,19 @@ export function ModalProfessionalOverview({ title }: { title: string }) {
                             className="cursor-pointer"
                             value="FullTime"
                           >
-                            FullTime
+                            Full time
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
                             value="PartTime"
                           >
-                            PartTime
+                            Part time
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="OpentoOpportunities"
+                            value="OpenToOpportunities"
                           >
-                            OpenToOpportunities
+                            Open to opportunities
                           </SelectItem>
                         </SelectContent>
                       </Select>
