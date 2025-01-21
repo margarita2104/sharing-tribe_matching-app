@@ -230,6 +230,7 @@ export function ModalProject({
                           onBlur={field.onBlur}
                           name={field.name}
                           ref={field.ref}
+                          accept="image/*"
                           className="w-full cursor-pointer"
                         />
                       </FormControl>
