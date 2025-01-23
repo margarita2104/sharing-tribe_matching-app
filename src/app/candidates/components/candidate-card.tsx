@@ -44,13 +44,16 @@ export default async function CandidateCard({ person }: Person) {
                 </dd>{" "}
               </>
             ) : null}
-
-            <dt className="sr-only">Role</dt>
-            <dd className="mt-3">
-              <span className="inline-flex items-center rounded-full bg-tree-poppy/10 px-2 py-1 text-xs font-medium ring-1 ring-inset ring-green-600/20">
-                {person.bio}
-              </span>
-            </dd>
+            {person.bio ? (
+              <>
+                <dt className="sr-only">Role</dt>
+                <dd className="mt-3">
+                  <span className="inline-flex items-center rounded-full bg-tree-poppy/10 px-2 py-1 text-xs font-medium ring-1 ring-inset ring-green-600/20">
+                    {person.bio}
+                  </span>
+                </dd>
+              </>
+            ) : null}
           </dl>
         </div>
         <div>

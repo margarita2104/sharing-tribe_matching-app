@@ -12,7 +12,7 @@ import {
   type WorkExperience,
 } from "~/next-auth";
 import { Card, CardFooter } from "~/components/ui/card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
 import { ModalEducation } from "./(educationCertidication)/modal-education";
@@ -94,6 +94,30 @@ export default function Profile({
   const [editAdditionalInfo, setEditAdditionalInfo] = useState(false);
   const [editWorkTandem, setEditWorkTandem] = useState(false);
   const [editProfile, setEditProfile] = useState(false);
+  const techRef = useRef<HTMLDivElement | null>(null);
+  const jobRef = useRef<HTMLDivElement | null>(null);
+  const workTandemRef = useRef<HTMLDivElement | null>(null);
+  const infoRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (techRef.current) {
+      techRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (jobRef.current) {
+      jobRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (workTandemRef.current) {
+      workTandemRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (infoRef.current) {
+      infoRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [
+    showTechSkills,
+    ShowJobPreferences,
+    ShowWorkTandemPreferences,
+    ShowAdditionalInfo,
+  ]);
 
   if (!user) return null;
 
@@ -220,7 +244,7 @@ export default function Profile({
         ) : null}
       </div>
       {showTechSkills ? (
-        <Card className="mt-6 h-fit w-11/12">
+        <Card className="mt-6 h-fit w-11/12" id="techSkils" ref={techRef}>
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Technical Skills</h2>
@@ -268,7 +292,7 @@ export default function Profile({
       ) : null}
 
       {ShowJobPreferences ? (
-        <Card className="mt-6 h-fit w-11/12">
+        <Card className="mt-6 h-fit w-11/12" id="jobPreferences" ref={jobRef}>
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Job Preferences</h2>
@@ -301,7 +325,11 @@ export default function Profile({
       ) : null}
 
       {ShowWorkTandemPreferences ? (
-        <Card className="mt-6 h-fit w-11/12">
+        <Card
+          className="mt-6 h-fit w-11/12"
+          id="workTandem"
+          ref={workTandemRef}
+        >
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Work Tandem Preferences</h2>
@@ -396,7 +424,7 @@ export default function Profile({
       ) : null}
 
       {ShowAdditionalInfo ? (
-        <Card className="mt-6 h-fit w-11/12">
+        <Card className="mt-6 h-fit w-11/12" id="additionalInfo" ref={infoRef}>
           <div>
             <div className="flex justify-between p-4">
               <h2 className="text-lg text-violet">Additional Information</h2>
