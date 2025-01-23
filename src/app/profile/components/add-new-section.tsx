@@ -6,6 +6,8 @@ import { ModalProfessionalOverview } from "./(professionalOverview)/modal-profes
 import { ModalReferences } from "./(references)/modal-references";
 import { ModalBio } from "./(short-bio)/modal-short-bio";
 import { ModalProject } from "./(projects)/modal-project";
+import Link from "next/link";
+import React from "react";
 
 export function AddNewSection({
   jobPreferences,

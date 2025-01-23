@@ -68,31 +68,33 @@ const SettingsPage = () => {
 
   return (
     <div className="mt-8">
-      <div className="grid w-9/12 grid-cols-1 items-center md:grid-cols-2 md:space-x-16">
+      <div className="grid grid-cols-1 items-center justify-items-center md:grid-cols-2">
         {user?.image ? (
           <Image
             src={user.image}
             alt="Profile picture"
             width={100}
             height={100}
-            className="h-24 w-24 justify-self-center rounded-full object-cover md:justify-self-end"
+            className="h-24 w-24 justify-self-center rounded-full object-cover"
           />
         ) : (
-          <RxAvatar className="h-24 w-24 justify-self-center rounded-full object-cover md:justify-self-end" />
+          <RxAvatar className="h-24 w-24 rounded-full object-cover" />
         )}
 
-        <div className="relative mt-6 space-y-1 md:justify-self-start">
+        <div className="relative mt-6 space-y-1">
           <p className="text-2xl text-violet">{user?.name}</p>
           {user?.discTestResult ? (
-            <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-tree-poppy px-2 py-1 text-purple-800">
-              <p>{user?.discTestResult}</p>
+            <div className="absolute right-0 top-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-tree-poppy text-center text-purple-800">
+              <span className="text-center">{user?.discTestResult}</span>
             </div>
           ) : null}
 
           <p>{user?.email}</p>
         </div>
       </div>
-      <h2 className="mt-8 text-center text-2xl text-purple-900">Settings</h2>
+      <h2 className="mb-8 mt-8 text-center text-2xl text-purple-900">
+        Settings
+      </h2>
       <div>
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
