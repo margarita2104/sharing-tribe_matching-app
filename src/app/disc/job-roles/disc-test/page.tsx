@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import testData from "./test.json";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,6 +7,7 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "~/hooks/use-current-user";
 import { updateTest } from "~/actions/profile";
+import Image from "next/image";
 
 type Selection = {
   most: string | null;
@@ -115,7 +115,7 @@ const DiscTest = () => {
   }, [selections]);
 
   const handleFinishTest = async () => {
-    if (typeof window !== "undefined" && mostAnsweredLetter) {
+    if (!user && typeof window !== "undefined" && mostAnsweredLetter) {
       // setting the test result in the localStorage
       localStorage.setItem("discTestResult", mostAnsweredLetter);
       router.push(
@@ -144,24 +144,10 @@ const DiscTest = () => {
 
   return (
     <main className="w-full">
-      {/* <section className="hero">
-        <Image
-          src="/images/disc-about-page.svg"
-          alt="Hero image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
-      </section> */}
       <section className="mt-6 flex flex-col items-center">
         <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
           DISC Personality Test
         </h1>
-        {/* <p className="w-1/2 text-center">
-          Select the statement that best describes how you naturally behave
-          in&nbsp;a work setting and feels <strong>MOST</strong> true for you,
-          as&nbsp;well as&nbsp;the statement that feels <strong>LEAST </strong>
-          like you or&nbsp;doesn&rsquo;t apply as&nbsp;much.
-        </p> */}
       </section>
       <div className="flex w-full flex-col items-center">
         <div className="mb-8 w-full rounded-xl border border-alto p-5 lg:w-1/2">
@@ -214,13 +200,11 @@ const DiscTest = () => {
                             transition: "background-color 0.3s ease",
                           }}
                         >
-                          <img
+                          <Image
                             src="/icons/thumbs-up.svg"
                             alt="Thumbs Up"
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                            }}
+                            width={30}
+                            height={30}
                           />
                         </RadioGroup.Item>
                       </RadioGroup.Root>
@@ -256,13 +240,11 @@ const DiscTest = () => {
                             transition: "background-color 0.3s ease",
                           }}
                         >
-                          <img
+                          <Image
                             src="/icons/thumbs-down.svg"
                             alt="Thumbs Down"
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                            }}
+                            width={30}
+                            height={30}
                           />
                         </RadioGroup.Item>
                       </RadioGroup.Root>

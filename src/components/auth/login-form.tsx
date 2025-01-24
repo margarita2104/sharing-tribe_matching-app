@@ -58,7 +58,8 @@ export const LoginForm = () => {
             setSuccess(data.success);
           }
         })
-        .catch(() => setError("Something went wrong"));
+        .catch(() => setError("Something went wrong"))
+        .finally(() => window.localStorage.clear());
     });
   };
 
