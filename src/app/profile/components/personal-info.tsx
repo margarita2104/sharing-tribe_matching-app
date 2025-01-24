@@ -140,9 +140,9 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormLabel className="w-full">Location</FormLabel>
-                    <FormControl>
+                    <FormControl className="w-full">
                       {edit ? (
-                        <div className="relative w-full">
+                        <div className="relative">
                           <Input
                             {...field}
                             placeholder="Enter city"
@@ -153,7 +153,9 @@ export function PersonalInfo({ user }: { user: ExtendedUser }) {
                             }}
                             disabled={isPending}
                           />
-                          {loading && <LoadingSpinner className="h-6 w-6" />}
+                          {loading && (
+                            <LoadingSpinner className="mx-auto my-2 flex h-6 w-6 items-center justify-center p-2" />
+                          )}
                           {suggestions.length > 0 && (
                             <ul className="absolute z-10 mt-1 w-full rounded-md bg-white shadow-md">
                               {suggestions.map((city) => (
