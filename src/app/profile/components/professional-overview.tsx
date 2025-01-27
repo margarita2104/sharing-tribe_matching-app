@@ -224,7 +224,7 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="OpentoOpportunities"
+                            value="OpenToOpportunities"
                           >
                             OpenToOpportunities
                           </SelectItem>
