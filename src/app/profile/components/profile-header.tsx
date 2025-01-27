@@ -116,7 +116,7 @@ export function ProfileHeader({
             className="h-24 w-24 justify-self-center rounded-full object-cover"
           />
         ) : (
-          <RxAvatar className="h-24 w-24 rounded-full object-cover" />
+          <RxAvatar className="h-24 w-24 justify-self-center rounded-full object-cover" />
         )}
 
         <div className="relative mt-6 space-y-1">
