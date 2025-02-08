@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { toast } from "~/hooks/use-toast";
+import { replaceUnderscoreWithSpace } from "~/lib/utils";
 
 export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
   const [error, setError] = useState<string | undefined>();
@@ -138,7 +139,7 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                         </FormControl>
                         <SelectContent className="cursor-pointer">
                           <SelectItem
-                            value="SoftwareDevelopment"
+                            value="Software_Development"
                             className="cursor-pointer"
                           >
                             Software Development
@@ -154,19 +155,19 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="SalesMarketing"
+                            value="Sales_Marketing"
                           >
                             Sales / Marketing
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="ProductManagment"
+                            value="Product_Managment"
                           >
                             Product Managment
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="ScrumMaster"
+                            value="Scrum_Master"
                           >
                             Scrum Master
                           </SelectItem>
@@ -179,7 +180,10 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <p className="w-full">{user.jobRoleFamily ?? "N/A"}</p>
+                      <p className="w-full">
+                        {replaceUnderscoreWithSpace(user.jobRoleFamily) ??
+                          "N/A"}
+                      </p>
                     )}
 
                     <FormMessage />
@@ -212,26 +216,29 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="FullTime"
+                            value="Full_Time"
                           >
-                            FullTime
+                            Full Time
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="PartTime"
+                            value="Part_Time"
                           >
-                            PartTime
+                            Part Time
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="OpenToOpportunities"
+                            value="Open_to_opportunities"
                           >
-                            OpenToOpportunities
+                            Open to opportunities
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
-                      <p className="w-full">{user.employmentStatus ?? "N/A"}</p>
+                      <p className="w-full">
+                        {replaceUnderscoreWithSpace(user.employmentStatus) ??
+                          "N/A"}
+                      </p>
                     )}
 
                     <FormMessage />
@@ -262,13 +269,18 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                           <SelectItem className="cursor-pointer" value="Remote">
                             Remote
                           </SelectItem>
-                          <SelectItem className="cursor-pointer" value="Onsite">
-                            Onsite
+                          <SelectItem
+                            className="cursor-pointer"
+                            value="On_site"
+                          >
+                            On site
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
-                      <p className="w-full">{user.workMode ?? "N/A"}</p>
+                      <p className="w-full">
+                        {replaceUnderscoreWithSpace(user.workMode) ?? "N/A"}
+                      </p>
                     )}
 
                     <FormMessage />
@@ -294,27 +306,29 @@ export function ProfessionalOverview({ user }: { user: ExtendedUser }) {
                         </FormControl>
                         <SelectContent className="cursor-pointer">
                           <SelectItem
-                            value="OneMonth"
+                            value="One_Month"
                             className="cursor-pointer"
                           >
                             1 Month
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="ThreeMonths"
+                            value="Three_Months"
                           >
                             3 Months
                           </SelectItem>
                           <SelectItem
                             className="cursor-pointer"
-                            value="SixMonths"
+                            value="Six_Months"
                           >
                             6 Months
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
-                      <p className="w-full">{user.availability ?? "N/A"}</p>
+                      <p className="w-full">
+                        {replaceUnderscoreWithSpace(user.availability) ?? "N/A"}
+                      </p>
                     )}
 
                     <FormMessage />

@@ -36,21 +36,21 @@ type Education = {
 };
 
 type jobRoleFamily =
-  | "SoftwareDevelopment"
+  | "Software_Development"
   | "Data"
   | "Fintech"
   | "Design"
-  | "SalesMarketing"
-  | "ProductManagment"
-  | "ScrumMaster"
+  | "Sales_Marketing"
+  | "Product_Managment"
+  | "Scrum_Master"
   | "Other";
 type employmentStatus =
   | "Freelance"
-  | "FullTime"
-  | "PartTime"
-  | "OpenToOpportunities";
-type workMode = "Hybrid" | "Remote" | "Onsite";
-type availability = "OneMonth" | "ThreeMonths" | "SixMonths";
+  | "Full_Time"
+  | "Part_Time"
+  | "Open_to_opportunities";
+type workMode = "Hybrid" | "Remote" | "On_site";
+type availability = "One_Month" | "Three_Months" | "Six_Months";
 export type ExtendedUser = DefaultSession["user"] & {
   id: string;
   image: string;

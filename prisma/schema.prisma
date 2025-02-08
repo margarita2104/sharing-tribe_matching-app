@@ -145,38 +145,38 @@ model AdditionalInfo {
 // Enums for predefined options
 enum EmploymentStatus {
     Freelance
-    FullTime
-    PartTime
-    OpenToOpportunities
+    Full_Time
+    Part_Time
+    Open_to_opportunities
 }
 
 enum Availability {
-    OneMonth
-    ThreeMonths
-    SixMonths
+    One_Month
+    Three_Months
+    Six_Months
 }
 
 enum JobRoleFamily {
-    SoftwareDevelopment
+    Software_Development
     Data
     Fintech
     Design
-    SalesMarketing
-    ProductManagment
-    ScrumMaster
+    Sales_Marketing
+    Product_Managment
+    Scrum_Master
     Other
 }
 
 enum WorkMode {
     Hybrid
     Remote
-    Onsite
+    On_site
 }
 
 enum WorkPreference {
-    FullTime
-    PartTime
-    JobSharing
+    Full_Time
+    Part_Time
+    Job_Sharing
     Hybrid
     Remote
 }
@@ -192,16 +192,16 @@ enum Industry {
 }
 
 enum Roles {
-    FrontendDeveloper
-    BackendDeveloper
-    FullstackDeveloper
-    MobileDeveloper
+    Frontend_Developer
+    Backend_Developer
+    Fullstack_Developer
+    Mobile_Developer
     Designer
-    ProductManager
-    DataScientist
-    DevOpsEngineer
-    QAEngineer
-    SoftwareEngineer
+    Product_Manager
+    Data_Scientist
+    DevOps_Engineer
+    QA_Engineer
+    Software_Engineer
     Other
 }
 

@@ -20,22 +20,24 @@ export const ProfileSchema = z
     image: z.union([z.instanceof(File), z.string()]).optional(),
     jobRoleFamily: z.optional(
       z.enum([
-        "SoftwareDevelopment",
+        "Software_Development",
         "Data",
         "Fintech",
         "Design",
-        "SalesMarketing",
-        "ProductManagment",
-        "ScrumMaster",
+        "Sales_Marketing",
+        "Product_Managment",
+        "Scrum_Master",
         "Other",
       ]),
     ),
     employmentStatus: z.optional(
-      z.enum(["Freelance", "FullTime", "PartTime", "OpenToOpportunities"]),
+      z.enum(["Freelance", "Full_Time", "Part_Time", "Open_to_opportunities"]),
     ),
-    workMode: z.optional(z.enum(["Hybrid", "Remote", "Onsite"])),
+    workMode: z.optional(z.enum(["Hybrid", "Remote", "On_site"])),
 
-    availability: z.optional(z.enum(["OneMonth", "ThreeMonths", "SixMonths"])),
+    availability: z.optional(
+      z.enum(["One_Month", "Three_Months", "Six_Months"]),
+    ),
     currentCompany: z.optional(z.string()),
 
     discTestResult: z.optional(z.enum(["D", "I", "S", "C"])),
@@ -160,20 +162,20 @@ export const SoftSKilsSchema = z.object({
 
 export const JobPreferenceSchema = z.object({
   workPreference: z.array(
-    z.enum(["FullTime", "PartTime", "JobSharing", "Hybrid", "Remote"]),
+    z.enum(["Full_Time", "Part_Time", "Job_Sharing", "Hybrid", "Remote"]),
   ),
   role: z.array(
     z.enum([
-      "FrontendDeveloper",
-      "BackendDeveloper",
-      "FullstackDeveloper",
-      "MobileDeveloper",
+      "Frontend_Developer",
+      "Backend_Developer",
+      "Fullstack_Developer",
+      "Mobile_Developer",
       "Designer",
-      "ProductManager",
-      "DataScientist",
-      "DevOpsEngineer",
-      "QAEngineer",
-      "SoftwareEngineer",
+      "Product_Manager",
+      "Data_Scientist",
+      "DevOps_Engineer",
+      "QA_Engineer",
+      "Software_Engineer",
       "Other",
     ]),
   ),
@@ -213,16 +215,16 @@ export const ProjectSchema = z.object({
 export const WorkTandemSchema = z.object({
   idealPartnerRole: z.array(
     z.enum([
-      "FrontendDeveloper",
-      "BackendDeveloper",
-      "FullstackDeveloper",
-      "MobileDeveloper",
+      "Frontend_Developer",
+      "Backend_Developer",
+      "Fullstack_Developer",
+      "Mobile_Developer",
       "Designer",
-      "ProductManager",
-      "DataScientist",
-      "DevOpsEngineer",
-      "QAEngineer",
-      "SoftwareEngineer",
+      "Product_Manager",
+      "Data_Scientist",
+      "DevOps_Engineer",
+      "QA_Engineer",
+      "Software_Engineer",
       "Other",
     ]),
   ),
@@ -234,11 +236,11 @@ export const AdditionalInfoSchema = z.object({
   hobbiesAndInterests: z.array(z.string()),
   volunteering: z.string().optional(),
   preferredWorkSchedule: z.enum([
-    "Flexible Hours",
-    "Fixed Hours",
-    "Full Time",
-    "Part Time",
-    "Job Sharing",
+    "Flexible_Hours",
+    "Fixed_Hours",
+    "Full_Time",
+    "Part_Time",
+    "Job_Sharing",
   ]),
 
   languages: z.array(

@@ -36,6 +36,7 @@ import {
 import { type TandemPreference } from "@prisma/client";
 import { MdOutlineCancel } from "react-icons/md";
 import { toast } from "~/hooks/use-toast";
+import { replaceUnderscoreWithSpace } from "~/lib/utils";
 
 type WorkTandemProps = {
   workTandemPreferences: TandemPreference | null;
@@ -106,7 +107,7 @@ export function WorkTandemSave({
                     (role, index) => (
                       <>
                         <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                          {role}
+                          {replaceUnderscoreWithSpace(role)}
                           {editWorkTandem && (
                             <div
                               onClick={() =>
@@ -151,10 +152,13 @@ export function WorkTandemSave({
                           Ideal Tandem Partner (Add a new one){" "}
                         </FormLabel>
                         <Select
-                          onValueChange={(value) => {
-                            field.onChange([value]);
+                          onValueChange={(newRole) => {
+                            const current = Array.isArray(field.value)
+                              ? field.value
+                              : [];
+                    
+                            field.onChange([...current, newRole]);
                           }}
-                          value={field.value?.[0] ?? ""}
                         >
                           <FormControl className="cursor-pointer">
                             <SelectTrigger>
@@ -168,7 +172,7 @@ export function WorkTandemSave({
                                 key={index}
                                 value={role}
                               >
-                                {role}
+                                {replaceUnderscoreWithSpace(role)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -186,7 +190,7 @@ export function WorkTandemSave({
                 {workTandemPreferences?.idealPartnerRole.map((role, index) => (
                   <>
                     <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                      {role}
+                      {replaceUnderscoreWithSpace(role)}
                       {editWorkTandem && (
                         <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform cursor-pointer">
                           <MdOutlineCancel className="text-red-500" />
@@ -205,7 +209,7 @@ export function WorkTandemSave({
                     (role, index) => (
                       <>
                         <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                          {role}
+                          {replaceUnderscoreWithSpace(role)}
                           {editWorkTandem && (
                             <div
                               onClick={() =>
@@ -279,7 +283,7 @@ export function WorkTandemSave({
                   (role, index) => (
                     <>
                       <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                        {role}
+                        {replaceUnderscoreWithSpace(role)}
                         {editWorkTandem && (
                           <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform cursor-pointer">
                             <MdOutlineCancel className="text-red-500" />
