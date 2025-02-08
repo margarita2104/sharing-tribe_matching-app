@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { replaceUnderscoreWithSpace } from "~/lib/utils";
 
 type JobPreferenceProps = {
   userId: string;
@@ -48,10 +49,6 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
     startTransition(() => {
       WorkTandemCreate(values)
         .then(async (data) => {
-          // if (data.error) {
-          //   setError(data.error);
-          // }
-
           if (data.success) {
             await update();
             setSuccess(data.success);
@@ -77,17 +74,13 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
                     </FormLabel>
 
                     <Select
-                      onValueChange={(selectedRole) => {
-                        const updatedRoles = Array.isArray(field.value)
-                          ? [...new Set([...field.value, selectedRole])]
-                          : [selectedRole];
-                        field.onChange(updatedRoles);
+                      onValueChange={(newRole) => {
+                        const current = Array.isArray(field.value)
+                          ? field.value
+                          : [];
+
+                        field.onChange([...current, newRole]);
                       }}
-                      value={
-                        Array.isArray(field.value)
-                          ? field.value.join(", ")
-                          : field.value
-                      }
                     >
                       <FormControl className="cursor-pointer">
                         <SelectTrigger>
@@ -101,7 +94,7 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
                             key={index}
                             value={role}
                           >
-                            {role}
+                            {replaceUnderscoreWithSpace(role)}
                           </SelectItem>
                         ))}
                       </SelectContent>

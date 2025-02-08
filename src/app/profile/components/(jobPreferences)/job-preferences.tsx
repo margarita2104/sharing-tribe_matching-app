@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { replaceUnderscoreWithSpace } from "~/lib/utils";
 
 type JobPreferenceProps = {
   userId: string;
@@ -77,17 +78,13 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                   <FormLabel className="w-full">Desired Roles</FormLabel>
 
                   <Select
-                    onValueChange={(selectedRole) => {
-                      const updatedRoles = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selectedRole])]
-                        : [selectedRole];
-                      field.onChange(updatedRoles);
+                    onValueChange={(newRole) => {
+                      const current = Array.isArray(field.value)
+                        ? field.value
+                        : [];
+                      // Append the newly selected value
+                      field.onChange([...current, newRole]);
                     }}
-                    value={
-                      Array.isArray(field.value)
-                        ? field.value.join(", ")
-                        : field.value
-                    }
                   >
                     <FormControl className="cursor-pointer">
                       <SelectTrigger>
@@ -95,15 +92,66 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="cursor-pointer">
-                      {availableRoles.map((role, index) => (
-                        <SelectItem
-                          className="cursor-pointer"
-                          key={index}
-                          value={role}
-                        >
-                          {role}
-                        </SelectItem>
-                      ))}
+                      <SelectItem
+                        value="Frontend_Developer"
+                        className="cursor-pointer"
+                      >
+                        Frontend Developer
+                      </SelectItem>
+                      <SelectItem
+                        value="Backend_Developer"
+                        className="cursor-pointer"
+                      >
+                        Backend Developer
+                      </SelectItem>
+                      <SelectItem
+                        value="Fullstack_Developer"
+                        className="cursor-pointer"
+                      >
+                        Fullstack Developer
+                      </SelectItem>
+                      <SelectItem
+                        value="Mobile_Developer"
+                        className="cursor-pointer"
+                      >
+                        Mobile Developer
+                      </SelectItem>
+                      <SelectItem value="Designer" className="cursor-pointer">
+                        Designer
+                      </SelectItem>
+                      <SelectItem
+                        value="Product_Manager"
+                        className="cursor-pointer"
+                      >
+                        Product Manager
+                      </SelectItem>
+                      <SelectItem
+                        value="Data_Scientist"
+                        className="cursor-pointer"
+                      >
+                        Data Scientist
+                      </SelectItem>
+                      <SelectItem
+                        value="DevOps_Engineer"
+                        className="cursor-pointer"
+                      >
+                        DevOps Engineer
+                      </SelectItem>
+                      <SelectItem
+                        value="QA_Engineer"
+                        className="cursor-pointer"
+                      >
+                        QA Engineer
+                      </SelectItem>
+                      <SelectItem
+                        value="Software_Engineer"
+                        className="cursor-pointer"
+                      >
+                        Software Engineer
+                      </SelectItem>
+                      <SelectItem value="Other" className="cursor-pointer">
+                        Other
+                      </SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -119,18 +167,13 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                   <FormLabel className="w-full">Work Preference</FormLabel>
 
                   <Select
-                    onValueChange={(selecteWorkPreference) => {
-                      
-                      const updatedWorkPreference = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selecteWorkPreference])]
-                        : [selecteWorkPreference];
-                      field.onChange(updatedWorkPreference); 
+                    onValueChange={(newRole) => {
+                      const current = Array.isArray(field.value)
+                        ? field.value
+                        : [];
+                      // Append the newly selected value
+                      field.onChange([...current, newRole]);
                     }}
-                    value={
-                      Array.isArray(field.value)
-                        ? field.value.join(", ")
-                        : field.value
-                    }
                   >
                     <FormControl className="cursor-pointer">
                       <SelectTrigger>
@@ -138,15 +181,24 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="cursor-pointer">
-                      {availableWorkPreference.map((role, index) => (
-                        <SelectItem
-                          className="cursor-pointer"
-                          key={index}
-                          value={role}
-                        >
-                          {role}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="Full_Time" className="cursor-pointer">
+                        Full Time
+                      </SelectItem>
+                      <SelectItem value="Part_Time" className="cursor-pointer">
+                        Part Time
+                      </SelectItem>
+                      <SelectItem
+                        value="Job_Sharing"
+                        className="cursor-pointer"
+                      >
+                        Job Sharing
+                      </SelectItem>
+                      <SelectItem value="Hybrid" className="cursor-pointer">
+                        Hybrid
+                      </SelectItem>
+                      <SelectItem value="Remote" className="cursor-pointer">
+                        Remote
+                      </SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -162,18 +214,13 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                   <FormLabel className="w-full">Desired Industry</FormLabel>
 
                   <Select
-                    onValueChange={(selectedIndustry) => {
-                      
-                      const updatedIndustry = Array.isArray(field.value)
-                        ? [...new Set([...field.value, selectedIndustry])] 
-                        : [selectedIndustry];
-                      field.onChange(updatedIndustry); 
+                    onValueChange={(newRole) => {
+                      const current = Array.isArray(field.value)
+                        ? field.value
+                        : [];
+                      // Append the newly selected value
+                      field.onChange([...current, newRole]);
                     }}
-                    value={
-                      Array.isArray(field.value)
-                        ? field.value.join(", ")
-                        : field.value
-                    }
                   >
                     <FormControl className="cursor-pointer">
                       <SelectTrigger>
@@ -181,15 +228,24 @@ export function JobPreferences({ userId }: JobPreferenceProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="cursor-pointer">
-                      {availableIndustry.map((role, index) => (
-                        <SelectItem
-                          className="cursor-pointer"
-                          key={index}
-                          value={role}
-                        >
-                          {role}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="IT" className="cursor-pointer">
+                        IT
+                      </SelectItem>
+                      <SelectItem value="Media" className="cursor-pointer">
+                        Media
+                      </SelectItem>
+                      <SelectItem value="Education" className="cursor-pointer">
+                        Education
+                      </SelectItem>
+                      <SelectItem value="Finance" className="cursor-pointer">
+                        Finance
+                      </SelectItem>
+                      <SelectItem value="Retail" className="cursor-pointer">
+                        Retail
+                      </SelectItem>
+                      <SelectItem value="Other" className="cursor-pointer">
+                        Other
+                      </SelectItem>
                     </SelectContent>
                   </Select>
 
