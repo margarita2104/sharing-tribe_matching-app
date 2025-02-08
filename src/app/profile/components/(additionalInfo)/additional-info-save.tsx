@@ -79,11 +79,11 @@ export function AdditionalInfoSave({
       hobbiesAndInterests: infos?.hobbiesAndInterests ?? [],
       volunteering: infos?.volunteering ?? undefined,
       preferredWorkSchedule: infos?.preferredWorkSchedule as
-        | "Flexible Hours"
-        | "Fixed Hours"
-        | "Full Time"
-        | "Part Time"
-        | "Job Sharing"
+        | "Flexible_Hours"
+        | "Fixed_Hours"
+        | "Full_Time"
+        | "Part_Time"
+        | "Job_Sharing"
         | undefined,
     },
   });
