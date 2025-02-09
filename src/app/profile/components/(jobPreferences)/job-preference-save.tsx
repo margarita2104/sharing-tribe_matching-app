@@ -42,6 +42,12 @@ type JobPreferenceProps = {
   userId: string;
 };
 
+const availableRoles = JobPreferenceSchema.shape.role._def.type._def.values;
+const availableIndustry =
+  JobPreferenceSchema.shape.industry._def.type._def.values;
+const availableWorkPreference =
+  JobPreferenceSchema.shape.workPreference._def.type._def.values;
+
 export function JobPreferencesSave({
   jobPreferences,
   editJobPreferences,
@@ -83,6 +89,22 @@ export function JobPreferencesSave({
         .catch(() => setError("Something went wrong!"));
     });
   };
+
+  const filteredRole =
+    jobPreferences &&
+    availableRoles.filter(
+      (preference) => !jobPreferences.role.includes(preference),
+    );
+  const filteredWorkPreference =
+    jobPreferences &&
+    availableWorkPreference.filter(
+      (preference) => !jobPreferences.workPreference.includes(preference),
+    );
+  const filteredIndustry =
+    jobPreferences &&
+    availableIndustry.filter(
+      (preference) => !jobPreferences.industry.includes(preference),
+    );
 
   return (
     <CardContent>
@@ -131,95 +153,45 @@ export function JobPreferencesSave({
                 <FormField
                   control={form.control}
                   name="role"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center">
-                      <FormLabel className="w-full">
-                        Desired Role (Add a new one){" "}
-                      </FormLabel>
-                      <Select
-                        onValueChange={(newRole) => {
-                          const current = Array.isArray(field.value)
-                            ? field.value
-                            : [];
-                          // Append the newly selected value
-                          field.onChange([...current, newRole]);
-                        }}
-                      >
-                        <FormControl className="cursor-pointer">
-                          <SelectTrigger>
-                            <SelectValue placeholder="Choose" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent className="cursor-pointer">
-                          <SelectItem
-                            value="Frontend_Developer"
-                            className="cursor-pointer"
-                          >
-                            Frontend Developer
-                          </SelectItem>
-                          <SelectItem
-                            value="Backend_Developer"
-                            className="cursor-pointer"
-                          >
-                            Backend Developer
-                          </SelectItem>
-                          <SelectItem
-                            value="Fullstack_Developer"
-                            className="cursor-pointer"
-                          >
-                            Fullstack Developer
-                          </SelectItem>
-                          <SelectItem
-                            value="Mobile_Developer"
-                            className="cursor-pointer"
-                          >
-                            Mobile Developer
-                          </SelectItem>
-                          <SelectItem
-                            value="Designer"
-                            className="cursor-pointer"
-                          >
-                            Designer
-                          </SelectItem>
-                          <SelectItem
-                            value="Product_Manager"
-                            className="cursor-pointer"
-                          >
-                            Product Manager
-                          </SelectItem>
-                          <SelectItem
-                            value="Data_Scientist"
-                            className="cursor-pointer"
-                          >
-                            Data Scientist
-                          </SelectItem>
-                          <SelectItem
-                            value="DevOps_Engineer"
-                            className="cursor-pointer"
-                          >
-                            DevOps Engineer
-                          </SelectItem>
-                          <SelectItem
-                            value="QA_Engineer"
-                            className="cursor-pointer"
-                          >
-                            QA Engineer
-                          </SelectItem>
-                          <SelectItem
-                            value="Software_Engineer"
-                            className="cursor-pointer"
-                          >
-                            Software Engineer
-                          </SelectItem>
-                          <SelectItem value="Other" className="cursor-pointer">
-                            Other
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                  render={({ field }) => {
+                    return (
+                      <FormItem className="flex items-center">
+                        <FormLabel className="w-full">
+                          Desired Role (Add a new one){" "}
+                        </FormLabel>
+                        <Select
+                          onValueChange={(selectedValue) => {
+                            // Instead of appending, we replace the entire array with just the selected value
+                            field.onChange([selectedValue]);
+                          }}
+                          value={
+                            field.value.length
+                              ? field.value[field.value.length - 1]
+                              : ""
+                          }
+                        >
+                          <FormControl className="cursor-pointer">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="cursor-pointer">
+                            {filteredRole?.map((role, index) => (
+                              <SelectItem
+                                className="cursor-pointer"
+                                key={index}
+                                value={role}
+                              >
+                                {replaceUnderscoreWithSpace(role)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
               </>
             ) : (
@@ -288,13 +260,15 @@ export function JobPreferencesSave({
                         Work Preference (Add a new one){" "}
                       </FormLabel>
                       <Select
-                        onValueChange={(newRole) => {
-                          const current = Array.isArray(field.value)
-                            ? field.value
-                            : [];
-                          // Append the newly selected value
-                          field.onChange([...current, newRole]);
+                        onValueChange={(selectedValue) => {
+                          // Instead of appending, we replace the entire array with just the selected value
+                          field.onChange([selectedValue]);
                         }}
+                        value={
+                          field.value.length
+                            ? field.value[field.value.length - 1]
+                            : ""
+                        }
                       >
                         <FormControl className="cursor-pointer">
                           <SelectTrigger>
@@ -302,30 +276,15 @@ export function JobPreferencesSave({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="cursor-pointer">
-                          <SelectItem
-                            value=" Full_Time"
-                            className="cursor-pointer"
-                          >
-                            Full Time
-                          </SelectItem>
-                          <SelectItem
-                            value=" Part_Time"
-                            className="cursor-pointer"
-                          >
-                            Part Time
-                          </SelectItem>
-                          <SelectItem
-                            value="Job_Sharing"
-                            className="cursor-pointer"
-                          >
-                            Job Sharing
-                          </SelectItem>
-                          <SelectItem value="Hybrid" className="cursor-pointer">
-                            Hybrid
-                          </SelectItem>
-                          <SelectItem value="Remote" className="cursor-pointer">
-                            Remote
-                          </SelectItem>
+                          {filteredWorkPreference?.map((role, index) => (
+                            <SelectItem
+                              className="cursor-pointer"
+                              key={index}
+                              value={role}
+                            >
+                              {replaceUnderscoreWithSpace(role)}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
 
@@ -400,13 +359,15 @@ export function JobPreferencesSave({
                         Desired industry (Add a new one){" "}
                       </FormLabel>
                       <Select
-                        onValueChange={(newRole) => {
-                          const current = Array.isArray(field.value)
-                            ? field.value
-                            : [];
-                          // Append the newly selected value
-                          field.onChange([...current, newRole]);
+                        onValueChange={(selectedValue) => {
+                          // Instead of appending, we replace the entire array with just the selected value
+                          field.onChange([selectedValue]);
                         }}
+                        value={
+                          field.value.length
+                            ? field.value[field.value.length - 1]
+                            : ""
+                        }
                       >
                         <FormControl className="cursor-pointer">
                           <SelectTrigger>
@@ -414,33 +375,15 @@ export function JobPreferencesSave({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="cursor-pointer">
-                          <SelectItem value="IT" className="cursor-pointer">
-                            IT
-                          </SelectItem>
-                          <SelectItem value="Media" className="cursor-pointer">
-                            Media
-                          </SelectItem>
-                          <SelectItem
-                            value="Education"
-                            className="cursor-pointer"
-                          >
-                            Education
-                          </SelectItem>
-                          <SelectItem value="Health" className="cursor-pointer">
-                            Health
-                          </SelectItem>
-                          <SelectItem
-                            value="ReFinancemote"
-                            className="cursor-pointer"
-                          >
-                            Finance
-                          </SelectItem>
-                          <SelectItem value="Retail" className="cursor-pointer">
-                            Retail
-                          </SelectItem>
-                          <SelectItem value="Other" className="cursor-pointer">
-                            Other
-                          </SelectItem>
+                          {filteredIndustry?.map((role, index) => (
+                            <SelectItem
+                              className="cursor-pointer"
+                              key={index}
+                              value={role}
+                            >
+                              {replaceUnderscoreWithSpace(role)}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
 
