@@ -124,6 +124,9 @@ const DiscTest = () => {
     }
     if (user) {
       await updateTest(mostAnsweredLetter, user?.id);
+      router.push(
+        `/disc/job-roles/disc-test/results?mostAnsweredLetter=${mostAnsweredLetter}`,
+      );
     }
   };
 

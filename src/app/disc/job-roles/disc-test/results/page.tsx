@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import { similarCandidates } from "~/actions/similar-candidates";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { useCurrentUser } from "~/hooks/use-current-user";
 
