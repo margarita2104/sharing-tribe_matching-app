@@ -74,13 +74,15 @@ export function WorkTandem({ userId }: JobPreferenceProps) {
                     </FormLabel>
 
                     <Select
-                      onValueChange={(newRole) => {
-                        const current = Array.isArray(field.value)
-                          ? field.value
-                          : [];
-
-                        field.onChange([...current, newRole]);
+                      onValueChange={(selectedValue) => {
+                        // Instead of appending, we replace the entire array with just the selected value
+                        field.onChange([selectedValue]);
                       }}
+                      value={
+                        field.value?.length
+                          ? field.value[field.value.length - 1]
+                          : ""
+                      }
                     >
                       <FormControl className="cursor-pointer">
                         <SelectTrigger>
