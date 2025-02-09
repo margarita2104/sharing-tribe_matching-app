@@ -101,7 +101,7 @@ const JobRoles = () => {
                   >
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="SoftwareDevelopment" />
+                        <RadioGroupItem value="Software_Development" />
                       </FormControl>
                       <FormLabel className="font-normal leading-5">
                         <strong>Software Development</strong> (Software
@@ -136,7 +136,7 @@ const JobRoles = () => {
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="SalesMarketing" />
+                        <RadioGroupItem value="Sales_Marketing" />
                       </FormControl>
                       <FormLabel className="font-normal leading-5">
                         <strong>Sales & Marketing</strong>
@@ -144,7 +144,7 @@ const JobRoles = () => {
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="ProductManagment" />
+                        <RadioGroupItem value="Product_Managment" />
                       </FormControl>
                       <FormLabel className="font-normal leading-5">
                         <strong>Product Management / Product Leadership</strong>
@@ -152,7 +152,7 @@ const JobRoles = () => {
                     </FormItem>
                     <FormItem className="flex items-center space-x-3 space-y-0">
                       <FormControl>
-                        <RadioGroupItem value="ScrumMaster" />
+                        <RadioGroupItem value="Scrum_Master" />
                       </FormControl>
                       <FormLabel className="font-normal leading-5">
                         <strong>Scrum Master / Team Coach / Team Lead</strong>

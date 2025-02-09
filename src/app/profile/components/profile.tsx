@@ -100,17 +100,20 @@ export default function Profile({
   const infoRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (techRef.current) {
-      techRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (jobRef.current) {
-      jobRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (workTandemRef.current) {
-      workTandemRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (infoRef.current) {
-      infoRef.current.scrollIntoView({ behavior: "smooth" });
+    if (
+      showTechSkills ||
+      ShowJobPreferences ||
+      ShowWorkTandemPreferences ||
+      ShowAdditionalInfo
+    ) {
+      const refs = [techRef, jobRef, workTandemRef, infoRef];
+
+      for (const ref of refs) {
+        if (ref.current) {
+          ref.current.scrollIntoView({ behavior: "smooth" });
+          break; // Stops at the first visible element
+        }
+      }
     }
   }, [
     showTechSkills,
@@ -118,6 +121,10 @@ export default function Profile({
     ShowWorkTandemPreferences,
     ShowAdditionalInfo,
   ]);
+  useEffect(() => {
+    // Force scroll to top on page load
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
   if (!user) return null;
 
