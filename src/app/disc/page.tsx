@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
-import { Button } from "~/components/ui/button";
 
 const Disc = () => {
   return (
     <main>
-      <AspectRatio ratio={16 / 8} className="bg-muted">
+      <AspectRatio ratio={16 / 5} className="bg-muted">
         <Image
           src="/images/disc-hero.svg"
           alt="Hero Image"
@@ -14,8 +13,9 @@ const Disc = () => {
           className="h-full w-full rounded-md object-cover"
         />
       </AspectRatio>
+
       <section className="flex flex-col items-center px-6">
-        <h1 className="m-10 text-center text-2xl font-semibold text-violet md:text-4xl">
+        <h1 className="m-10 text-center text-xl font-semibold text-violet md:text-4xl">
           Discover Your Working Style
         </h1>
         <p className="text-center text-sm leading-7 md:w-3/4 md:text-base md:leading-9">
@@ -29,28 +29,29 @@ const Disc = () => {
           approach.
         </p>
       </section>
-      <section className="grid grid-cols-1 place-items-center gap-10 bg-gallery px-14 py-8 md:grid-cols-2">
+
+      <section className="grid grid-cols-1 place-items-center gap-10 bg-gallery px-6 py-8 md:grid-cols-2 md:px-14">
         <div className="w-full">
-          <h2 className="mb-6 text-center text-2xl font-semibold text-violet">
+          <h2 className="mb-6 text-center text-xl font-semibold text-violet md:text-2xl">
             What is&nbsp;the DISC Personality Test?
           </h2>
-          <p className="mb-3 leading-7">
+          <p className="mb-3 text-sm leading-6 md:text-base md:leading-8">
             The DISC model is&nbsp;a&nbsp;widely recognized tool that identifies
             four key personality types:
             <strong> Dominance, Influence, Steadiness, </strong> and
             <strong> Conscientiousness</strong>.
           </p>
-          <p className="mb-3 leading-7">
+          <p className="mb-3 text-sm leading-6 md:text-base md:leading-8">
             Each type reflects how you respond to&nbsp;challenges, interact with
             others, pace your work, and approach rules and structure.
           </p>
-          <p className="mb-3 leading-7">
+          <p className="mb-3 text-sm leading-6 md:text-base md:leading-8">
             Understanding where you fall on&nbsp;the DISC spectrum helps you
             become more aware of&nbsp;your strengths and working preferences,
             as&nbsp;well as&nbsp;the type of&nbsp;partner who can complement
             your style.
           </p>
-          <p className="mb-3 leading-7">
+          <p className="mb-3 text-sm leading-6 md:text-base md:leading-8">
             This test is&nbsp;designed to&nbsp;help you understand your
             personality and working style so&nbsp;that we&nbsp;can match you
             with a&nbsp;professional who complements your strengths.
@@ -62,98 +63,81 @@ const Disc = () => {
             alt="Section illustration"
             width={400}
             height={400}
-            className="h-full w-full object-cover"
+            className="h-full w-full max-w-[300px] object-cover md:max-w-[400px]"
           />
         </div>
       </section>
-      <section className="px-12">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-violet">
+
+      <section className="px-6 md:px-12">
+        <h2 className="mb-6 text-center text-xl font-semibold text-violet md:text-2xl">
           How the DISC Test Works
         </h2>
-        <p className="mb-6 text-center leading-7">
+        <p className="mb-6 text-center text-sm leading-6 md:text-base md:leading-8">
           You will see 20&nbsp;questions, and for each question, you will have
           4&nbsp;statements; you need to&nbsp;choose one that feels MOST like
           you and one that feels LEAST like you.
         </p>
-        <p className="mb-6 text-center leading-7">
+        <p className="mb-6 text-center text-sm leading-6 md:text-base md:leading-8">
           <strong>Tips for Accurate Results: </strong>
           Don&rsquo;t overthink your answers&mdash;go with your first instinct.
           There are no&nbsp;right or&nbsp;wrong answers; simply choose what
           feels most natural. Be&nbsp;honest with yourself to&nbsp;ensure your
           DISC profile accurately reflects your true working style.
         </p>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div className="rounded-lg border border-alto px-10 py-9">
-            <div className="mb-6">
-              <h3 className="mb-6 text-center text-xl font-semibold">
-                20 Questions
-              </h3>
-              <p className="text-center">
-                The test consists of 20 simple, multiple-choice questions
-                designed to measure your personality traits.
-              </p>
+        <div className="lg:px-[200px] grid grid-cols-1 gap-6 md:grid-cols-3">
+          {[
+            {
+              title: "20 Questions",
+              text: "The test consists of 20 simple, multiple-choice questions designed to measure your personality traits.",
+              icon: "/icons/disc-icon-1.svg",
+            },
+            {
+              title: "Quick & Easy",
+              text: "The test takes approximately 10 minutes to complete.",
+              icon: "/icons/disc-icon-2.svg",
+            },
+            {
+              title: "Personalized Report",
+              text: "Once you’ve completed the test, you’ll receive a profile explaining your dominant traits and how they influence your work style.",
+              icon: "/icons/disc-icon-3.svg",
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col justify-between rounded-lg border border-alto px-6 py-6 md:px-10 md:py-9"
+            >
+              <div className="mb-6">
+                <h3 className="mb-3 text-center text-lg font-semibold md:text-xl">
+                  {item.title}
+                </h3>
+                <p className="text-center text-sm md:text-base">{item.text}</p>
+              </div>
+              <div className="flex justify-center">
+                <Image
+                  src={item.icon}
+                  alt="Section icon"
+                  width={65}
+                  height={65}
+                />
+              </div>
             </div>
-            <div className="flex justify-center">
-              <Image
-                src="/icons/disc-icon-1.svg"
-                alt="Section icon"
-                width={65}
-                height={57}
-              />
-            </div>
-          </div>
-          <div className="rounded-lg border border-alto px-10 py-9">
-            <div className="mb-6">
-              <h3 className="mb-6 text-center text-xl font-semibold">
-                Quick &amp;&nbsp;Easy
-              </h3>
-              <p className="text-center">
-                The test takes approximately 10&nbsp;minutes to&nbsp;complete.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <Image
-                src="/icons/disc-icon-2.svg"
-                alt="Section icon"
-                width={65}
-                height={65}
-              />
-            </div>
-          </div>
-          <div className="rounded-lg border border-alto px-10 py-9">
-            <div className="mb-6">
-              <h3 className="mb-6 text-center text-xl font-semibold">
-                Personalized Report
-              </h3>
-              <p className="text-center">
-                Once you&rsquo;ve completed the test, you&rsquo;ll receive
-                a&nbsp;profile explaining your dominant traits and how they
-                influence your work style.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <Image
-                src="/icons/disc-icon-3.svg"
-                alt="Section icon"
-                width={47}
-                height={65}
-              />
-            </div>
-          </div>
+          ))}
         </div>
       </section>
-      <section className="flex justify-center">
+
+      <section className="mt-6 flex justify-center">
         <Link
           href="/disc/job-roles"
-          className="rounded-lg border border-alto bg-tree-poppy px-12 py-3 text-xl font-semibold hover:bg-flush-orange md:px-14 md:py-5"
+          className="rounded-lg border border-alto bg-tree-poppy px-8 py-3 text-lg font-semibold hover:bg-flush-orange md:px-14 md:py-5 md:text-xl"
         >
           Start DISC Test
         </Link>
       </section>
-      <section className="flex justify-center text-center">
+
+      <section className="mt-6 flex justify-center text-center">
         <Link
           href="mailto:contact@sharingtribe.tech"
-          className="border-b-2 border-transparent text-xl font-semibold hover:border-b-2 hover:border-tree-poppy"
+          className="border-b-2 border-transparent text-lg font-semibold hover:border-b-2 hover:border-tree-poppy md:text-xl"
         >
           Have a&nbsp;question about the DISC test? Ask&nbsp;us
         </Link>
