@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-14 bg-violet px-7 pb-12 pt-2 text-tree-poppy">
+    <footer className="mt-14 bg-violet px-7 pb-12 pt-2 text-sm leading-6 text-tree-poppy md:text-base md:leading-8">
       <Link className="mb-3 flex justify-center sm:justify-start" href="/">
         <Image
           src={"/logo.svg"}
@@ -20,7 +20,8 @@ const Footer = () => {
           </p>
           <div className="flex flex-col sm:flex-row">
             <p className="mb-3">
-              Phone:&nbsp;<a href="tel:+41793842261">+41 793 842 261</a>
+              Phone:&nbsp;
+              <a href="tel:+41793842261">+41 793 842 261</a>
               &nbsp;|&nbsp;
             </p>
             <p className="mb-3">
@@ -30,7 +31,7 @@ const Footer = () => {
               </a>
             </p>
           </div>
-          <p>Copyright &copy;&nbsp;2024 Sharing Tribe</p>
+          <p>Copyright &copy;&nbsp;2025 Sharing Tribe</p>
         </address>
       </div>
     </footer>

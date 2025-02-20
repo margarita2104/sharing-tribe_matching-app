@@ -33,6 +33,10 @@ const DiscTest = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const totalQuestions = testData.questions.length;
 
+  const isCurrentQuestionComplete = (questionIndex: number) => {
+    return selections[questionIndex]?.most && selections[questionIndex]?.least;
+  };
+
   const handleSelect = (
     questionIndex: number,
     type: "most" | "least",
@@ -131,6 +135,10 @@ const DiscTest = () => {
   };
 
   const handleNext = () => {
+    if (!isCurrentQuestionComplete(currentQuestionIndex)) {
+      return;
+    }
+
     if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -166,7 +174,7 @@ const DiscTest = () => {
                 (option, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between rounded-xl border border-alto py-9 pl-5 md:py-5"
+                    className="flex items-center justify-between rounded-xl border border-alto pl-5 sm:py-3 md:py-5 lg:py-7"
                     style={{ height: "60px" }}
                   >
                     <span className="h-fit py-8">{option.text}</span>
@@ -288,10 +296,16 @@ const DiscTest = () => {
             Previous
           </button>
           <button
-            className={`rounded-lg bg-tree-poppy px-5 py-2 text-violet hover:bg-flush-orange ${
-              isNextDisabled ? "cursor-not-allowed bg-gray-400" : ""
+            className={`rounded-lg px-5 py-2 text-violet ${
+              isNextDisabled
+                ? "cursor-not-allowed bg-gray-400"
+                : isCurrentQuestionComplete(currentQuestionIndex)
+                  ? "bg-tree-poppy hover:bg-flush-orange"
+                  : "cursor-not-allowed bg-gray-300"
             }`}
-            disabled={isNextDisabled}
+            disabled={
+              isNextDisabled || !isCurrentQuestionComplete(currentQuestionIndex)
+            }
             onClick={handleNext}
           >
             Next

@@ -64,7 +64,7 @@ const JobRoles = () => {
 
   return (
     <>
-      <AspectRatio ratio={16 / 8} className="bg-muted">
+      <AspectRatio ratio={16 / 5} className="bg-muted">
         <Image
           src="/images/disc-about-page.svg"
           alt="Hero Image"
@@ -173,7 +173,7 @@ const JobRoles = () => {
             )}
           />
           <div className="mt-10 flex flex-col items-center justify-center gap-y-8">
-            <p className="mt-8">
+            <p className="mt-8 text-sm md:text-base text-center">
               Please choose the category that best fits your role, and click
               &laquo;Next&raquo; to&nbsp;proceed to&nbsp;the DISC test.
             </p>
