@@ -9,7 +9,7 @@ const Candidates = async () => {
   const userss = await getUserFiltered();
   return (
     <main>
-      <AspectRatio ratio={16 / 8} className="bg-muted">
+      <AspectRatio ratio={16 / 5} className="bg-muted">
         <Image
           src="/images/candidates-hero.svg"
           alt="Hero Image"
