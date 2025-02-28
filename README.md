@@ -36,8 +36,8 @@ This application is built with a powerful modern stack:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/matching-app.git
-   cd matching-app
+   git clone https://github.com/margarita2104/sharing-tribe_matching-app.git
+   cd sharing-tribe_matching-app
    ```
 
 2. Install dependencies:
