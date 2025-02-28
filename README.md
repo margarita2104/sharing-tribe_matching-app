@@ -22,7 +22,6 @@ This application is built with a powerful modern stack:
 
 ### Planned Features
 - Matching algorithm based on complementary skills and preferences
-- Real-time messaging between matched users
 
 ## Getting Started
 
