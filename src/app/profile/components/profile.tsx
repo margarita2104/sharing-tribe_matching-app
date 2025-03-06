@@ -252,7 +252,7 @@ export default function Profile({
                   {!showAll && workExperiences.length > 1 && (
                     <>
                       <Button onClick={() => setShowAll(true)}>
-                        Show More!
+                        Show More
                       </Button>
                       <ModalWorkExpButton userId={user.id} title="Add more" />
                     </>
