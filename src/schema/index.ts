@@ -134,7 +134,7 @@ export const WorkExperienceSchema = z
   );
 export const EducationSchema = z.object({
   degree: z.string().min(1, {
-    message: "Degre or Certification is required.",
+    message: "Degree or Certification is required.",
   }),
   fieldOfStudy: z.string().min(1, {
     message: "Field of study is required.",

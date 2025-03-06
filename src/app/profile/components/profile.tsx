@@ -11,7 +11,12 @@ import {
   type ExtendedUser,
   type WorkExperience,
 } from "~/next-auth";
-import { Card, CardFooter } from "~/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "~/components/ui/card";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { ModalWorkExpButton } from "./(workExperience)/modal-work-exp";
@@ -136,319 +141,393 @@ export default function Profile({
         setEditProfile={setEditProfile}
       />
 
-      <div className="mt-8 flex w-9/12 items-center justify-center space-x-8">
-        <Bio
-          user={user}
-          editProfile={editProfile}
-          setEditProfile={setEditProfile}
-        />
+      <div className="mt-8 flex w-full justify-center">
+        <div className="w-11/12">
+          <Bio
+            user={user}
+            editProfile={editProfile}
+            setEditProfile={setEditProfile}
+          />
+        </div>
       </div>
-      {user.discTestResult ? null : (
-        <Button
-          asChild
-          className="bg-tree-poppy text-violet hover:bg-tree-poppy/90"
-        >
-          <Link href="/disc/job-roles">Take DISC Test</Link>
-        </Button>
-      )}
-      {user.workExperiences.length &&
-      user.education.length &&
-      (user.technicalSkills.length || user.softSkills.length) &&
-      user.jobPreferences &&
-      user.tandemPreferences &&
-      user.references.length &&
-      user.projects.length &&
-      user.additionalInfo &&
-      user.jobTitle &&
-      user.jobRoleFamily &&
-      user.employmentStatus &&
-      user.workMode &&
-      user.availability &&
-      user.currentCompany ? null : (
-        <AddNewSection
-          userId={user.id ?? ""}
-          bio={user.bio}
-          workExperienceLenght={workExperiences.length}
-          educationLength={education.length}
-          referencesLength={references.length}
-          projectsLength={projects.length}
-          jobTitle={user.jobTitle}
-          setShowTechSkills={setShowTechSkills}
-          showTechSkills={showTechSkills}
-          techSkills={techSkills.length}
-          jobPreferences={Boolean(jobPreferences)}
-          setShowJobPreferences={setJobPreferences}
-          workTandemPreferences={Boolean(
-            workTandemPreferences?.complementarySkills.length ??
-              workTandemPreferences?.idealPartnerRole.length,
+
+      <div className="mt-4 flex w-full justify-center">
+        <div className="flex w-11/12 flex-col items-center space-y-4">
+          {user.discTestResult ? null : (
+            <Button
+              asChild
+              className="bg-tree-poppy text-violet hover:bg-tree-poppy/90"
+            >
+              <Link href="/disc/job-roles">Take DISC Test</Link>
+            </Button>
           )}
-          setShowWorkTandemPreferences={setShowWorkTandemPreferences}
-          setShowAdditionalInfo={setShowAdditionalInfo}
-          infos={Boolean(infos)}
-        />
-      )}
 
-      <div className="mt-8 grid w-11/12 grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
-        <PersonalInfo user={user} />
-
-        {!user.jobTitle ? null : <ProfessionalOverview user={user} />}
-
-        {workExperiences.length ? (
-          <Card className="h-fit w-full">
-            {workExperiences
-              .slice(0, showAll ? workExperiences.length : 1)
-              .map((workExperience, index) => (
-                <WorkExperiences key={index} workExperience={workExperience} />
-              ))}
-            <CardFooter className="flex w-full justify-between">
-              {!showAll && workExperiences.length > 1 && (
-                <>
-                  <Button onClick={() => setShowAll(true)}>Show More</Button>
-                  <ModalWorkExpButton userId={user.id} title="Add more" />
-                </>
+          {user.workExperiences.length &&
+          user.education.length &&
+          (user.technicalSkills.length || user.softSkills.length) &&
+          user.jobPreferences &&
+          user.tandemPreferences &&
+          user.references.length &&
+          user.projects.length &&
+          user.additionalInfo &&
+          user.jobTitle &&
+          user.jobRoleFamily &&
+          user.employmentStatus &&
+          user.workMode &&
+          user.availability &&
+          user.currentCompany ? null : (
+            <AddNewSection
+              userId={user.id ?? ""}
+              bio={user.bio}
+              workExperienceLenght={workExperiences.length}
+              educationLength={education.length}
+              referencesLength={references.length}
+              projectsLength={projects.length}
+              jobTitle={user.jobTitle}
+              setShowTechSkills={setShowTechSkills}
+              showTechSkills={showTechSkills}
+              techSkills={techSkills.length}
+              jobPreferences={Boolean(jobPreferences)}
+              setShowJobPreferences={setJobPreferences}
+              workTandemPreferences={Boolean(
+                workTandemPreferences?.complementarySkills.length ??
+                  workTandemPreferences?.idealPartnerRole.length,
               )}
-              {workExperiences.length === 1 ? (
-                <ModalWorkExpButton userId={user.id} title="Add more" />
-              ) : null}
-              {showAll && (
-                <>
-                  <Button onClick={() => setShowAll(false)}>Show Less</Button>
-                  <ModalWorkExpButton userId={user.id} title="Add more" />
-                </>
-              )}
-            </CardFooter>
+              setShowWorkTandemPreferences={setShowWorkTandemPreferences}
+              setShowAdditionalInfo={setShowAdditionalInfo}
+              infos={Boolean(infos)}
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="mt-8 flex w-full justify-center">
+        <div className="w-11/12">
+          {/* First row with fixed height cards */}
+          <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="h-80">
+              <div className="h-full [&>*]:!h-full">
+                <PersonalInfo user={user} />
+              </div>
+            </div>
+
+            <div className="h-80">
+              <div className="h-full [&>*]:!h-full">
+                {!user.jobTitle ? (
+                  <Card className="h-full w-full">
+                    <CardHeader>
+                      <div className="flex justify-between">
+                        <h2 className="text-lg text-violet">
+                          Professional Overview
+                        </h2>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-400">
+                        No professional information available
+                      </p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <ProfessionalOverview user={user} />
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Second row with flexible height cards */}
+          <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
+            {workExperiences.length ? (
+              <Card className="w-full">
+                {/* Assuming the first work experience item has a header; 
+                    only show it for the first item */}
+                {workExperiences
+                  .slice(0, showAll ? workExperiences.length : 1)
+                  .map((workExperience, index) => (
+                    <div key={index}>
+                      <WorkExperiences workExperience={workExperience} />
+                    </div>
+                  ))}
+                <CardFooter className="flex w-full justify-between">
+                  {!showAll && workExperiences.length > 1 && (
+                    <>
+                      <Button onClick={() => setShowAll(true)}>
+                        Show More
+                      </Button>
+                      <ModalWorkExpButton userId={user.id} title="Add more" />
+                    </>
+                  )}
+                  {workExperiences.length === 1 ? (
+                    <ModalWorkExpButton userId={user.id} title="Add more" />
+                  ) : null}
+                  {showAll && (
+                    <>
+                      <Button onClick={() => setShowAll(false)}>
+                        Show Less
+                      </Button>
+                      <ModalWorkExpButton userId={user.id} title="Add more" />
+                    </>
+                  )}
+                </CardFooter>
+              </Card>
+            ) : null}
+
+            {education.length ? (
+              <Card className="w-full">
+                {/* Assuming the education component has its own header */}
+                {education
+                  .slice(0, showAllEducation ? education.length : 1)
+                  .map((education, index) => (
+                    <div key={index}>
+                      <EducationCertification education={education} />
+                    </div>
+                  ))}
+                <CardFooter className="flex w-full justify-between">
+                  {!showAllEducation && education.length > 1 && (
+                    <>
+                      <Button onClick={() => setShowAllEducation(true)}>
+                        Show More
+                      </Button>
+                      <ModalEducation userId={user.id} title="Add more" />
+                    </>
+                  )}
+                  {education.length === 1 ? (
+                    <ModalEducation userId={user.id} title="Add more" />
+                  ) : null}
+                  {showAllEducation && (
+                    <>
+                      <Button onClick={() => setShowAllEducation(false)}>
+                        Show Less
+                      </Button>
+                      <ModalEducation userId={user.id} title="Add more" />
+                    </>
+                  )}
+                </CardFooter>
+              </Card>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      {/* Skills section */}
+      {showTechSkills ? (
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12" id="techSkills" ref={techRef}>
+            <div>
+              <div className="flex justify-between p-4">
+                <h2 className="text-lg text-violet">Technical Skills</h2>
+                {edit ? null : (
+                  <div className="cursor-pointer" onClick={() => setEdit(true)}>
+                    <Image
+                      src="/icons/profile-edit.png"
+                      alt="Profile edit icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                )}
+              </div>
+              <TechnicalSkills
+                userId={user.id}
+                techSkills={techSkills}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </div>
+            <div>
+              <div className="flex justify-between p-4">
+                <h2 className="text-lg text-violet">Soft Skills</h2>
+                {edit ? null : (
+                  <div className="cursor-pointer" onClick={() => setEdit(true)}>
+                    <Image
+                      src="/icons/profile-edit.png"
+                      alt="Profile edit icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <SoftSkillsMain
+                userId={user.id}
+                softSkills={softSkills}
+                setEdit={setEdit}
+                edit={edit}
+              />
+            </div>
           </Card>
-        ) : null}
-        {education.length ? (
-          <Card className="h-fit w-full">
-            {education
-              .slice(0, showAllEducation ? education.length : 1)
-              .map((educatio, index) => (
-                <EducationCertification key={index} educatio={educatio} />
+        </div>
+      ) : null}
+
+      {/* Job Preferences section */}
+      {ShowJobPreferences ? (
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12" id="jobPreferences" ref={jobRef}>
+            <div>
+              <div className="flex justify-between p-4">
+                <h2 className="text-lg text-violet">Job Preferences</h2>
+                {editJobPreferences ? null : (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setEditJobPreferences(true)}
+                  >
+                    <Image
+                      src="/icons/profile-edit.png"
+                      alt="Profile edit icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                )}
+              </div>
+              {!jobPreferences ? (
+                <JobPreferences userId={user.id} />
+              ) : (
+                <JobPreferencesSave
+                  userId={user.id}
+                  jobPreferences={jobPreferences}
+                  editJobPreferences={editJobPreferences}
+                  setEditJobPreferences={setEditJobPreferences}
+                />
+              )}
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
+      {/* Work Tandem Preferences section */}
+      {ShowWorkTandemPreferences ? (
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12" id="workTandem" ref={workTandemRef}>
+            <div>
+              <div className="flex justify-between p-4">
+                <h2 className="text-lg text-violet">Work Tandem Preferences</h2>
+                {editWorkTandem ? null : (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setEditWorkTandem(true)}
+                  >
+                    <Image
+                      src="/icons/profile-edit.png"
+                      alt="Profile edit icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                )}
+              </div>
+              {!workTandemPreferences ? (
+                <WorkTandem userId={user.id} />
+              ) : (
+                <WorkTandemSave
+                  userId={user.id}
+                  workTandemPreferences={workTandemPreferences}
+                  editWorkTandem={editWorkTandem}
+                  setEditWorkTandem={setEditWorkTandem}
+                />
+              )}
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
+      {/* References section */}
+      {references.length ? (
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12">
+            {/* Assuming ReferenceComponent includes its own header */}
+            {references
+              .slice(0, showAllReference ? references.length : 1)
+              .map((reference, index) => (
+                <div key={index}>
+                  <ReferenceComponent reference={reference} />
+                </div>
               ))}
             <CardFooter className="flex w-full justify-between">
-              {!showAllEducation && education.length > 1 && (
+              {!showAllReference && references.length > 1 && (
                 <>
-                  <Button onClick={() => setShowAllEducation(true)}>
+                  <Button onClick={() => setShowAllReferences(true)}>
                     Show More
                   </Button>
-                  <ModalEducation userId={user.id} title="Add more" />
+                  <ModalReferences userId={user.id} title="Add more" />
                 </>
               )}
-              {education.length === 1 ? (
-                <ModalEducation userId={user.id} title="Add more" />
+              {references.length === 1 ? (
+                <ModalReferences userId={user.id} title="Add more" />
               ) : null}
-              {showAllEducation && (
+              {showAllReference && references.length > 1 ? (
                 <>
-                  <Button onClick={() => setShowAllEducation(false)}>
+                  <Button onClick={() => setShowAllReferences(false)}>
                     Show Less
                   </Button>
-                  <ModalEducation userId={user.id} title="Add more" />
+                  <ModalReferences userId={user.id} title="Add more" />
                 </>
-              )}
+              ) : null}
             </CardFooter>
           </Card>
-        ) : null}
-      </div>
-      {showTechSkills ? (
-        <Card className="mt-6 h-fit w-11/12" id="techSkils" ref={techRef}>
-          <div>
-            <div className="flex justify-between p-4">
-              <h2 className="text-lg text-violet">Technical Skills</h2>
-              {edit ? null : (
-                <div className="cursor-pointer" onClick={() => setEdit(true)}>
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
-            </div>
-            <TechnicalSkills
-              userId={user.id}
-              techSkills={techSkills}
-              setEdit={setEdit}
-              edit={edit}
-            />
-          </div>
-          <div>
-            <div className="flex justify-between p-4">
-              <h2 className="text-lg text-violet">Soft Skills</h2>
-              {edit ? null : (
-                <div className="cursor-pointer" onClick={() => setEdit(true)}>
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
-            </div>
-
-            <SoftSkillsMain
-              userId={user.id}
-              softSkills={softSkills}
-              setEdit={setEdit}
-              edit={edit}
-            />
-          </div>
-        </Card>
+        </div>
       ) : null}
 
-      {ShowJobPreferences ? (
-        <Card className="mt-6 h-fit w-11/12" id="jobPreferences" ref={jobRef}>
-          <div>
-            <div className="flex justify-between p-4">
-              <h2 className="text-lg text-violet">Job Preferences</h2>
-              {editJobPreferences ? null : (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setEditJobPreferences(true)}
-                >
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
-            </div>
-            {!jobPreferences ? (
-              <JobPreferences userId={user.id} />
-            ) : (
-              <JobPreferencesSave
-                userId={user.id}
-                jobPreferences={jobPreferences}
-                editJobPreferences={editJobPreferences}
-                setEditJobPreferences={setEditJobPreferences}
-              />
-            )}
-          </div>
-        </Card>
-      ) : null}
-
-      {ShowWorkTandemPreferences ? (
-        <Card
-          className="mt-6 h-fit w-11/12"
-          id="workTandem"
-          ref={workTandemRef}
-        >
-          <div>
-            <div className="flex justify-between p-4">
-              <h2 className="text-lg text-violet">Work Tandem Preferences</h2>
-              {editWorkTandem ? null : (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setEditWorkTandem(true)}
-                >
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
-            </div>
-            {!workTandemPreferences ? (
-              <WorkTandem userId={user.id} />
-            ) : (
-              <WorkTandemSave
-                userId={user.id}
-                workTandemPreferences={workTandemPreferences}
-                editWorkTandem={editWorkTandem}
-                setEditWorkTandem={setEditWorkTandem}
-              />
-            )}
-          </div>
-        </Card>
-      ) : null}
-
-      {references.length ? (
-        <Card className="mt-6 h-fit w-11/12">
-          {references
-            .slice(0, showAllReference ? references.length : 1)
-            .map((reference, index) => (
-              <ReferenceComponent key={index} reference={reference} />
-            ))}
-          <CardFooter className="flex w-full justify-between">
-            {!showAllReference && references.length > 1 && (
-              <>
-                <Button onClick={() => setShowAllReferences(true)}>
-                  Show More
-                </Button>
-                <ModalReferences userId={user.id} title="Add more" />
-              </>
-            )}
-            {references.length === 1 ? (
-              <ModalReferences userId={user.id} title="Add more" />
-            ) : null}
-            {showAllReference && references.length > 1 ? (
-              <>
-                <Button onClick={() => setShowAllReferences(false)}>
-                  Show Less
-                </Button>
-                <ModalReferences userId={user.id} title="Add more" />
-              </>
-            ) : null}
-          </CardFooter>
-        </Card>
-      ) : null}
-
+      {/* Projects section */}
       {projects.length ? (
-        <Card className="mt-6 h-fit w-11/12">
-          {projects
-            .slice(0, showAllProjects ? projects.length : 1)
-            .map((project, index) => (
-              <ProjectComponent key={index} project={project} />
-            ))}
-          <CardFooter className="flex w-full justify-between">
-            {!showAllProjects && projects.length > 1 && (
-              <>
-                <Button onClick={() => setShowAllProjects(true)}>
-                  Show More
-                </Button>
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12">
+            {/* Assuming ProjectComponent includes its own header */}
+            {projects
+              .slice(0, showAllProjects ? projects.length : 1)
+              .map((project, index) => (
+                <div key={index}>
+                  <ProjectComponent project={project} />
+                </div>
+              ))}
+            <CardFooter className="flex w-full justify-between">
+              {!showAllProjects && projects.length > 1 && (
+                <>
+                  <Button onClick={() => setShowAllProjects(true)}>
+                    Show More
+                  </Button>
+                  <ModalProject userId={user.id} title="Add more" />
+                </>
+              )}
+              {projects.length === 1 ? (
                 <ModalProject userId={user.id} title="Add more" />
-              </>
-            )}
-            {projects.length === 1 ? (
-              <ModalProject userId={user.id} title="Add more" />
-            ) : null}
-            {showAllProjects && projects.length > 1 ? (
-              <>
-                <Button onClick={() => setShowAllProjects(false)}>
-                  Show Less
-                </Button>
-                <ModalProject userId={user.id} title="Add more" />
-              </>
-            ) : null}
-          </CardFooter>
-        </Card>
+              ) : null}
+              {showAllProjects && projects.length > 1 ? (
+                <>
+                  <Button onClick={() => setShowAllProjects(false)}>
+                    Show Less
+                  </Button>
+                  <ModalProject userId={user.id} title="Add more" />
+                </>
+              ) : null}
+            </CardFooter>
+          </Card>
+        </div>
       ) : null}
 
+      {/* Additional Info section */}
       {ShowAdditionalInfo ? (
-        <Card className="mt-6 h-fit w-11/12" id="additionalInfo" ref={infoRef}>
-          <div>
-            <div className="flex justify-between p-4">
-              <h2 className="text-lg text-violet">Additional Information</h2>
-              {editAdditionalInfo ? null : (
-                <div
-                  className="cursor-pointer"
-                  onClick={() => setEditAdditionalInfo(true)}
-                >
-                  <Image
-                    src="/icons/profile-edit.png"
-                    alt="Profile edit icon"
-                    width={16}
-                    height={16}
-                  />
-                </div>
-              )}
-            </div>
+        <div className="flex w-full justify-center">
+          <Card className="mt-6 w-11/12" id="additionalInfo" ref={infoRef}>
+            <CardHeader>
+              <div className="flex justify-between">
+                <h2 className="text-lg text-violet">Additional Information</h2>
+                {editAdditionalInfo ? null : (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => setEditAdditionalInfo(true)}
+                  >
+                    <Image
+                      src="/icons/profile-edit.png"
+                      alt="Profile edit icon"
+                      width={16}
+                      height={16}
+                    />
+                  </div>
+                )}
+              </div>
+            </CardHeader>
             {!infos ? (
               <AdditionalInfoComponent userId={user.id} />
             ) : (
@@ -459,8 +538,8 @@ export default function Profile({
                 setEditAdditionalInfo={setEditAdditionalInfo}
               />
             )}
-          </div>
-        </Card>
+          </Card>
+        </div>
       ) : null}
     </>
   );

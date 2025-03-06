@@ -21,7 +21,7 @@ import Image from "next/image";
 import { toast } from "~/hooks/use-toast";
 
 type EducationProps = {
-  educatio: {
+  education: {
     id: number;
     degree: string;
     fieldOfStudy: string;
@@ -31,7 +31,7 @@ type EducationProps = {
   };
 };
 
-export function EducationCertification({ educatio }: EducationProps) {
+export function EducationCertification({ education }: EducationProps) {
   const [error, setError] = useState<string | undefined>();
   const [edit, setEdit] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | undefined>();
@@ -41,15 +41,15 @@ export function EducationCertification({ educatio }: EducationProps) {
   const form = useForm<z.infer<typeof EducationSchema>>({
     resolver: zodResolver(EducationSchema),
     defaultValues: {
-      degree: educatio.degree,
-      fieldOfStudy: educatio.fieldOfStudy,
-      institution: educatio.institution,
-      graduationYear: educatio.graduationYear ?? undefined,
+      degree: education.degree,
+      fieldOfStudy: education.fieldOfStudy,
+      institution: education.institution,
+      graduationYear: education.graduationYear ?? undefined,
     },
   });
   const onSubmit = (values: z.infer<typeof EducationSchema>) => {
     startTransition(() => {
-      EducationUpdate(values, educatio.id)
+      EducationUpdate(values, education.id)
         .then(async (data) => {
           // if (data?.error) {
           //   // setError(data.error);
@@ -113,7 +113,7 @@ export function EducationCertification({ educatio }: EducationProps) {
                             disabled={isPending}
                           />
                         ) : (
-                          <p className="w-full">{educatio.degree}</p>
+                          <p className="w-full">{education.degree}</p>
                         )}
                       </FormControl>
                     </div>
@@ -138,7 +138,7 @@ export function EducationCertification({ educatio }: EducationProps) {
                           />
                         ) : (
                           <p className="w-full">
-                            {educatio.fieldOfStudy ?? "N/A"}
+                            {education.fieldOfStudy ?? "N/A"}
                           </p>
                         )}
                       </FormControl>
@@ -150,7 +150,7 @@ export function EducationCertification({ educatio }: EducationProps) {
               <FormField
                 control={form.control}
                 name="userId"
-                defaultValue={educatio.userId}
+                defaultValue={education.userId}
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
                     <FormControl>
@@ -177,7 +177,7 @@ export function EducationCertification({ educatio }: EducationProps) {
                           />
                         ) : (
                           <p className="w-full">
-                            {educatio.institution ?? "N/A"}
+                            {education.institution ?? "N/A"}
                           </p>
                         )}
                       </FormControl>
@@ -204,7 +204,7 @@ export function EducationCertification({ educatio }: EducationProps) {
                           />
                         ) : (
                           <p className="w-full">
-                            {educatio.graduationYear ?? "N/A"}
+                            {education.graduationYear ?? "N/A"}
                           </p>
                         )}
                       </FormControl>

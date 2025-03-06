@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 
-import { FormError } from "~/components/form-error";
-import { FormSuccess } from "~/components/form-success";
+// import { FormError } from "~/components/form-error";
+// import { FormSuccess } from "~/components/form-success";
 import { z } from "zod";
 import { toast } from "~/hooks/use-toast";
 import { type ExtendedUser } from "~/next-auth";
@@ -122,7 +122,7 @@ export function ProfileHeader({
         <div className="relative mt-6 space-y-1">
           <p className="w-full text-2xl text-violet">{user.name}</p>
           {user.discTestResult ? (
-            <div className="absolute right-0 top-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-tree-poppy text-center text-purple-800">
+            <div className="absolute -right-4 -top-2 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 transform items-center justify-center rounded-full bg-tree-poppy text-center text-purple-800">
               <span className="text-center">{user.discTestResult}</span>
             </div>
           ) : null}

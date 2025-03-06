@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { Input } from "../../../components/ui/input";
-import { FormError } from "../../../components/form-error";
-import { FormSuccess } from "../../../components/form-success";
+// import { FormError } from "../../../components/form-error";
+// import { FormSuccess } from "../../../components/form-success";
 import Image from "next/image";
 import { type ExtendedUser } from "~/next-auth";
 import {
