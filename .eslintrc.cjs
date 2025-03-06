@@ -19,13 +19,15 @@ const config = {
       "warn",
       {
         "prefer": "type-imports",
-        "fixStyle": "inline-type-imports"
+        "fixStyle": "inline-type-imports",
+        "disallowTypeAnnotations": false
       }
     ],
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^(props|actionTypes)$"
       }
     ],
     "@typescript-eslint/require-await": "off",
@@ -39,4 +41,5 @@ const config = {
     ]
   }
 }
+
 module.exports = config;
