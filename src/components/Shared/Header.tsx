@@ -30,7 +30,7 @@ const Header = async () => {
             className="border-b-2 border-transparent hover:border-b-2 hover:border-tree-poppy"
             href="/candidates"
           >
-            Candidates
+            Candidates!
           </Link>
         </div>
       )}
