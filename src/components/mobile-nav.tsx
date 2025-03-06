@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { type Session } from "next-auth";
+import type { Session } from "next-auth";
 import { CiMenuBurger } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import {

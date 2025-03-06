@@ -21,7 +21,7 @@ import { Input } from "../../../components/ui/input";
 import { FormError } from "../../../components/form-error";
 import { FormSuccess } from "../../../components/form-success";
 import Image from "next/image";
-import { type ExtendedUser } from "~/next-auth";
+import type { ExtendedUser } from "~/next-auth";
 import { toast } from "~/hooks/use-toast";
 import Link from "next/link";
 import { LoadingSpinner } from "~/components/ui/loading-spinner";

@@ -1,4 +1,4 @@
-import { type TandemPreference } from "@prisma/client";
+import type { TandemPreference } from "@prisma/client";
 import { CardContent } from "~/components/ui/card";
 
 export default function CandidateWorkTandemPreferences({

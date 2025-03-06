@@ -1,4 +1,4 @@
-import { type SoftSkills } from "~/next-auth";
+import type { SoftSkills } from "~/next-auth";
 import CandidateSoftSkillText from "./candidate-soft-skill-text";
 
 type SoftSkillsProp = {

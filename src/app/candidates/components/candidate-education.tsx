@@ -1,4 +1,4 @@
-import { type Education } from "@prisma/client";
+import type { Education } from "@prisma/client";
 import { CardContent, CardHeader } from "~/components/ui/card";
 
 export default function CandidateEducation({

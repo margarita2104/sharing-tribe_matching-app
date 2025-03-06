@@ -10,7 +10,7 @@ import {
 import { LogoutButton } from "./logout-button";
 import { RxAvatar } from "react-icons/rx";
 import Image from "next/image";
-import { type Session } from "next-auth";
+import type { Session } from "next-auth";
 import Link from "next/link";
 
 export const UserButton = ({ user }: { user: Session | null }) => {

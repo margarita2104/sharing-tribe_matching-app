@@ -2,7 +2,7 @@ import NavAuthButtons from "../NavAuthButtons";
 import { UserButton } from "../auth/user-button";
 import HeaderLinks from "./HeaderLinks";
 import { auth } from "~/auth";
-import { type Session } from "next-auth";
+import type { Session } from "next-auth";
 import { MobileNav } from "../mobile-nav";
 import Link from "next/link";
 

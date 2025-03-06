@@ -22,7 +22,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { PrismaClient } from "@prisma/client";
 import cloudinary from "~/lib/cloudinary";
-import { type JsonValue } from "@prisma/client/runtime/library";
+import type { JsonValue } from "@prisma/client/runtime/library";
 
 const dbReusable = new PrismaClient();
 

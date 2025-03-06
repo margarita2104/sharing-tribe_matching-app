@@ -30,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type JobPreference } from "@prisma/client";
+import type { JobPreference } from "@prisma/client";
 import { MdOutlineCancel } from "react-icons/md";
 import { toast } from "~/hooks/use-toast";
 import { replaceUnderscoreWithSpace } from "~/lib/utils";

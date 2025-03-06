@@ -1,5 +1,5 @@
 "use client";
-import { type ExtendedUser } from "~/next-auth";
+import type { ExtendedUser } from "~/next-auth";
 
 import { useState, useTransition } from "react";
 import { Button } from "../../../../components/ui/button";

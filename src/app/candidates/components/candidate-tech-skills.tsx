@@ -1,4 +1,4 @@
-import { type TechSkills } from "~/next-auth";
+import type { TechSkills } from "~/next-auth";
 import CandidateTechSkillText from "./candidate-tech-skill-text";
 
 type TechSkillProps = {

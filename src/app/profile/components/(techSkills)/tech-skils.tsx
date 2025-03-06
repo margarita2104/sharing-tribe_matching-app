@@ -17,7 +17,7 @@ import {
 import { Input } from "../../../../components/ui/input";
 import { toast } from "~/hooks/use-toast";
 import { Button } from "~/components/ui/button";
-import { type TechSkills } from "~/next-auth";
+import type { TechSkills } from "~/next-auth";
 import Skill from "./skill";
 
 type TechSkillProps = {

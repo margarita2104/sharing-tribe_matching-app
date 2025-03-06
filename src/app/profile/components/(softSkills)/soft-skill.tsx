@@ -17,7 +17,7 @@ import {
 import { Input } from "../../../../components/ui/input";
 import { toast } from "~/hooks/use-toast";
 import { Button } from "~/components/ui/button";
-import { type SoftSkills } from "~/next-auth";
+import type { SoftSkills } from "~/next-auth";
 import SoftSkillText from "./soft-skill-text";
 
 type SoftSkillsProp = {

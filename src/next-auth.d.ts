@@ -5,7 +5,7 @@ import {
   type Project,
   type AdditionalInfo,
 } from "@prisma/client";
-import { type DefaultSession } from "next-auth";
+import type { DefaultSession } from "next-auth";
 
 type WorkExperience = {
   id: number;

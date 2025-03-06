@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type AdditionalInfo } from "@prisma/client";
+import type { AdditionalInfo } from "@prisma/client";
 import { toast } from "~/hooks/use-toast";
 import ButtonDeleteLanguage from "./delete-language";
 
