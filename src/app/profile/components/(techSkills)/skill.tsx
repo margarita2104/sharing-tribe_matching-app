@@ -1,6 +1,6 @@
 "use client";
 
-import { type { TechSkills } from "~/next-auth";
+import { type TechSkills } from "~/next-auth";
 import { MdOutlineCancel } from "react-icons/md";
 import { TechSkillDelete } from "~/actions/profile";
 import { toast } from "~/hooks/use-toast";

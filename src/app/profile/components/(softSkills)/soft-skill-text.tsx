@@ -1,8 +1,8 @@
 "use client";
 
-import { type { SoftSkills } from "~/next-auth";
+import { type SoftSkills } from "~/next-auth";
 import { MdOutlineCancel } from "react-icons/md";
-import { SoftSkillDelete, TechSkillDelete } from "~/actions/profile";
+import { SoftSkillDelete } from "~/actions/profile";
 import { toast } from "~/hooks/use-toast";
 import { startTransition } from "react";
 

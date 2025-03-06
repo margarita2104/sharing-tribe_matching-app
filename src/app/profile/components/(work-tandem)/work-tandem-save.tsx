@@ -24,8 +24,8 @@ import {
   FormMessage,
 } from "../../../../components/ui/form";
 import { Input } from "../../../../components/ui/input";
-import { FormError } from "../../../../components/form-error";
-import { FormSuccess } from "../../../../components/form-success";
+// import { FormError } from "../../../../components/form-error";
+// import { FormSuccess } from "../../../../components/form-success";
 import {
   Select,
   SelectContent,
@@ -33,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type { TandemPreference } from "@prisma/client";
+import { type TandemPreference } from "@prisma/client";
 import { MdOutlineCancel } from "react-icons/md";
 import { toast } from "~/hooks/use-toast";
 import { replaceUnderscoreWithSpace } from "~/lib/utils";
