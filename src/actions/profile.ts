@@ -8,21 +8,21 @@ import { currentUser } from "../lib/auth";
 import { generateVerificationToken } from "~/lib/tokens";
 import { sendVerificationEmailProfile } from "~/lib/mail";
 import {
-  type WorkExperienceSchema,
-  type ProfileSchema,
-  type EducationSchema,
-  type TechSkillsSchema,
-  type SoftSKilsSchema,
-  type JobPreferenceSchema,
-  type WorkTandemSchema,
-  type ReferencesSchema,
-  type ProjectSchema,
-  type AdditionalInfoSchema,
+   WorkExperienceSchema,
+   ProfileSchema,
+   EducationSchema,
+   TechSkillsSchema,
+   SoftSKilsSchema,
+   JobPreferenceSchema,
+   WorkTandemSchema,
+   ReferencesSchema,
+   ProjectSchema,
+   AdditionalInfoSchema,
 } from "~/schema";
 import { revalidatePath } from "next/cache";
 import { PrismaClient } from "@prisma/client";
 import cloudinary from "~/lib/cloudinary";
-import { type JsonValue } from "@prisma/client/runtime/library";
+import {  JsonValue } from "@prisma/client/runtime/library";
 
 const dbReusable = new PrismaClient();
 
@@ -197,7 +197,7 @@ export const uploadImage = async (formData: FormData) => {
     revalidatePath("/profile");
 
     return { success: true, imageUrl };
-  } catch (error) {
+  } catch (_error) {
     return { error: "Image upload failed" };
   }
 };
@@ -691,7 +691,7 @@ export const uploadImageProject = async (formData: FormData) => {
     revalidatePath("/profile");
 
     return { success: true, imageUrl };
-  } catch (error) {
+  } catch (_error) {
     return { error: "Image upload failed" };
   }
 };
