@@ -1,4 +1,4 @@
-import type { JobPreference } from "@prisma/client";
+import { type JobPreference } from "@prisma/client";
 import { CardContent } from "~/components/ui/card";
 
 export default function CandidateJobPreferences({

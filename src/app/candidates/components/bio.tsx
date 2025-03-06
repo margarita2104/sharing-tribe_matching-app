@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 
 export default function CandidateBio({ user }: { user: User }) {
   return (

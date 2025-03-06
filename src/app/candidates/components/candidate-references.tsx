@@ -1,4 +1,4 @@
-import type { Reference } from "@prisma/client";
+import { type Reference } from "@prisma/client";
 import { CardContent, CardHeader } from "~/components/ui/card";
 
 export default function CandidateReferences({

@@ -1,4 +1,4 @@
-import type { Project } from "@prisma/client";
+import { type Project } from "@prisma/client";
 import Image from "next/image";
 import { CardContent, CardHeader } from "~/components/ui/card";
 

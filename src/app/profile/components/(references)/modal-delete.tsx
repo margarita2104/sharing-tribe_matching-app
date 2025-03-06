@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from "../../../../components/ui/alert-dialog";
 import { Button } from "../../../../components/ui/button";
-import type { PrismaClient } from "@prisma/client";
+import { type PrismaClient } from "@prisma/client";
 import { toast } from "~/hooks/use-toast";
 import { useState } from "react";
 

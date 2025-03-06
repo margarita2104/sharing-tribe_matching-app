@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { CardWrapper } from "./card-wrapper";
-import type { JobRoleFamily } from "@prisma/client";
+import { type JobRoleFamily } from "@prisma/client";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");

@@ -4,7 +4,7 @@ import { getUserById } from "~/data/user";
 import bcrypt from "bcryptjs";
 import { currentUser } from "~/lib/auth";
 
-import type { SettingsSchema } from "~/schema";
+import { type SettingsSchema } from "~/schema";
 import { db } from "~/server/db";
 import { z } from "zod";
 

@@ -1,4 +1,4 @@
-import type { WorkExperience } from "@prisma/client";
+import { type WorkExperience } from "@prisma/client";
 import { CardContent, CardHeader } from "~/components/ui/card";
 
 export default function CandidateWorkExperiences({

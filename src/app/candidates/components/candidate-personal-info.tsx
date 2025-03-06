@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import { type User } from "@prisma/client";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 
 export default function CandidatePersonalInfo({ user }: { user: User }) {

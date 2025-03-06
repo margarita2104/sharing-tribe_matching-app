@@ -1,4 +1,4 @@
-import type { AdditionalInfo } from "@prisma/client";
+import { type AdditionalInfo } from "@prisma/client";
 import { CardContent } from "~/components/ui/card";
 
 type Language = {

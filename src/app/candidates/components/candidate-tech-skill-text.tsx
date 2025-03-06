@@ -1,4 +1,4 @@
-import type { TechSkills } from "~/next-auth";
+import { type TechSkills } from "~/next-auth";
 
 type SkillProps = { skill: TechSkills };
 
