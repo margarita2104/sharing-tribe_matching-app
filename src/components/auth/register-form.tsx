@@ -4,6 +4,7 @@ import * as z from "zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { register } from "../../actions/register";
 import { Input } from "../ui/input";
