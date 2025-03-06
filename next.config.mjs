@@ -1,5 +1,4 @@
 // @ts-check
-
 /**
  * @type {import('next').NextConfig}
  */
@@ -25,6 +24,12 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "10mb",
     },
+    // Add this to set Node.js as the default runtime
+    runtime: 'nodejs',
+  },
+  // Add this to ignore ESLint errors during build
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

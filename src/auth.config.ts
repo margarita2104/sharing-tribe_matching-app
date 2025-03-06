@@ -1,5 +1,5 @@
-// Explicitly set the runtime to Node.js
 export const runtime = 'nodejs';
+
 
 import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
