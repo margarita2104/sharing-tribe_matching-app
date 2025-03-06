@@ -73,7 +73,7 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
               control={form.control}
               name="hobbiesAndInterests"
               render={({ field }) => (
-                <FormItem className="flex items-center justify-between">
+                <FormItem className="flex w-full items-center justify-between">
                   <FormLabel className="w-full">
                     Hobbies and Interests
                   </FormLabel>

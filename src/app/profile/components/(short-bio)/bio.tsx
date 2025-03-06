@@ -82,7 +82,7 @@ export default function Bio({
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex w-full flex-col"
             >
-              <div>
+              <div className="flex items-center w-full">
                 <h3 className="w-full max-w-full text-2xl text-purple-900">
                   Short Bio:
                 </h3>
@@ -120,7 +120,7 @@ export default function Bio({
           </Form>
         </>
       ) : (
-        <div className="mb-8 flex items-center space-x-2">
+        <div className="mb-8 flex items-center justify-center space-x-2">
           <h3 className="text-2xl text-purple-900">Short Bio:</h3>
           <p className="break-words text-xl text-slate-700">{user.bio}</p>
         </div>
