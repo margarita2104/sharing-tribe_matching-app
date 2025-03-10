@@ -6,6 +6,13 @@ export default function CandidateProfessionalOverview({
 }: {
   user: User;
 }) {
+
+  const replaceUnderscoreWithSpace = (value: string | null | undefined) => {
+    if (!value) return value;
+    return value.replace(/_/g, ' ');
+  };
+
+
   return (
     <Card className="h-fit w-full" title="Personal Information">
       <CardHeader>
@@ -21,19 +28,19 @@ export default function CandidateProfessionalOverview({
           </div>
           <div className="flex justify-between">
             <p className="w-full">Job role family</p>
-            <p className="w-full">{user.jobRoleFamily ?? "N/A"}</p>
+            <p className="w-full">{replaceUnderscoreWithSpace(user.jobRoleFamily) ?? "N/A"}</p>
           </div>
           <div className="flex justify-between">
             <p className="w-full">Employment Status</p>
-            <p className="w-full">{user.employmentStatus ?? "N/A"}</p>
+            <p className="w-full">{replaceUnderscoreWithSpace(user.employmentStatus) ?? "N/A"}</p>
           </div>
           <div className="flex justify-between">
             <p className="w-full">Work Mode</p>
-            <p className="w-full">{user.workMode ?? "N/A"}</p>
+            <p className="w-full">{replaceUnderscoreWithSpace(user.workMode) ?? "N/A"}</p>
           </div>
           <div className="flex justify-between">
             <p className="w-full">Availability</p>
-            <p className="w-full">{user.availability ?? "N/A"}</p>
+            <p className="w-full">{replaceUnderscoreWithSpace(user.availability) ?? "N/A"}</p>
           </div>
           <div className="flex justify-between">
             <p className="w-full">Current Company</p>

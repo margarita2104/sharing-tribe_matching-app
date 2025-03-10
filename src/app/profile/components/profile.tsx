@@ -205,13 +205,13 @@ export default function Profile({
         <div className="w-11/12">
           {/* First row with fixed height cards */}
           <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="h-80">
+            <div className="h-120">
               <div className="h-full [&>*]:!h-full">
                 <PersonalInfo user={user} />
               </div>
             </div>
 
-            <div className="h-80">
+            <div className="h-120">
               <div className="h-full [&>*]:!h-full">
                 {!user.jobTitle ? (
                   <Card className="h-full w-full">

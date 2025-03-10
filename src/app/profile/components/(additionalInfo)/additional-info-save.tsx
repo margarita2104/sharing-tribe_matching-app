@@ -112,6 +112,11 @@ export function AdditionalInfoSave({
     ? (infos.languages as Language[])
     : [];
 
+  const replaceUnderscoreWithSpace = (value: string | null | undefined) => {
+    if (!value) return value;
+    return value.replace(/_/g, " ");
+  };
+
   return (
     <CardContent>
       <Form {...form}>
@@ -301,7 +306,7 @@ export function AdditionalInfoSave({
                         <SelectContent>
                           {availableSchedule.map((schedule) => (
                             <SelectItem key={schedule} value={schedule}>
-                              {schedule}
+                              {replaceUnderscoreWithSpace(schedule)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -314,7 +319,9 @@ export function AdditionalInfoSave({
             ) : (
               <div className="flex flex-wrap items-center space-x-10">
                 <FormLabel>Preferred Work Schedule</FormLabel>
-                <p>{infos?.preferredWorkSchedule}</p>
+                <p>
+                  {replaceUnderscoreWithSpace(infos?.preferredWorkSchedule)}
+                </p>
               </div>
             )}
 

@@ -6,6 +6,11 @@ export default function CandidateJobPreferences({
 }: {
   jobPreferences: JobPreference;
 }) {
+  const replaceUnderscoreWithSpace = (value: string | null | undefined) => {
+    if (!value) return value;
+    return value.replace(/_/g, " ");
+  };
+
   return (
     <CardContent>
       <div className="space-y-4">
@@ -14,7 +19,7 @@ export default function CandidateJobPreferences({
             <div className="flex items-center space-x-2" key={index}>
               <p>Desired Roles</p>
               <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                {role}
+                {replaceUnderscoreWithSpace(role)}
               </span>
             </div>
           ))}
@@ -25,7 +30,7 @@ export default function CandidateJobPreferences({
             <div className="flex items-center space-x-2" key={index}>
               <p>Work Preference</p>
               <span className="relative rounded-full bg-slate-300 px-2 py-1 text-slate-950">
-                {role}
+                {replaceUnderscoreWithSpace(role)}
               </span>
             </div>
           ))}
