@@ -64,6 +64,11 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
     });
   };
 
+  const replaceUnderscoreWithSpace = (value: string | null | undefined) => {
+    if (!value) return value;
+    return value.replace(/_/g, " ");
+  };
+
   return (
     <CardContent>
       <Form {...form}>
@@ -204,7 +209,7 @@ export function AdditionalInfoComponent({ userId }: AdditionalInfoProps) {
                       <SelectContent>
                         {availableSchedule.map((schedule) => (
                           <SelectItem key={schedule} value={schedule}>
-                            {schedule}
+                            {replaceUnderscoreWithSpace(schedule)}
                           </SelectItem>
                         ))}
                       </SelectContent>

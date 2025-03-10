@@ -11,6 +11,12 @@ export default function CandidateAdditionalInfo({
 }: {
   additionalInfo: AdditionalInfo;
 }) {
+
+  const replaceUnderscoreWithSpace = (value: string | null | undefined) => {
+    if (!value) return value;
+    return value.replace(/_/g, " ");
+  };
+  
   const parsedLanguages: Language[] = Array.isArray(additionalInfo?.languages)
     ? (additionalInfo.languages as Language[])
     : [];
@@ -35,7 +41,7 @@ export default function CandidateAdditionalInfo({
           </div>
           <div className="flex w-full items-center justify-between">
             <p className="w-full">Volunteering experience</p>
-            <p className="w-full">{additionalInfo?.volunteering || "N/A"}</p>
+            <p className="w-full">{additionalInfo?.volunteering ?? "N/A"}</p>
           </div>
           <div className="flex w-full items-center justify-between">
             <p className="w-full">Languages</p>
@@ -55,8 +61,8 @@ export default function CandidateAdditionalInfo({
           </div>
           <div className="flex w-full items-center justify-between">
             <p className="w-full">Preferred Work Schedule</p>
-            <p className="w-full">{additionalInfo?.preferredWorkSchedule || "N/A"}</p>
-          </div>
+            <p className="w-full">{replaceUnderscoreWithSpace(additionalInfo?.preferredWorkSchedule) ?? "N/A"}</p>
+            </div>
         </div>
       </CardContent>
     );
