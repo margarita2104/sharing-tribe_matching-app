@@ -18,6 +18,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com", // Cloudinary's base domain
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co", // ImgBB's base domain
+      },
+      {
+        protocol: "https",
+        hostname: "unlbefaczyrekurowmfs.supabase.co",
+      },
     ],
   },
   experimental: {
