@@ -26,6 +26,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "unlbefaczyrekurowmfs.supabase.co",
       },
+      {
+        protocol: "https",
+        hostname: "mycloud.swisscom.ch",
+      },
     ],
   },
   experimental: {
